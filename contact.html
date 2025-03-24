@@ -22,7 +22,21 @@
     <main>
         <section>
             <h2>Get in Touch</h2>
-            <p>Placeholder text for contact information.</p>
+            <p>Email me at martin.jamesfrancis(@)gmail.com, connect with me on <a href="https://www.linkedin.com/in/martinjamesf" target="_blank">LinkedIn</a>, or fill out the form below.</p>
+            <form action="https://formspree.io/f/martin.jamesfrancis@gmail.com" method="POST" onsubmit="return validateForm()">
+                <label for="first-name">First Name:</label>
+                <input type="text" id="first-name" name="first-name" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <input type="hidden" name="_subject" value="New Contact Form Submission">
+                
+                <!-- Honeypot field to prevent spam -->
+                <input type="text" name="_gotcha" style="display:none">
+                
+                <button type="submit">Send</button>
+            </form>
         </section>
     </main>
     <footer>
