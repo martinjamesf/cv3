@@ -1,7 +1,7 @@
 /* pico override styles/main.css */
 .container {
-    margin: 64px 0;
+    margin-top: 64px 0;
 }
 section {
-    margin: 32px 0;    
+    margin-top: 32px 0;    
 }
