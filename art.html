@@ -1,4 +1,4 @@
-<!-- art.html -->
+<!-- contact.html -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,14 +6,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
-    <title>Art</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.conditional.jade.min.css">
+    <title>Home</title>
+    <link rel="stylesheet" href="styles/pico.indigo.css">
     <!-- <link rel="stylesheet" href="styles/main.css"> -->
+    <style is:global>
+        #theme-switcher {
+          background: none;
+          border: 0;
+        }
+        #theme-switcher svg {
+          width: 1rem;
+          height: 1rem;
+          color: var(--pico-contrast);
+        }
+      </style>
 </head>
 
 <body>
-    <header>
-        <h1>Art</h1>
+    <header class="container">
         <nav>
             <ul>
                 <li><strong>James Martin</strong></li>
@@ -23,10 +33,12 @@
                 <li><a href="bio-cv.html">Bio & CV</a></li>
                 <li><a href="art.html">Art</a></li>
                 <li><a href="contact.html">Contact</a></li>
+                <li>|</l>
+                <li><button id="theme-switcher"></button></li>
             </ul>
         </nav>
     </header>
-    <main>
+    <main class="container">
         <section>
             <h2>Gallery</h2>
             <p>Placeholder text for art content.</p>
