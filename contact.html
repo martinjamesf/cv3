@@ -1,44 +1,51 @@
-<!-- contact.html -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light dark">
-    <title>Home</title>
-    <link rel="stylesheet" href="styles/pico.jade.css">
-    <link rel="stylesheet" href="styles/main.css">
-    <style is:global>
-        #theme-switcher {
-            background: none;
-            border: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Home</title>
+  <link rel="stylesheet" href="styles/pico.jade.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <style is:global>
+    #theme-switcher {
+      background: none;
+      border: 0;
+    }
 
-        #theme-switcher svg {
-            width: 1rem;
-            height: 1rem;
-            color: var(--pico-contrast);
-        }
-    </style>
+    #theme-switcher svg {
+      width: 1rem;
+      height: 1rem;
+      color: var(--pico-contrast);
+    }
+  </style>
 </head>
 
 <body>
-    <header class="container">
-        <nav>
-            <ul>
-                <li><strong>James Martin</strong></li>
+  <header class="container">
+    <nav>
+      <ul>
+        <li><strong><a href="index.html">James Martin</a></strong></li>
+      </ul>
+      <ul>
+        <li><a href="#" class="secondary">Resume</a></li>
+        <li role="menubar">
+          <details class="dropdown">
+            <summary>
+              Learn More
+            </summary>
+            <ul dir="rtl">
+              <li><a href="bio-cv.html">Bio</a></li>
+              <li><a href="art.html">Art</a></li>
+              <li><a href="contact.html">Contact</a></li>
             </ul>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="bio-cv.html">Bio & CV</a></li>
-                <li><a href="art.html">Art</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li>|</l>
-                <li><button id="theme-switcher"></button></li>
-            </ul>
-        </nav>
-    </header>
+          </details>
+        </li>
+        <li><button class="secondary" id="theme-switcher" data-tooltip="Bottom" data-placement="bottom"></button></li>
+      </ul>
+    </nav>
+  </header>
     <main class="container">
         <section>
             <h2>Get in Touch</h2>
