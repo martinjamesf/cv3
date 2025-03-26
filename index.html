@@ -25,14 +25,33 @@
 <body>
   <header class="container">
     <nav>
-      <ul>
-        <li><strong>James Martin</strong></li>
-      </ul>
+      
       <ul role="menu">
         <li><a href="index.html">Home</a></li>
         <li><a href="bio-cv.html">Bio & CV</a></li>
         <li><a href="art.html">Art</a></li>
         <li style="--pico-nav-breadcrumb-divider: '✨';"><a href="contact.html">Contact</a></li>
+        <li><button id="theme-switcher"></button></li>
+      </ul>
+    </nav>
+    <nav>
+      <ul>
+        <li><strong><a href="index.html">James Martin</a></strong></li>
+      </ul>
+      <ul>
+        <li><a href="#" class="secondary">Resume</a></li>
+        <li>
+          <details class="dropdown">
+            <summary>
+              Account
+            </summary>
+            <ul dir="rtl">
+              <li><a href="bio-cv.html">Bio</a></li>
+              <li><a href="art.html">Art</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </details>
+        </li>
         <li><button id="theme-switcher"></button></li>
       </ul>
     </nav>
