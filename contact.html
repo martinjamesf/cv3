@@ -24,18 +24,18 @@
 
 <body>
   <header class="container">
-    <nav class="container-fluid">
+    <nav>
       <ul>
         <li><strong><a href="index.html">James Martin</a></strong></li>
       </ul>
       <ul>
         <li><a href="#" class="secondary">Resume</a></li>
-        <li>
+        <li role="menubar">
           <details class="dropdown">
             <summary>
               Learn More
             </summary>
-            <ul>
+            <ul dir="rtl">
               <li><a href="bio-cv.html">Bio</a></li>
               <li><a href="art.html">Art</a></li>
               <li><a href="contact.html">Contact</a></li>
@@ -46,32 +46,32 @@
       </ul>
     </nav>
   </header>
-    <main class="container">
-        <section>
-            <h2>Get in Touch</h2>
-            <p>Email me at martin.jamesfrancis(@)gmail.com, connect with me on <a
-                    href="https://www.linkedin.com/in/martinjamesf" target="_blank">LinkedIn</a>, or fill out the form
-                below.</p>
-            <form action="https://formspree.io/f/xeoaknbd" method="POST">
-                <label>
-                    Your email:
-                    <input type="email" name="email">
-                </label>
-                <label>
-                    Your message:
-                    <textarea name="message"></textarea>
-                </label>
-                <!-- your other form fields go here -->
-                <button type="submit">Send</button>
-            </form>
-        </section>
-    </main>
-    <footer class="container">
-        <p>
-            <script>document.write(new Date().getFullYear())</script> | James Martin
-        </p>
-    </footer>
-    <script src="js/scripts.js"></script>
+  <main class="container">
+    <section>
+      <h2>Get in Touch</h2>
+      <p>Email me at martin.jamesfrancis(@)gmail.com, connect with me on <a
+          href="https://www.linkedin.com/in/martinjamesf" target="_blank">LinkedIn</a>, or fill out the form
+        below.</p>
+      <form action="https://formspree.io/f/xeoaknbd" method="POST">
+        <label>
+          Your email:
+          <input type="email" name="email">
+        </label>
+        <label>
+          Your message:
+          <textarea name="message"></textarea>
+        </label>
+        <!-- your other form fields go here -->
+        <button type="submit">Send</button>
+      </form>
+    </section>
+  </main>
+  <footer class="container">
+    <p>
+      <script>document.write(new Date().getFullYear())</script> | James Martin
+    </p>
+  </footer>
+  <script src="js/scripts.js"></script>
 </body>
 
 </html>
