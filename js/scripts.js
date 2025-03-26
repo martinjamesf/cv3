@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   html.setAttribute("data-theme", "auto");
   switchTheme.setAttribute("data-tooltip", "os theme");
   switchTheme.focus();
-  removeTooltip(3000);
+  removeTooltip(1500);
 });
 switchTheme.addEventListener("click", (e) => {
   e.preventDefault();
@@ -46,7 +46,7 @@ switchTheme.addEventListener("click", (e) => {
   );
   removeTooltip();
 });
-const removeTooltip = (timeInt = 1750) => {
+const removeTooltip = (timeInt = 1500) => {
   setTimeout(() => {
     switchTheme.blur();
   }, timeInt);
