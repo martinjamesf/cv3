@@ -2838,7 +2838,7 @@ textarea,
  * Adding svg logo color (james)
  */
  .jfm {
-  fill:var(--pico-primary);
+  color:var(--pico-primary);
   width: 32px; 
   height: 32px; 
   border-radius: 50%;
