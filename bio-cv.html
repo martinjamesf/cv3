@@ -1,32 +1,132 @@
-<!-- bio-cv.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bio & CV</title>
-    <link rel="stylesheet" href="styles/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Home</title>
+  <link rel="stylesheet" href="styles/pico.jade.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <style is:global>
+    #theme-switcher {
+      background: none;
+      border: 0;
+    }
+
+    #theme-switcher svg {
+      width: 1rem;
+      height: 1rem;
+      color: var(--pico-contrast);
+    }
+  </style>
 </head>
+
 <body>
-    <header>
-        <h1>Bio & CV</h1>
-        <nav>
+  <header class="container-fluid">
+    <nav>
+      <ul>
+        <li><strong><a href="index.html">James Martin</a></strong></li>
+      </ul>
+      <ul>
+        <li><a href="resume.html" class="secondary">Resume</a></li>
+        <li role="menubar">
+          <details class="dropdown">
+            <summary>
+              Learn More
+            </summary>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="bio-cv.html">Bio & CV</a></li>
-                <li><a href="art.html">Art</a></li>
-                <li><a href="contact.html">Contact</a></li>
+              <li><a href="bio-cv.html">Bio</a></li>
+              <li><a href="art.html">Art</a></li>
+              <li><a href="contact.html">Contact</a></li>
             </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2>About Me</h2>
-            <p>Placeholder text for bio and CV content.</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2025 Your Name</p>
-    </footer>
+          </details>
+        </li>
+        <li><button class="secondary" id="theme-switcher" data-tooltip="Bottom" data-placement="bottom"></button></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <section>
+      <hgroup>
+        <h1 class="text-capitalize">Who am I</h1>
+        <small class="text-muted">Design Strategist, User Experience Designer, Graphic Designer, and Person
+          &#40;the
+          fun type&#41;</small> </div>
+      </hgroup>
+      <p>Hi there,</p>
+      <p>As a Design Leader with expertise in human-centered service design, advanced design thinking, and
+        user experience strategy, I have successfully led teams in creating digital experiences across
+        finance, insurance, medical devices, fitness equipment, marketing, and advertising industries.
+        My approach ensures that solutions are not only user-centric, but also strategically aligned
+        with business objectives and development feasibility.
+      </p>
+      <p>
+      <p>My Core Strengths:</p>
+      <ul>
+        <li><strong>Leadership & Team Development –</strong> Coaching teams in design-thinking
+          methodologies, fosteringinnovation, and aligning efforts toward strategic business goals.
+        </li>
+        <li>User Experience & Product Design –</strong> Applying insights from Human-Centered Service
+          Design (HCD)and Advanced Design Thinking to craft seamless, research-driven user
+          experiences.</li>
+        <li><strong>Systems-Thinking & Strategy –</strong> Driving operational improvements and
+          advocating for scalable,user-first solutions across complex organizations.
+        <li><strong>Presentation & Workshop Facilitation –</strong> Leading design sprints, workshops,
+          and executivepresentations to communicate the value of design.</li>
+        <li><strong>Visual & Motion Design –</strong> Leveraging graphic design, motion/video editing,
+          and front-end experiences to create engaging, high-impact experiences.</li>
+      </ul>
+      <p>With my User Experience Certification (UXC), I deliver validated user experiences with user
+        research, design strategy, and systems-thinking methodologies. Beyond delivering digital product
+        solutions, I am a curious intrapreneur who thrives on solving problems through creative
+        solutions. My ability to bridge design, business strategy, and development has allowed me to
+        drive meaningful impact within
+        organizations.</p>
+      <p>Additionally, my military experience has sharpened my leadership skills, resilience, and ability
+        to focus on what truly matters—fostering collaboration, empowering others, and driving results
+        in fast-paced environments.</p>
+      <p>Let’s set up a time to discuss how I can contribute to your team. When would be a good time for
+        us to connect?</p>
+      <p>I love the fact that I get to lead teams of people through the philosophy of human-centered design,
+        design thinking, and product development. I also deliver experience design and strategy that meet the
+        desires of our customers, the feasibility of our development teams, and the viability of the business. I
+        currently work and play from Madison (Wisconsin), though I am used to working onsite or virtually with a
+        wide variety of teams across diverse geographies.</p>
+      <img class="img-fluid round pb-5" src="images/jamesIndoors.jpg" alt="Profile image of James Martin">
+      <!--Books-->
+      <p>I'm an avid reader. I love to learn more about my profession, design, human behavior, self-improving
+        myself, and helping others. One of my favorite books is Orbiting the Gaint Hairball by Gordon MacKenzie.
+      </p>
+      <img class="img-fluid round pb-5" src="images/books.jpg" alt="Profile image of James Martin">
+      <!--Outdoors-->
+      <p>Apart from work, I love the outdoors. Just this year alone, I will have:</p>
+      <ul>
+        <li>Snowboarded in Vail, local parks, and the many “hills” of WI and the UP</li>
+        <li>Kayaked the Wisconsin River on a 3-night trip (love the sandbars)</li>
+        <li>Car-camped across the great state of Wisconsin too many times to count</li>
+        <li>Thru-hiked 125 miles of the upper Ice Age Trail</li>
+        <li>Trained for my second Ironman distance race in September ‘22 </li>
+      </ul>
+      <img src="images/jamesOutdoors.jpg" alt="Profile image of James Martin" class="img-fluid round mb-4">
+      <p class="pb-3">I enjoy sharing my outdoor experiences with my family and friends. We’ve had many adventures
+        over the years that have helped me be a better person. Here is a glimpse into some of <a
+          style="text-decoration: underline" href="https://photos.app.goo.gl/ZuW1QAiBQ76i64R8A">my outdoor
+          adventures.</a></p>
+      <!--Army-->
+      <p>Another fun fact about me; I enlisted at the age of 17 into the United States Army and served one tour of
+        duty (OIF) in 2003. While in a war zone, my contributions and performance earned me a retroactive
+        promotion (battlefield promotions weren’t reinstated until 2009) to a non-commissioned officer. And yes,
+        I used camo paint to draw flames on my truck in the middle of Iraq.</p>
+      <img class="img-fluid round" src="images/about_truck.jpg" alt="Image of a truck with camo flames">
+    </section>
+  </main>
+  <footer class="container">
+    <p>
+      <script>document.write(new Date().getFullYear())</script> | James Martin
+    </p>
+  </footer>
+  <script src="js/scripts.js"></script>
 </body>
+
 </html>

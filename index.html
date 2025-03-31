@@ -1,33 +1,102 @@
-<!-- Template: index.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="styles/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Home</title>
+  <link rel="stylesheet" href="styles/pico.jade.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <style is:global>
+    #theme-switcher {
+      background: none;
+      border: 0;
+    }
+
+    #theme-switcher svg {
+      width: 1rem;
+      height: 1rem;
+      color: var(--pico-contrast);
+    }
+  </style>
 </head>
+
 <body>
-    <header>
-        <h1>James Martin</h1>
-        <nav>
+  <header class="container-fluid">
+    <nav>
+      <ul>
+        <li><img src="images/JFM-Secondary.svg" style="width: 32px; height: 32px; border-radius: 50%;"/></li>
+        <li><strong><a href="index.html">James Martin</a></strong></li>
+      </ul>
+      <ul>
+        <li><a href="resume.html" class="secondary">Resume</a></li>
+        <li role="menubar">
+          <details class="dropdown">
+            <summary> More </summary>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="bio-cv.html">Bio & CV</a></li>
-                <li><a href="art.html">Art</a></li>
-                <li><a href="contact.html">Contact</a></li>
+              <li><a href="bio-cv.html">Bio</a></li>
+              <li><a href="art.html">Art</a></li>
+              <li><a href="contact.html">Contact</a></li>
             </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2>Design Leader | Building Impactful Digital Experiences with Strategy & Creativity</h2>
-            <h3><strong><script>document.write(new Date().getFullYear() - 2006)</script></strong> years of crafting intuitive, high-impact digital experiences. A strategic intrapreneur who blends creativity with problem-solving to empower teams and drive business growth.</h2>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2025 Your Name</p>
-    </footer>
-    <script src="js/scripts.js"></script>
+          </details>
+        </li>
+        <li><button class="secondary" id="theme-switcher" data-tooltip="Bottom" data-placement="bottom"></button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section>
+      <h1 style="font-size:xx-large;">Design Leader | Driving Impactful Digital Products with Strategy, Creativity, and Enterprise Design Leadership</h1>
+      <h2><script>document.write(new Date().getFullYear() - 2006)</script> years of crafting intuitive, high-impact digital experiences. A strategic intrapreneur who
+        blends creativity with problem-solving to empower teams and drive business growth.</h2>
+    </section>
+    <hr>
+    <section>
+      <div class="grid">
+        <div>
+          <small>Design Leader</small>
+          <p><strong>I lead with vision and purpose.</strong> I cultivate high-performing teams, mentoring designers and
+            collaborating with stakeholders to drive strategic initiatives that align user needs with
+            business success.</p>
+        </div>
+        <div>
+          <small>Strategic Facilitator</small>
+          <p><strong>Problem-solving fuels my creativity.</strong> I bring cross-functional teams together, designing
+            and
+            facilitating workshops that uncover opportunities, spark innovation, and align teams toward
+            impactful solutions.</p>
+        </div>
+      </div>
+      <div class="grid">
+        <div>
+          <small>Experience Builder</small>
+          <p><strong>I craft experiences with intention.</strong> With a deep foundation in research and design
+            strategy, I
+            lead teams in creating seamless, human-centered digital products that are as intuitive as they
+            are effective.</p>
+        </div>
+        <div>
+          <small>People-First Innovator</small>
+          <p><strong>People are at the heart of everything I do.</strong> I design for real, complex
+            individuals—balancing
+            empathy, strategy, and execution to create meaningful experiences that improve lives and drive
+            business outcomes.</p>
+        </div>
+      </div>
+    </section>
+    <hr>
+    <section>
+      <p>sample work section</p>
+    </section>
+  </main>
+  <footer class="container">
+    <p>
+      <script>document.write(new Date().getFullYear())</script> | James Martin
+    </p>
+  </footer>
+  <script src="js/scripts.js"></script>
 </body>
+
 </html>
