@@ -1,10 +1,10 @@
 @charset "UTF-8";
 :root,
 :host {
-    --pico-primary: rgba(0, 180, 120, .2);
+    --pico-primary: #00b478;
 }
 .jfm {
-    fill:var(--pico-primary);
+    background-color:var(--pico-primary);
     width: 32px; 
     height: 32px; 
     border-radius: 50%;
