@@ -11,5 +11,6 @@
 }
 mark {
     background-color:var(--pico-primary) ;
+    border-color:var(--pico-primary) ;
     padding: -4px;
 }
