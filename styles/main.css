@@ -1,7 +1,7 @@
+@charset "UTF-8";
 :root,
 :host {
-    color-scheme: light;
-    --pico-primary:
+    --pico-primary: #00b478;
 }
 .jfm {
     fill:var(--pico-primary);
