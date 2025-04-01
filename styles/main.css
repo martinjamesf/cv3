@@ -4,3 +4,7 @@
     height: 32px; 
     border-radius: 50%;
 }
+mark {
+    background-color:var(--pico-primary);
+    padding: -4px;
+}
