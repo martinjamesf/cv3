@@ -1,3 +1,8 @@
+:root,
+:host {
+    color-scheme: light;
+    --pico-primary:
+}
 .jfm {
     fill:var(--pico-primary);
     width: 32px; 
