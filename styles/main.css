@@ -9,7 +9,7 @@
     height: 32px; 
     border-radius: 50%;
 }
-mark {
+h1 mark {
     background-color: rgba(0, 180, 120, .2) ;
     border-color:var rgba(0, 180, 120, .2) ;
     padding: -4px;
