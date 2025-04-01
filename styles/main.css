@@ -10,7 +10,7 @@
     border-radius: 50%;
 }
 mark {
-    background-color:var(--pico-primary) ;
-    border-color:var(--pico-primary) ;
+    background-color: rgba(0, 180, 120, .2) ;
+    border-color:var rgba(0, 180, 120, .2) ;
     padding: -4px;
 }
