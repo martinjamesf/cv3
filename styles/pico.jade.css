@@ -3103,6 +3103,7 @@ textarea,
  */
 .jfm {
   color: var(--pico-primary);
+  fill: #005f3d;
   width: 32px;
   height: 32px;
   border-radius: 50%;
