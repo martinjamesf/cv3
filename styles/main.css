@@ -1,7 +1,7 @@
 @charset "UTF-8";
 :root,
 :host {
-    --pico-primary: #00b478;
+    --pico-primary: rgba(0, 180, 120, .2);
 }
 .jfm {
     fill:var(--pico-primary);
@@ -10,6 +10,6 @@
     border-radius: 50%;
 }
 mark {
-    background-color:var(--pico-primary);
+    background-color:var(--pico-primary) ;
     padding: -4px;
 }
