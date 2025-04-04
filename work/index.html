@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>James Martin</title>
+  <link rel="stylesheet" href="../styles/pico.jade.css">
+  <link rel="stylesheet" href="../styles/main.css">
+  <style is:global>
+    #theme-switcher {
+      background: none;
+      border: 0;
+    }
+
+    #theme-switcher svg {
+      width: 1rem;
+      height: 1rem;
+      color: var(--pico-contrast);
+    }
+  </style>
+</head>
+
+<body>
+  <header class="container-fluid">
+    <nav>
+      <ul>
+        <li><strong><a href="index.html">James Martin</a></strong></li>
+      </ul>
+      <ul class="secondary">
+        <li><a href="../resume.html">Resume</a></li>
+        <li><a href="../bio-cv.html">Bio</a></li>
+        <li><a href="work/index.html">Work</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><button id="theme-switcher" data-tooltip="Bottom" data-placement="bottom"></button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <header>
+    <h1>Portfolio</h1>
+    <p>A collection of thoughts and musings</p>
+  </header>
+  <main>
+    <article>
+      <h2><a href="#">First Blog Post</a></h2>
+      <p><small>March 30, 2025</small></p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="#">Read more...</a></p>
+    </article>
+    <article>
+      <h2><a href="#">Another Blog Post</a></h2>
+      <p><small>March 25, 2025</small></p>
+      <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="#">Read more...</a></p>
+    </article>
+  </main>
+  <footer class="container">
+    <p>
+      <script>document.write(new Date().getFullYear())</script> | James Martin
+    </p>
+  </footer>
+  <script src="../js/scripts.js"></script>
+</body>
+
+</html>
