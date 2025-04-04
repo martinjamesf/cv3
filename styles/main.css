@@ -14,3 +14,9 @@ h1 mark {
     border-color:var rgba(0, 180, 120, .2) ;
     padding: -1px;
 }
+.responsive {
+        width: 100%;
+        max-width: 320px;
+        height: auto;
+      }
+}
