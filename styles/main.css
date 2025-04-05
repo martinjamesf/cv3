@@ -12,18 +12,16 @@
     }
 }
 
-/* Responsive design for smaller screens */
-@media (max-width: 768px) {
-    .line-length {
-        width: 100;
-        padding-left: 0%;
-        padding-right: 0%
-    }
-}
-/* End of styles */
-
 .line-length {
     width: 66%;
     padding-left: 22%;
     padding-right: 22%
+}
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .line-length {
+        width: 100%;
+        padding-left: 0%;
+        padding-right: 0%
+    }
 }
