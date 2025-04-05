@@ -19,4 +19,99 @@ h1 mark {
         max-width: 320px;
         height: auto;
       }
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    .jfm {
+        width: 24px; 
+        height: 24px; 
+    }
+    h1 {
+        font-size: 1.5em;
+    }
+    .responsive {
+        max-width: 100%;
+    }
 }
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root,
+    :host {
+        --pico-primary: #00b478; /* Keep primary color same for dark mode */
+    }
+    .jfm {
+        background-color: rgba(0, 180, 120, 0.8); /* Slightly darker for contrast */
+    }
+    h1 mark {
+        background-color: rgba(0, 180, 120, .4);
+        border-color: rgba(0, 180, 120, .4);
+    }
+}
+/* Additional styles for better readability in dark mode */
+body {
+    color: #f0f0f0; /* Lighter text color for dark mode */
+    background-color: #121212; /* Dark background for better contrast */
+}
+/* Ensure links are visible in dark mode */
+a {
+    color: #1e90ff; /* Bright blue for links */
+}
+/* Ensure images are responsive */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* Optional: adds a slight border radius to images */
+}
+/* Additional styles for better readability */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4; /* Light background for better readability */
+}
+h1 {
+    color: var(--pico-primary);
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+p {
+    margin: 10px 0;
+    font-size: 1.1em;
+    color: #333; /* Darker text for better contrast */
+}
+a:hover {
+    text-decoration: underline;
+    color: #007acc; /* Lighter blue for hover effect */
+}
+/* Footer styles */
+footer {
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #666; /* Lighter text for footer */
+    border-top: 1px solid #ccc; /* Subtle border for separation */
+}
+footer a {
+    color: var(--pico-primary);
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+    color: #007acc; /* Lighter blue for hover effect */
+}
+/* Responsive footer */
+@media (max-width: 600px) {
+    footer {
+        font-size: 0.8em;
+        padding: 15px;
+    }
+    footer a {
+        display: block; /* Stack links vertically on small screens */
+        margin: 5px 0;
+    }
+}
+/* End of styles/main.css */
+/* Ensure the CSS is loaded correctly */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
