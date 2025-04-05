@@ -1,7 +1,7 @@
 /* js/scripts.js */
 console.log("Website loaded");
 
-/* js/scripts.js */
+/* contact script */
 function validateForm() {
   const email = document.getElementById("email").value;
   const firstName = document.getElementById("first-name").value;
@@ -59,5 +59,3 @@ const removeTooltip = (timeInt = 1500) => {
     switchTheme.blur();
   }, timeInt);
 };
-
-

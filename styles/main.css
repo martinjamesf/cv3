@@ -3,59 +3,27 @@
 :host {
     --pico-primary: #00b478;
 }
-.jfm {
-    background-color:var(--pico-primary);
-    width: 32px; 
-    height: 32px; 
-    border-radius: 50%;
-}
-h1 mark {
-    background-color: rgba(0, 180, 120, .2) ;
-    border-color:var rgba(0, 180, 120, .2) ;
-    padding: -1px;
-}
-.responsive {
-        width: 100%;
-        max-width: 320px;
-        height: auto;
-      }
+
+/* Base styles */
 @media (prefers-color-scheme: dark) {
     :root,
     :host {
         --pico-primary: #00b478;
     }
-    .jfm {
-        background-color: var(--pico-primary);
-        border: 2px solid rgba(255, 255, 255, 0.2);
-    }
-    h1 mark {
-        background-color: rgba(0, 180, 120, .3);
-        border-color: rgba(0, 180, 120, .3);
-    }
 }
-/* Ensure the styles are scoped to the component */
-:host {
-    display: block;
-    font-family: Arial, sans-serif;
-    color: var(--pico-primary);
-}
-/* Additional styles for the component */
-.jfm:hover {
-    transform: scale(1.1);
-    transition: transform 0.2s ease-in-out;
-}
-.jfm:active {
-    transform: scale(0.9);
-}
+
 /* Responsive design for smaller screens */
-@media (max-width: 600px) {
-    .jfm {
-        width: 24px;
-        height: 24px;
-    }
-    h1 {
-        font-size: 1.5em;
+@media (max-width: 768px) {
+    .line-length {
+        width: 100;
+        padding-left: 0%;
+        padding-right: 0%
     }
 }
 /* End of styles */
 
+.line-length {
+    width: 66%;
+    padding-left: 22%;
+    padding-right: 22%
+}
