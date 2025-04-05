@@ -17,7 +17,7 @@ function validateForm() {
   }
   return true;
 }
-/* <script> */
+/* Theme Switcher <script> */
 let isLight = true;
 const html = document.documentElement;
 const switchTheme = document.getElementById("theme-switcher");
@@ -59,4 +59,5 @@ const removeTooltip = (timeInt = 1500) => {
     switchTheme.blur();
   }, timeInt);
 };
-/* </script> */ 
+
+
