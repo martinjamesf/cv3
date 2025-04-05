@@ -19,6 +19,21 @@ h1 mark {
         max-width: 320px;
         height: auto;
       }
+<<<<<<< HEAD
+@media (prefers-color-scheme: dark) {
+    :root,
+    :host {
+        --pico-primary: #00b478;
+    }
+    .jfm {
+        background-color: var(--pico-primary);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+    h1 mark {
+        background-color: rgba(0, 180, 120, .3);
+        border-color: rgba(0, 180, 120, .3);
+    }
+=======
 /* Responsive design for smaller screens */
 @media (max-width: 600px) {
     .jfm {
@@ -31,7 +46,36 @@ h1 mark {
     .responsive {
         max-width: 100%;
     }
+>>>>>>> b2ea572efbbf3ec394be16af8370b087c67a1d0d
 }
+<<<<<<< HEAD
+/* Ensure the styles are scoped to the component */
+:host {
+    display: block;
+    font-family: Arial, sans-serif;
+    color: var(--pico-primary);
+}
+/* Additional styles for the component */
+.jfm:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
+}
+.jfm:active {
+    transform: scale(0.9);
+}
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    .jfm {
+        width: 24px;
+        height: 24px;
+    }
+    h1 {
+        font-size: 1.5em;
+    }
+}
+/* End of styles */
+
+=======
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
     :root,
@@ -115,3 +159,5 @@ footer a:hover {
 /* Ensure the CSS is loaded correctly */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+
+>>>>>>> b2ea572efbbf3ec394be16af8370b087c67a1d0d
