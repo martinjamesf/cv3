@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>James Martin | Blog</title>
+  <link rel="stylesheet" href="../styles/pico.jade.css">
+  <link rel="stylesheet" href="../styles/main.css">
+  <style is:global>
+    #theme-switcher {
+      background: none;
+      border: 0;
+    }
+
+    #theme-switcher svg {
+      width: 1rem;
+      height: 1rem;
+      color: var(--pico-contrast);
+    }
+  </style>
+</head>
+
+<body>
+  <header class="container-fluid">
+    <nav>
+      <ul>
+        <li><strong><a href="index.html">James Martin</a></strong></li>
+      </ul>
+      <ul class="secondary">
+        <li><a href="../resume.html">Resume</a></li>
+        <li><a href="../bio.html">Bio</a></li>
+        <li>Work</li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><button id="theme-switcher" data-tooltip="Bottom" data-placement="bottom"></button></li>
+      </ul>
+    </nav>
+  </header>
+    <main>
+        <section>
+            <div class="grid">
+                <!-- Card 1 -->
+                <article>
+                    <img src="https://via.placeholder.com/300x200" alt="Project 1">
+                    <h3>Project 1</h3>
+                    <p>A brief description of Project 1 goes here.</p>
+                    <a href="/work/project1.html" role="button">View Project</a>
+                </article>
+
+                <!-- Card 2 -->
+                <article>
+                    <img src="https://via.placeholder.com/300x200" alt="Project 2">
+                    <h3>Project 2</h3>
+                    <p>A brief description of Project 2 goes here.</p>
+                    <a href="/work/project2.html" role="button">View Project</a>
+                </article>
+
+                <!-- Card 3 -->
+                <article>
+                    <img src="https://via.placeholder.com/300x200" alt="Project 3">
+                    <h3>Project 3</h3>
+                    <p>A brief description of Project 3 goes here.</p>
+                    <a href="/work/project3.html" role="button">View Project</a>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Martin James</p>
+    </footer>
+</body>
+</html>
