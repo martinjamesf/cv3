@@ -13,9 +13,9 @@
 }
 
 .line-length {
-    width: 66%;
-    padding-left: 22%;
-    padding-right: 22%
+    width: 100%;
+    padding-left: 16%;
+    padding-right: 16%
 }
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
