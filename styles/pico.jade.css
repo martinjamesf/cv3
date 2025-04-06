@@ -761,8 +761,21 @@ section {
   grid-column-gap: var(--pico-grid-column-gap);
   grid-row-gap: var(--pico-grid-row-gap);
   display: grid;
-  grid-template-columns: 1fr;
+  /* grid-template-columns: 1fr; */
+  grid-template-columns:repeat(10, 1fr);  /* Default to 10 equal columns */S
 }
+
+/* Adjusting Pico CSS grid for more layout options */
+.grid .col1 {
+  grid-template-columns: 1fr; /* Span across two columns */
+}
+.col2 {
+  grid-template-columns: 2fr; /* Span across two columns */
+}
+.item3 {
+  grid-column: 2 / 4; /* Start at column 2 and span two columns */
+}
+
 
 @media (min-width: 768px) {
   .grid {
@@ -3096,15 +3109,4 @@ textarea,
     transition-delay: 0s !important;
     transition-duration: 0s !important;
   }
-}
-
-/*
- * Adding svg logo color (james)
-
-.jfm {
-  color: var(--pico-primary);
-  fill: #005f3d;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
 }
