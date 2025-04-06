@@ -18,11 +18,9 @@ function validateForm() {
   return true;
 }
 /* Theme Switcher <script> */
-let isLight = true;
+let isLight = true; // Default theme is light
 const html = document.documentElement;
 const switchTheme = document.getElementById("theme-switcher");
-const os_default =
-  '<svg viewBox="0 0 16 16"><path fill="currentColor" d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/></svg>';
 const sun =
   '<svg viewBox="0 0 16 16"><path fill="currentColor" d="M8 11a3 3 0 1 1 0-6a3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8a4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/></svg>';
 const moon =
@@ -30,17 +28,12 @@ const moon =
 
 document.addEventListener("DOMContentLoaded", () => {
   if (switchTheme) {
-  if (html) {
-    html.setAttribute("data-theme", "auto");
-  }
-    switchTheme.focus();
-    if (switchTheme) {
-      removeTooltip(1500);
-    }
-    switchTheme.focus();
-    removeTooltip(1500);
+    html.setAttribute("data-theme", "light"); // Set default theme to light
+    switchTheme.innerHTML = sun; // Set initial icon to sun
+    switchTheme.setAttribute("data-tooltip", "light theme");
   }
 });
+
 if (switchTheme) {
   switchTheme.addEventListener("click", (e) => {
     e.preventDefault();
@@ -51,7 +44,6 @@ if (switchTheme) {
       "data-tooltip",
       `${isLight ? "light" : "dark"} theme`
     );
-    removeTooltip();
   });
 }
 const removeTooltip = (timeInt = 1500) => {
