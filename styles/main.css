@@ -25,3 +25,12 @@
         padding-right: 0%
     }
 }
+
+.card {
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.card:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
