@@ -766,16 +766,66 @@ section {
 }
 
 /* Adjusting Pico CSS grid for more layout options */
-.grid .col1 {
-  grid-template-columns: 1fr; /* Span across two columns */
+.col-1 {
+  grid-template-columns: repeat(1, 1fr); /* 1 column */
 }
-.col2 {
-  grid-template-columns: 2fr; /* Span across two columns */
+.col-2 {
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
 }
-.item3 {
-  grid-column: 2 / 4; /* Start at column 2 and span two columns */
+.col-3 {
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
 }
-
+.col-4 {
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+}
+.col-5 {
+  grid-template-columns: repeat(5, 1fr); /* 5 columns */
+}
+.col-6 {
+  grid-template-columns: repeat(6, 1fr); /* 6 columns */
+}
+.col-7 {
+  grid-template-columns: repeat(7, 1fr); /* 7 columns */
+}
+.col-8 {
+  grid-template-columns: repeat(8, 1fr); /* 8 columns */
+}
+.col-9 {
+  grid-template-columns: repeat(9, 1fr); /* 9 columns */
+}
+.col-10 {
+  grid-template-columns: repeat(10, 1fr); /* 10 columns */
+}
+/* Offset columns above 768px breakpoint */
+@media (min-width: 768px) {
+  .offset-1 {
+    grid-column-start: span 2;
+  }
+  .offset-2 {
+    grid-column-start: span 3;
+  }
+  .offset-3 {
+    grid-column-start: span 4;
+  }
+  .offset-4 {
+    grid-column-start: span 5;
+  }
+  .offset-5 {
+    grid-column-start: span 6;
+  }
+  .offset-6 {
+    grid-column-start: span 7;
+  }
+  .offset-7 {
+    grid-column-start: span 8;
+  }
+  .offset-8 {
+    grid-column-start: span 9;
+  }
+  .offset-9 {
+    grid-column-start: span 10;
+  }
+}
 
 @media (min-width: 768px) {
   .grid {
