@@ -248,7 +248,7 @@ details summary[role=button]:not(.outline)::after {
 :root:not([data-theme=dark]),
 :host(:not([data-theme=dark])) {
   color-scheme: light;
-  --pico-background-color: #fff;
+  --pico-background-color: #F8f8ff;
   --pico-color: #373c44;
   --pico-text-selection-color: rgba(0, 166, 110, 0.25);
   --pico-muted-color: #646b79;
@@ -262,7 +262,7 @@ details summary[role=button]:not(.outline)::after {
   --pico-primary-hover-border: var(--pico-primary-hover-background);
   --pico-primary-hover-underline: var(--pico-primary-hover);
   --pico-primary-focus: rgba(0, 166, 110, 0.5);
-  --pico-primary-inverse: #fff;
+  --pico-primary-inverse: #F8f8ff;
   --pico-secondary: #5d6b89;
   --pico-secondary-background: #525f7a;
   --pico-secondary-border: var(--pico-secondary-background);
@@ -272,7 +272,7 @@ details summary[role=button]:not(.outline)::after {
   --pico-secondary-hover-border: var(--pico-secondary-hover-background);
   --pico-secondary-hover-underline: var(--pico-secondary-hover);
   --pico-secondary-focus: rgba(93, 107, 137, 0.25);
-  --pico-secondary-inverse: #fff;
+  --pico-secondary-inverse: #F8f8ff;
   --pico-contrast: #181c25;
   --pico-contrast-background: #181c25;
   --pico-contrast-border: var(--pico-contrast-background);
@@ -282,7 +282,7 @@ details summary[role=button]:not(.outline)::after {
   --pico-contrast-hover-border: var(--pico-contrast-hover-background);
   --pico-contrast-hover-underline: var(--pico-secondary-hover);
   --pico-contrast-focus: rgba(93, 107, 137, 0.25);
-  --pico-contrast-inverse: #fff;
+  --pico-contrast-inverse: #F8f8ff;
   --pico-box-shadow: 0.0145rem 0.029rem 0.174rem rgba(129, 145, 181, 0.01698), 0.0335rem 0.067rem 0.402rem rgba(129, 145, 181, 0.024), 0.0625rem 0.125rem 0.75rem rgba(129, 145, 181, 0.03), 0.1125rem 0.225rem 1.35rem rgba(129, 145, 181, 0.036), 0.2085rem 0.417rem 2.502rem rgba(129, 145, 181, 0.04302), 0.5rem 1rem 6rem rgba(129, 145, 181, 0.06), 0 0 0 0.0625rem rgba(129, 145, 181, 0.015);
   --pico-h1-color: #2d3138;
   --pico-h2-color: #373c44;
@@ -309,7 +309,7 @@ details summary[role=button]:not(.outline)::after {
   --pico-form-element-border-color: #cfd5e2;
   --pico-form-element-color: #23262c;
   --pico-form-element-placeholder-color: var(--pico-muted-color);
-  --pico-form-element-active-background-color: #fff;
+  --pico-form-element-active-background-color: #F8f8ff;
   --pico-form-element-active-border-color: var(--pico-primary-border);
   --pico-form-element-focus-color: var(--pico-primary-border);
   --pico-form-element-disabled-opacity: 0.5;
@@ -321,7 +321,7 @@ details summary[role=button]:not(.outline)::after {
   --pico-form-element-valid-focus-color: var(--pico-form-element-valid-active-border-color);
   --pico-switch-background-color: #bfc7d9;
   --pico-switch-checked-background-color: var(--pico-primary-background);
-  --pico-switch-color: #fff;
+  --pico-switch-color: #F8f8ff;
   --pico-switch-thumb-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   --pico-range-border-color: #dfe3eb;
   --pico-range-active-border-color: #bfc7d9;
@@ -336,7 +336,7 @@ details summary[role=button]:not(.outline)::after {
   --pico-card-border-color: var(--pico-muted-border-color);
   --pico-card-box-shadow: var(--pico-box-shadow);
   --pico-card-sectioning-background-color: rgb(251, 251.5, 252.25);
-  --pico-dropdown-background-color: #fff;
+  --pico-dropdown-background-color: #F8f8ff;
   --pico-dropdown-border-color: #eff1f4;
   --pico-dropdown-box-shadow: var(--pico-box-shadow);
   --pico-dropdown-color: var(--pico-color);
@@ -391,7 +391,7 @@ details summary[role=button]:not(.outline)::after {
     --pico-primary-hover-border: var(--pico-primary-hover-background);
     --pico-primary-hover-underline: var(--pico-primary-hover);
     --pico-primary-focus: rgba(0, 180, 120, 0.375);
-    --pico-primary-inverse: #fff;
+    --pico-primary-inverse: #F8f8ff;
     --pico-secondary: #969eaf;
     --pico-secondary-background: #525f7a;
     --pico-secondary-border: var(--pico-secondary-background);
@@ -401,13 +401,13 @@ details summary[role=button]:not(.outline)::after {
     --pico-secondary-hover-border: var(--pico-secondary-hover-background);
     --pico-secondary-hover-underline: var(--pico-secondary-hover);
     --pico-secondary-focus: rgba(144, 158, 190, 0.25);
-    --pico-secondary-inverse: #fff;
+    --pico-secondary-inverse: #F8f8ff;
     --pico-contrast: #dfe3eb;
     --pico-contrast-background: #eff1f4;
     --pico-contrast-border: var(--pico-contrast-background);
     --pico-contrast-underline: rgba(223, 227, 235, 0.5);
-    --pico-contrast-hover: #fff;
-    --pico-contrast-hover-background: #fff;
+    --pico-contrast-hover: #F8f8ff;
+    --pico-contrast-hover-background: #F8f8ff;
     --pico-contrast-hover-border: var(--pico-contrast-hover-background);
     --pico-contrast-hover-underline: var(--pico-contrast-hover);
     --pico-contrast-focus: rgba(207, 213, 226, 0.25);
@@ -420,7 +420,7 @@ details summary[role=button]:not(.outline)::after {
     --pico-h5-color: #a4acba;
     --pico-h6-color: #8891a4;
     --pico-mark-background-color: #014063;
-    --pico-mark-color: #fff;
+    --pico-mark-color: #F8f8ff;
     --pico-ins-color: #62af9a;
     --pico-del-color: rgb(205.5, 126, 123);
     --pico-blockquote-border-color: var(--pico-muted-border-color);
@@ -450,7 +450,7 @@ details summary[role=button]:not(.outline)::after {
     --pico-form-element-valid-focus-color: var(--pico-form-element-valid-active-border-color);
     --pico-switch-background-color: #333c4e;
     --pico-switch-checked-background-color: var(--pico-primary-background);
-    --pico-switch-color: #fff;
+    --pico-switch-color: #F8f8ff;
     --pico-switch-thumb-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
     --pico-range-border-color: #202632;
     --pico-range-active-border-color: #2a3140;
@@ -530,7 +530,7 @@ details summary[role=button]:not(.outline)::after {
   --pico-primary-hover-border: var(--pico-primary-hover-background);
   --pico-primary-hover-underline: var(--pico-primary-hover);
   --pico-primary-focus: rgba(0, 180, 120, 0.375);
-  --pico-primary-inverse: #fff;
+  --pico-primary-inverse: #F8f8ff;
   --pico-secondary: #969eaf;
   --pico-secondary-background: #525f7a;
   --pico-secondary-border: var(--pico-secondary-background);
@@ -540,13 +540,13 @@ details summary[role=button]:not(.outline)::after {
   --pico-secondary-hover-border: var(--pico-secondary-hover-background);
   --pico-secondary-hover-underline: var(--pico-secondary-hover);
   --pico-secondary-focus: rgba(144, 158, 190, 0.25);
-  --pico-secondary-inverse: #fff;
+  --pico-secondary-inverse: #F8f8ff;
   --pico-contrast: #dfe3eb;
   --pico-contrast-background: #eff1f4;
   --pico-contrast-border: var(--pico-contrast-background);
   --pico-contrast-underline: rgba(223, 227, 235, 0.5);
-  --pico-contrast-hover: #fff;
-  --pico-contrast-hover-background: #fff;
+  --pico-contrast-hover: #F8f8ff;
+  --pico-contrast-hover-background: #F8f8ff;
   --pico-contrast-hover-border: var(--pico-contrast-hover-background);
   --pico-contrast-hover-underline: var(--pico-contrast-hover);
   --pico-contrast-focus: rgba(207, 213, 226, 0.25);
@@ -559,7 +559,7 @@ details summary[role=button]:not(.outline)::after {
   --pico-h5-color: #a4acba;
   --pico-h6-color: #8891a4;
   --pico-mark-background-color: #014063;
-  --pico-mark-color: #fff;
+  --pico-mark-color: #F8f8ff;
   --pico-ins-color: #62af9a;
   --pico-del-color: rgb(205.5, 126, 123);
   --pico-blockquote-border-color: var(--pico-muted-border-color);
@@ -589,7 +589,7 @@ details summary[role=button]:not(.outline)::after {
   --pico-form-element-valid-focus-color: var(--pico-form-element-valid-active-border-color);
   --pico-switch-background-color: #333c4e;
   --pico-switch-checked-background-color: var(--pico-primary-background);
-  --pico-switch-color: #fff;
+  --pico-switch-color: #F8f8ff;
   --pico-switch-thumb-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   --pico-range-border-color: #202632;
   --pico-range-active-border-color: #2a3140;
