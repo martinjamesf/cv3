@@ -761,8 +761,7 @@ section {
   grid-column-gap: var(--pico-grid-column-gap);
   grid-row-gap: var(--pico-grid-row-gap);
   display: grid;
-  /* grid-template-columns: 1fr; */
-  grid-template-columns:repeat(10, 1fr);  /* Default to 10 equal columns */S
+  grid-template-columns: 1fr;
 }
 
 /* Adjusting Pico CSS grid for more layout options */
