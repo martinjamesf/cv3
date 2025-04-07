@@ -32,7 +32,5 @@
 }
 
 .card:hover {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--pico-primary-focus); /*  rgba(0, 180, 120, 0.375)*/
 }
-
-/*
