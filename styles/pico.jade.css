@@ -3188,8 +3188,11 @@ textarea,
   }
 }
 
-/* Eighties Theme */
-[data-theme="eighties"] {
+@media only screen and (prefers-color-scheme: eighties) {
+
+  :root:not([data-theme]),
+  :host(:not([data-theme])) {
+    color-scheme: eighties;
     --pico-background-color: #0c0b1a;
     --pico-color: #f2f2f2;
     --pico-text-selection-color: rgba(255, 0, 255, 0.25);
