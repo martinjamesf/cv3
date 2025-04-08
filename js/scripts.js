@@ -61,6 +61,9 @@ if (switchTheme) {
     switchTheme.classList.add("rotate-theme");
     setTimeout(() => switchTheme.classList.remove("rotate-theme"), 500);
 
+    switchTheme.classList.add("glitch");
+    setTimeout(() => switchTheme.classList.remove("glitch"), 300);
+
     applyTheme(currentThemeIndex);
   });
 }
