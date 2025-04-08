@@ -1,4 +1,4 @@
-/* Place this inside your main CSS file */
+@charset "UTF-8";
 :root[data-theme="eighties"] {
     /* Colors */
     --primary: #ff00ff;
