@@ -49,7 +49,7 @@ function validateForm() {
 
       html.setAttribute("data-theme", theme);
 
-      switchTheme.innerHTML = theme === "light" ? sun : theme === "dark" ? moon : theme === "eighties" ? eighties;
+      switchTheme.innerHTML = theme === "light" ? sun : theme === "dark" ? moon : eighties;
       switchTheme.setAttribute("data-tooltip", `${theme} theme`);
     });
   }
