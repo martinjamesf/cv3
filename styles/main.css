@@ -11,38 +11,5 @@
         padding-right: 0%
     }
 }
-/* Place this inside your main CSS file */
-:root[data-theme="eighties"] {
-    /* Colors */
-    --primary: #ff00ff;
-    --background: #0a0a0a;
-    --card-background: #111;
-    --text: #39ff14;
-    --muted: #888;
-    --border: #ff00ff;
-    --accent: #00ffff;
-  
-    /* Fonts */
-    --font-family: 'Press Start 2P', monospace;
-  
-    /* Optional extras */
-    --button-background: var(--accent);
-    --button-color: black;
-    --link-color: #ff00ff;
-    --link-hover: #00ffff;
-  }
-
-  .theme-icon.glitch {
-    animation: glitch 0.3s steps(2, end) 1;
-  }
-  
-  @keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-1px, 1px); }
-    40% { transform: translate(1px, -1px); }
-    60% { transform: translate(-1px, 0); }
-    80% { transform: translate(1px, 1px); }
-    100% { transform: translate(0); }
-  }
 
   
