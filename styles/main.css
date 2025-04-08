@@ -11,3 +11,92 @@
         padding-right: 0%
     }
 }
+/*
+@media only screen and (prefers-color-scheme: eighties) {
+    :root:not([data-theme]),
+    :host(:not([data-theme])) {
+      color-scheme: eighties;
+      --pico-background-color: #0c0b1a;
+      --pico-color: #f2f2f2;
+      --pico-text-selection-color: rgba(255, 0, 255, 0.25);
+      --pico-muted-color: #9090c0;
+      --pico-muted-border-color: #2d2d44;
+      --pico-primary: #00ffff;
+      /* Electric Cyan 
+      --pico-primary-background: #0088ff;
+      /* Electric Blue 
+      --pico-primary-border: var(--pico-primary-background);
+      --pico-primary-underline: rgba(0, 255, 255, 0.5);
+      --pico-primary-hover: #00eaff;
+      --pico-primary-hover-background: #0077cc;
+      --pico-primary-hover-border: var(--pico-primary-hover-background);
+      --pico-primary-hover-underline: var(--pico-primary-hover);
+      --pico-primary-focus: rgba(0, 255, 255, 0.3);
+      --pico-primary-inverse: #0c0b1a;
+      --pico-secondary: #ff00cc;
+      --pico-secondary-background: #cc00aa;
+      --pico-secondary-border: var(--pico-secondary-background);
+      --pico-secondary-underline: rgba(255, 0, 204, 0.5);
+      --pico-secondary-hover: #ff33dd;
+      --pico-secondary-hover-background: #cc2299;
+      --pico-secondary-hover-border: var(--pico-secondary-hover-background);
+      --pico-secondary-focus: rgba(255, 0, 204, 0.25);
+      --pico-secondary-inverse: #0c0b1a;
+      --pico-contrast: #ffff33;
+      /* Neon Yellow 
+      --pico-contrast-background: #ffee00;
+      --pico-contrast-border: var(--pico-contrast-background);
+      --pico-contrast-underline: rgba(255, 255, 51, 0.5);
+      --pico-contrast-hover: #ffff66;
+      --pico-contrast-hover-background: #ffee33;
+      --pico-contrast-hover-border: var(--pico-contrast-hover-background);
+      --pico-contrast-focus: rgba(255, 255, 0, 0.25);
+      --pico-contrast-inverse: #0c0b1a;
+      --pico-box-shadow: 0 0 0.25rem rgba(255, 0, 255, 0.3), 0 0 1rem rgba(0, 255, 255, 0.2);
+      --pico-h1-color: #ff66cc;
+      --pico-h2-color: #66ccff;
+      --pico-h3-color: #f2f2f2;
+      --pico-h4-color: #bbbbdd;
+      --pico-h5-color: #aaaacc;
+      --pico-h6-color: #9999bb;
+      --pico-mark-background-color: #ff0;
+      --pico-mark-color: #000;
+      --pico-ins-color: #00ffff;
+      --pico-del-color: #ff3366;
+      --pico-blockquote-border-color: #444466;
+      --pico-blockquote-footer-color: #8888aa;
+      --pico-button-box-shadow: 0 0 0.5rem rgba(255, 0, 255, 0.2);
+      --pico-button-hover-box-shadow: 0 0 0.75rem rgba(0, 255, 255, 0.3);
+      --pico-table-border-color: #33334d;
+      --pico-table-row-stripped-background-color: rgba(255, 255, 255, 0.02);
+      --pico-code-background-color: #1a1a2a;
+      --pico-code-color: #00ffee;
+      --pico-form-element-background-color: #14142b;
+      --pico-form-element-selected-background-color: #222244;
+      --pico-form-element-border-color: #4444aa;
+      --pico-form-element-color: #ffffff;
+      --pico-form-element-placeholder-color: #9999cc;
+      --pico-form-element-active-background-color: #1e1e3a;
+      --pico-form-element-active-border-color: var(--pico-primary-border);
+      --pico-form-element-focus-color: var(--pico-primary-border);
+      --pico-switch-background-color: #333355;
+      --pico-switch-checked-background-color: var(--pico-primary-background);
+      --pico-switch-color: #f8f8ff;
+      --pico-range-border-color: #444466;
+      --pico-range-active-border-color: #0077cc;
+      --pico-range-thumb-border-color: var(--pico-background-color);
+      --pico-range-thumb-color: var(--pico-secondary-background);
+      --pico-range-thumb-active-color: var(--pico-primary-background);
+      --pico-card-background-color: #181830;
+      --pico-card-border-color: #2a2a4a;
+      --pico-card-box-shadow: var(--pico-box-shadow);
+      --pico-dropdown-background-color: #181830;
+      --pico-dropdown-border-color: #2a2a4a;
+      --pico-dropdown-box-shadow: var(--pico-box-shadow);
+      --pico-dropdown-color: var(--pico-color);
+      --pico-dropdown-hover-background-color: #2a2a4a;
+      --pico-tooltip-background-color: var(--pico-contrast-background);
+      --pico-tooltip-color: var(--pico-contrast-inverse);
+      --pico-modal-overlay-background-color: rgba(12, 11, 26, 0.85);
+    }
+*/
