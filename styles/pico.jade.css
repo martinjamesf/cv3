@@ -3189,7 +3189,6 @@ textarea,
 }
 
 @media only screen and (prefers-color-scheme: eighties) {
-
   :root:not([data-theme]),
   :host(:not([data-theme])) {
     color-scheme: eighties;
@@ -3276,3 +3275,4 @@ textarea,
     --pico-tooltip-color: var(--pico-contrast-inverse);
     --pico-modal-overlay-background-color: rgba(12, 11, 26, 0.85);
   }
+  
