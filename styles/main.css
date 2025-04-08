@@ -11,7 +11,7 @@
         padding-right: 0%
     }
 }
-/*
+
 @media only screen and (prefers-color-scheme: eighties) {
     :root:not([data-theme]),
     :host(:not([data-theme])) {
@@ -22,9 +22,9 @@
       --pico-muted-color: #9090c0;
       --pico-muted-border-color: #2d2d44;
       --pico-primary: #00ffff;
-      /* Electric Cyan 
+      /* Electric Cyan */
       --pico-primary-background: #0088ff;
-      /* Electric Blue 
+      /* Electric Blue */
       --pico-primary-border: var(--pico-primary-background);
       --pico-primary-underline: rgba(0, 255, 255, 0.5);
       --pico-primary-hover: #00eaff;
@@ -43,7 +43,7 @@
       --pico-secondary-focus: rgba(255, 0, 204, 0.25);
       --pico-secondary-inverse: #0c0b1a;
       --pico-contrast: #ffff33;
-      /* Neon Yellow 
+      /* Neon Yellow */
       --pico-contrast-background: #ffee00;
       --pico-contrast-border: var(--pico-contrast-background);
       --pico-contrast-underline: rgba(255, 255, 51, 0.5);
@@ -99,4 +99,3 @@
       --pico-tooltip-color: var(--pico-contrast-inverse);
       --pico-modal-overlay-background-color: rgba(12, 11, 26, 0.85);
     }
-*/
