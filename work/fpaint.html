@@ -1,93 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-30XYP9MNS8"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-30XYP9MNS8');
-    </script>
-    <!-- End Google Analytics -->
 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Martinjamesf | Unige Research Capabilities</title>
+    <meta name="color-scheme" content="light dark">
+    <title>James Martin | notes</title>
+    <link rel="stylesheet" href="../styles/pico.jade.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <style is:global>
+        #theme-switcher {
+            background: none;
+            border: 0;
+        }
 
-    <!-- Pico CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+        #theme-switcher svg {
+            width: 1rem;
+            height: 1rem;
+            color: var(--pico-contrast);
+        }
+    </style>
 </head>
-<body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PL7WW52"
-                height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
-    <!-- Navigation -->
+<header class="container-fluid">
     <nav>
         <ul>
-            <li><strong>James Martin</strong></li>
+            <li><strong><a href="../index.html">James Martin</a></strong></li>
         </ul>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="resume.html">Resume</a></li>
-            <li><a href="mailto:martin.jamesfrancis+website.com" aria-label="Email James Martin">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                     class="bi bi-envelope" viewBox="0 0 16 16">
-                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4z"/>
-                    <path d="M.05 4.555L8 8.414l7.95-3.859A1 1 0 0 0 15 4H1a1 1 0 0 0-.95.555z"/>
-                </svg>
-            </a></li>
+        <ul class="secondary">
+            <li><a href="../resume.html">Resume</a></li>
+            <li>Work</li>
+            <li><a href="../bio.html">Bio</a></li>
+            <li><a href="../notes/index.html">Notes</a></li>
+            <li><a href="https://www.linkedin.com/in/martinjamesf" target="_blank"
+                    aria-label="Visit James Martin's LinkedIn Profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 48 48"
+                        fill="none">
+                        <circle cx="24" cy="24" r="20" fill="var(--pico-primary)" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M18.7747 14.2839C18.7747 15.529 17.8267 16.5366 16.3442 16.5366C14.9194 16.5366 13.9713 15.529 14.0007 14.2839C13.9713 12.9783 14.9193 12 16.3726 12C17.8267 12 18.7463 12.9783 18.7747 14.2839ZM14.1199 32.8191V18.3162H18.6271V32.8181H14.1199V32.8191Z"
+                            fill="white" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M22.2393 22.9446C22.2393 21.1357 22.1797 19.5935 22.1201 18.3182H26.0351L26.2432 20.305H26.3322C26.9254 19.3854 28.4079 17.9927 30.8101 17.9927C33.7752 17.9927 35.9995 19.9502 35.9995 24.219V32.821H31.4922V24.7838C31.4922 22.9144 30.8404 21.6399 29.2093 21.6399C27.9633 21.6399 27.2224 22.4999 26.9263 23.3297C26.8071 23.6268 26.7484 24.0412 26.7484 24.4574V32.821H22.2411V22.9446H22.2393Z"
+                            fill="white" />
+                    </svg>
+                </a>
+            </li>
+            <li><button id="theme-switcher" data-tooltip="Bottom" data-placement="bottom"></button></li>
         </ul>
     </nav>
-
-    <!-- Main Content -->
-    <main class="container">
-        <header>
-            <h1>Quick and "Dirty" Research Methods</h1>
-            <p class="text-muted">User Experience Research, Prototyping, and Design</p>
-        </header>
-
+</header>
+<!-- Main -->
+<section>
+    <div class="container">
+      <header>
+        <h1>Quick and "Dirty" Research Methods</h1>
+        <small>User Experience Research, Prototyping, and Design</small>
+      </header>
+  
+      <article>
+        <div style="display: flex; align-items: start; gap: 2rem; flex-wrap: wrap;">
+          <a href="https://www.johnsonhealthtech.com/us/eng">
+            <img src="images/johnson.png" alt="Johnson Health Tech Logo" width="116" height="60" />
+          </a>
+          <p>
+            From 2013 to 2015, I was the sole User Experience Designer at Johnson Health Tech (a multinational company engaged in manufacturing and selling exercise equipment)... (rest of your paragraph)
+          </p>
+        </div>
+  
         <section>
-            <article>
-                <header>
-                    <a href="https://www.johnsonhealthtech.com/us/eng">
-                        <img src="images/johnson.png" alt="Johnson Health Tech Logo" width="116" height="60">
-                    </a>
-                </header>
-                <p>From 2013 to 2015, I was the sole User Experience Designer at Johnson Health Tech...</p>
-            </article>
-
-            <article>
-                <h2>Case study: Paper prototyping with finger paint</h2>
-                <p>We were looking to explore the usability of speed and incline adjustment...</p>
-                <img src="images/portfolio/fpaint/treadmill.jpg" alt="Man running on a treadmill">
-                <!-- Additional content here -->
-            </article>
-
-            <!-- More articles and sections as needed -->
-
+          <h2>Case study: Paper prototyping with finger paint</h2>
+          <p>We were looking to explore the usability of speed and incline adjustment for consumers...</p>
+          <img src="images/portfolio/fpaint/treadmill.jpg" alt="Image of a man running on a treadmill" />
+  
+          <p>We knew paper prototyping was the direction, but we didn't know how to see where people were pressing...</p>
+          <p>Finally, we landed on a solution!... (rest of paragraph)</p>
         </section>
-    </main>
+  
+        <section>
+          <h3>Experimentation</h3>
+          <p>First, we created a script and ranking system for our study...</p>
+          <img src="images/portfolio/fpaint/studytemp.jpg" alt="Image of a research template used in study" />
+  
+          <p>Next, we were ready for our study. We gathered our participants...</p>
+          <img src="images/portfolio/fpaint/analysis.jpg" alt="Image of one layout study finding" />
+  
+          <p>We documented the observations... (rest of paragraph)</p>
+        </section>
+  
+        <section>
+          <h4>Layout 1</h4>
+          <img src="images/portfolio/fpaint/smp1.jpg" alt="Image of layout number one" />
+          <p>The layout was a new concept... <a href="https://www.interaction-design.org/literature/topics/fitts-law#:~:text=Fitts'%20law%20states%20that%20the,size%2C%20the%20longer%20it%20takes.">Learn more here</a>.</p>
+          <strong>Some of the things we observed/heard:</strong>
+          <ul>
+            <li>Participants felt they needed more precision to press edge buttons...</li>
+            <li>Content in corners felt crowded...</li>
+            <li>Liked "quick keys"... always available</li>
+            <li>Top buttons were harder to reach...</li>
+          </ul>
+        </section>
+  
+        <section>
+          <h4>Layout 2</h4>
+          <img src="images/portfolio/fpaint/smp2.jpg" alt="Image of layout number two" />
+          <p>The second layout was a keypad option...</p>
+          <strong>Some of the things we observed/heard:</strong>
+          <ul>
+            <li>Familiar and well-liked design</li>
+            <li>Best precision among layouts</li>
+          </ul>
+        </section>
+  
+        <section>
+          <h4>Layout 3</h4>
+          <img src="images/portfolio/fpaint/smp3.jpg" alt="Image of layout number three" />
+          <p>The third layout featured larger buttons and was centered...</p>
+          <strong>Some of the things we observed/heard:</strong>
+          <ul>
+            <li>Participants liked the larger buttons</li>
+            <li>Some preferred side-positioned controls</li>
+            <li>More finger "poking" vs pressing</li>
+          </ul>
+        </section>
+  
+        <section>
+          <h3>Findings and next steps</h3>
+          <p>Overall, the study was a huge success...</p>
+          <p>The findings helped us determine a design direction...</p>
+  
+          <figure>
+            <img src="images/portfolio/fpaint/results.png" alt="Vision console influenced by findings" />
+            <figcaption>Vision console controls influenced by findings.</figcaption>
+          </figure>
+  
+          <figure>
+            <img src="images/portfolio/fpaint/results2.jpg" alt="Sprint8 app influenced by findings" />
+            <figcaption>Sprint8 workout app controls influenced by findings.</figcaption>
+          </figure>
+  
+          <div style="aspect-ratio: 16/9;">
+            <iframe src="https://player.vimeo.com/video/682018632?h=d890972eff" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width: 100%; height: 100%;"></iframe>
+          </div>
+        </section>
+      </article>
+    </div>
+  </section>
+  
 
-    <!-- Footer -->
-    <footer>
-        <ul>
-            <li><a href="https://www.linkedin.com/in/martinjamesf/" target="_blank" aria-label="LinkedIn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                     class="bi bi-linkedin" viewBox="0 0 16 16">
-                    <path d="M0 1.146C0 .513.417 0 .936 0h14.128c.519 0 .936.513.936 1.146v13.708c0 .633-.417 1.146-.936 1.146H.936c-.519 0-.936-.513-.936-1.146V1.146zM4.943 12.5V6.75H3V12.5h1.943zm-.971-6.75c.687 0 1.114-.448 1.114-1.01C5.086 4.448 4.659 4 3.972 4c-.687 0-1.114.448-1.114 1.01 0 .562.427 1.01 1.114 1.01zM13 12.5v-3.25c0-.839-.167-1.5-1.167-1.5-.636 0-1.015.428-1.182.84-.06.146-.075.348-.075.55V12.5H9V6.75h1.943v.839h.028c.271-.514.936-1.167 1.943-1.167 1.271 0 2.143.833 2.143 2.5V12.5H13z"/>
-                </svg>
-            </a></li>
-            <!-- Additional social links -->
-        </ul>
-    </footer>
+<footer class="container-fluid" style="text-align: center; margin-top: 2rem;">
+    <p>Hand-coded by me | 
+        <a href="http://www.github.com/martinjamesf" target="_blank">
+            <svg width="1rem" height="1rem" viewBox="0 -0.5 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+                <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g id="Color-" transform="translate(-700.000000, -560.000000)" fill="var(--pico-primary)">
+                        <path
+                            d="M723.9985,560 C710.746,560 700,570.787092 700,584.096644 C700,594.740671 706.876,603.77183 716.4145,606.958412 C717.6145,607.179786 718.0525,606.435849 718.0525,605.797328 C718.0525,605.225068 718.0315,603.710086 718.0195,601.699648 C711.343,603.155898 709.9345,598.469394 709.9345,598.469394 C708.844,595.686405 707.2705,594.94548 707.2705,594.94548 C705.091,593.450075 707.4355,593.480194 707.4355,593.480194 C709.843,593.650366 711.1105,595.963499 711.1105,595.963499 C713.2525,599.645538 716.728,598.58234 718.096,597.964902 C718.3135,596.407754 718.9345,595.346062 719.62,594.743683 C714.2905,594.135281 708.688,592.069123 708.688,582.836167 C708.688,580.205279 709.6225,578.054788 711.1585,576.369634 C710.911,575.759726 710.0875,573.311058 711.3925,569.993458 C711.3925,569.993458 713.4085,569.345902 717.9925,572.46321 C719.908,571.928599 721.96,571.662047 724.0015,571.651505 C726.04,571.662047 728.0935,571.928599 730.0105,572.46321 C734.5915,569.345902 736.603,569.993458 736.603,569.993458 C737.9125,573.311058 737.089,575.759726 736.8415,576.369634 C738.3805,578.054788 739.309,580.205279 739.309,582.836167 C739.309,592.091712 733.6975,594.129257 728.3515,594.725612 C729.2125,595.469549 729.9805,596.939353 729.9805,599.18773 C729.9805,602.408949 729.9505,605.006706 729.9505,605.797328 C729.9505,606.441873 730.3825,607.191834 731.6005,606.9554 C741.13,603.762794 748,594.737659 748,584.096644 C748,570.787092 737.254,560 723.9985,560"
+                            id="Github">
+                        </path>
+                    </g>
+                </g>
+            </svg>
+        </a>
+    </p>
+</footer>
 
-    <!-- Optional JavaScript -->
-    <!-- Pico CSS does not require additional JavaScript -->
+<script src="../js/scripts.js"></script>
 </body>
+
 </html>
