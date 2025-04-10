@@ -1,4 +1,5 @@
-[data-theme="eighties"] {
+@charset "UTF-8";
+:root[data-theme="eighties"] {
   --primary: #ff4ec3;
   --primary-hover: #ff84d6;
   --primary-focus: #e600a4;
@@ -6,7 +7,7 @@
 
   --background-color: #0d0221;
   --muted-color: #a7a1ae;
-  --muted-border-color: #302253;
+  --muted-border-color: #5c5a61;
   --card-background-color: #1a103d;
 
   --h1-color: #ffe600;
