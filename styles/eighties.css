@@ -1,5 +1,6 @@
 @charset "UTF-8";
-:root
+
+:root,
 [data-theme="eighties"] {
   --primary: #ff4ec3;
   --primary-hover: #ff84d6;
