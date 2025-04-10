@@ -17,7 +17,7 @@ function validateForm() {
   }
   return true;
 }
-/* Theme Switcher <script> */
+/* Theme Switcher <script> 
   const html = document.documentElement;
   const switchTheme = document.getElementById("theme-switcher");
 
@@ -52,4 +52,40 @@ function validateForm() {
       switchTheme.innerHTML = theme === "light" ? sun : theme === "dark" ? moon : eighties;
       switchTheme.setAttribute("data-tooltip", `${theme} theme`);
     });
-  }
+  } */
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const html = document.documentElement;
+      const switchTheme = document.getElementById("theme-switcher");
+    
+      const themes = ["light", "dark", "eighties"];
+      const icons = {
+        light: sunIcon,
+        dark: moonIcon,
+        eighties: eightiesIcon,
+      };
+    
+      let currentThemeIndex = 0;
+    
+      // Load the preferred theme from localStorage or default to light
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme && themes.includes(savedTheme)) {
+        currentThemeIndex = themes.indexOf(savedTheme);
+      }
+      applyTheme(currentThemeIndex);
+    
+      switchTheme.addEventListener("click", (e) => {
+        e.preventDefault();
+        currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+        applyTheme(currentThemeIndex);
+      });
+    
+      function applyTheme(index) {
+        const theme = themes[index];
+        html.setAttribute("data-theme", theme);
+        switchTheme.innerHTML = icons[theme];
+        switchTheme.setAttribute("aria-label", `${theme} theme`);
+        localStorage.setItem("theme", theme);
+      }
+    });
+    
