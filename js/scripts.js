@@ -31,8 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const eighties = `
  <svg class="theme-icon" viewBox="0 0 24 24"><g fill="var(--primary">
     <rect x="3" y="6" width="18" height="12" rx="2" ry="2" stroke="var(--primary" stroke-width="2" fill="none"/>
-    <circle cx="8" cy="12" r="2" fill="var(--primary-inverse)"/>
-    <circle cx="16" cy="12" r="2" fill="var(--primary-inverse)"/>
+    <circle cx="8" cy="12" r="2" fill="var(--primary)"/>
+    <circle cx="16" cy="12" r="2" fill="var(--primary)"/>
     <path d="M3 16h18v2H3z" fill="var(--primary)"/>
   </svg>
   `;
