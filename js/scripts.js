@@ -63,8 +63,14 @@ function validateForm() {
   
     const eighties = '<svg class="theme-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M21 2H3v20h18V2Zm-2 18H5V4h14v16Zm-3.5-5c-.7 0-1.37.15-2 .43V9h4v1h-3v3.56c.3-.05.65-.06 1-.06c1.93 0 3.5 1.57 3.5 3.5S16.43 20 14.5 20S11 18.43 11 16.5c0-1.04.45-1.97 1.17-2.62c.69-.62 1.59-.88 2.33-.88c.39 0 .75.05 1.08.13c.17.05.32.1.42.15l-.49.87c-.22-.08-.52-.15-.92-.15Zm-8-7h3v1H8V9Zm1 2H8v3h3v1H7v-5h2v1Zm.5 6c-.97 0-1.76.79-1.76 1.76S8.53 20.5 9.5 20.5s1.76-.79 1.76-1.76S10.47 17 9.5 17Z"/></svg>';
   
+    const icons = {
+      light: sunIcon,
+      dark: moonIcon,
+      eighties: eightiesIcon,
+    };
+
     const themes = ["light", "dark", "eighties"];
-    let current = 0;
+    let currentThemeIndex = 0;
   
     const applyTheme = (theme) => {
       html.setAttribute("data-theme", theme);
@@ -81,20 +87,8 @@ function validateForm() {
       current = (current + 1) % themes.length;
       applyTheme(themes[current]);
     });
-  
+    
     document.addEventListener("DOMContentLoaded", () => {
-      const html = document.documentElement;
-      const switchTheme = document.getElementById("theme-switcher");
-    
-      const themes = ["light", "dark", "eighties"];
-      const icons = {
-        light: sunIcon,
-        dark: moonIcon,
-        eighties: eightiesIcon,
-      };
-    
-      let currentThemeIndex = 0;
-    
       // Load the preferred theme from localStorage or default to light
       const savedTheme = localStorage.getItem("theme");
       if (savedTheme && themes.includes(savedTheme)) {
