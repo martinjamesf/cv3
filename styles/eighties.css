@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
-:root,
-[data-theme="eighties"] {
+/* Core theme variables */
+:root[data-theme="eighties"] {
   --primary: #ff4ec3;
   --primary-hover: #ff84d6;
   --primary-focus: #e600a4;
@@ -41,40 +41,112 @@
   transition: all 0.3s ease-in-out;
 }
 
-/* Add the grid background */
-[data-theme="eighties"] body {
-  position: relative;
-  background: linear-gradient(135deg, #0d0221, #1a103d, #2c1a60);
-  background-size: 400% 400%;
-  animation: eightiesBackground 20s ease infinite;
+/* Neon grid background */
+body[data-theme="eighties"] {
+  background: #0d0221;
+  background-image: 
+    linear-gradient(0deg, rgba(255, 78, 195, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 78, 195, 0.1) 1px, transparent 1px),
+    radial-gradient(circle at center, rgba(97, 234, 255, 0.05), transparent 70%);
+  background-size: 40px 40px, 40px 40px, 100% 100%;
+  animation: gridFade 30s linear infinite;
+  color: var(--text-color);
 }
 
-/* Neon Grid Effect */
-[data-theme="eighties"] .neon-grid {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(255, 78, 195, 0.2) 1%, transparent 1%) center center;
-  background-size: 20px 20px;
-  z-index: -1; /* Set behind the content */
-  pointer-events: none; /* Ignore clicks */
-  animation: neonGridAnimation 5s linear infinite;
-}
-
-@keyframes neonGridAnimation {
+@keyframes gridFade {
   0% {
-    transform: translateY(0);
+    background-position: 0 0, 0 0, 0 0;
   }
   100% {
-    transform: translateY(100%);
+    background-position: 100px 100px, 100px 100px, 0 0;
   }
 }
 
-/* Neon grid lines flicker effect */
-@keyframes eightiesBackground {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* Glowing buttons */
+[data-theme="eighties"] button,
+[data-theme="eighties"] .contrast,
+[data-theme="eighties"] .primary {
+  background: linear-gradient(145deg, #ff4ec3, #ffe600);
+  color: #000;
+  box-shadow: 0 0 12px #ff4ec3, 0 0 24px #ffe600;
+  border: none;
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease-in-out;
+}
+
+[data-theme="eighties"] button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 16px #ff84d6, 0 0 32px #ffe600;
+}
+
+/* Glowing headers */
+[data-theme="eighties"] h1,
+[data-theme="eighties"] h2 {
+  text-shadow: 0 0 8px #ffe600, 0 0 16px #ff4ec3;
+}
+
+/* Cards and sections */
+[data-theme="eighties"] section,
+[data-theme="eighties"] article,
+[data-theme="eighties"] .card {
+  background-color: var(--card-background-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 20px rgba(255, 78, 195, 0.3);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+}
+
+/* Form fields */
+[data-theme="eighties"] input,
+[data-theme="eighties"] select,
+[data-theme="eighties"] textarea {
+  background-color: var(--form-element-background-color);
+  border: 1px solid var(--form-element-border-color);
+  color: var(--text-color);
+  box-shadow: inset 0 0 5px #5e4b8b;
+}
+
+[data-theme="eighties"] input:focus,
+[data-theme="eighties"] select:focus,
+[data-theme="eighties"] textarea:focus {
+  border-color: var(--form-element-focus-color);
+  box-shadow: 0 0 8px var(--focus-ring-color);
+}
+
+/* Neon link hover */
+[data-theme="eighties"] a:hover {
+  text-shadow: 0 0 6px var(--link-hover-color);
+}
+
+/* Code styling */
+[data-theme="eighties"] code {
+  background-color: var(--code-background-color);
+  color: var(--code-color);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}
+
+/* Optional: 80s synth-style animated underline for links */
+[data-theme="eighties"] a {
+  position: relative;
+  text-decoration: none;
+  color: var(--link-color);
+}
+
+[data-theme="eighties"] a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background: var(--link-hover-color);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  transform-origin: right;
+}
+
+[data-theme="eighties"] a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
