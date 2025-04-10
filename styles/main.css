@@ -12,21 +12,3 @@
         padding-right: 0%
     }
 }
-
-/* Eighties Theme */
-[data-theme="eighties"] {
-    --pico-background-color: #2b2a33;
-    --pico-color: #f8f8f2;
-    --pico-primary: #ff79c6;
-    --pico-primary-hover: #ff92d0;
-    --pico-primary-focus: rgba(255, 121, 198, 0.25);
-    --pico-primary-inverse: #1e1f29;
-    --pico-secondary: #bd93f9;
-    --pico-secondary-hover: #caa9fa;
-    --pico-secondary-focus: rgba(189, 147, 249, 0.25);
-    --pico-secondary-inverse: #1e1f29;
-    --pico-border-color: #6272a4;
-    --pico-muted-color: #6272a4;
-    --pico-mark-background-color: #ffb86c;
-  }
-  
