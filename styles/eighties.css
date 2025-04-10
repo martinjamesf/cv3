@@ -1,4 +1,11 @@
 @charset "UTF-8";
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); /* dim effect */
+  z-index: -1;
+}
 
 /* Core theme variables */
 :root[data-theme="eighties"] {
