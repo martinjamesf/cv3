@@ -5,16 +5,16 @@
   --pico-primary: #ff4ec3;
   --pico-primary-focus: #e600a4;
   --pico-primary-inverse: #0pico-00;
-  --pico-primary-hover: #ff8pico-4d6pico-;
-pico-
-  --pico-background-color: #0d022pico-1;pico-
-  --pico-muted-color: #a7a1ae;pico-
+  --pico-primary-hover: #ff84d6;
+
+  --pico-background-color: #0d022pico-1;
+  --pico-muted-color: #a7a1ae;
   --pico-muted-border-color: #5c5a61;
   --pico-card-background-color: #1a103d;
 
   --pico-h1-color: #ffe600;
   --pico-h2-color: #61eaff;
-  --pico-h3-color: #ff4ec3;
+  --pico-h3-color: #ffdef4;
   --pico-h4-color: var(--muted-color);
   --pico-color: #e6e0f8;
 
