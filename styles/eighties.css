@@ -1,23 +1,51 @@
 @charset "UTF-8";
-:root[data-theme="eighties"] {
-    /* Colors */
-    --primary: #ff00ff;
-    --background: #0a0a0a;
-    --card-background: #111;
-    --text: #39ff14;
-    --muted: #888;
-    --border: #ff00ff;
-    --accent: #00ffff;
-  
-    /* Fonts */
-    --font-family: 'Press Start 2P', monospace;
-  
-    /* Optional extras */
-    --button-background: var(--accent);
-    --button-color: black;
-    --link-color: #ff00ff;
-    --link-hover: #00ffff;
-  }
+/*:root*/
+[data-theme="eighties"] {
+  --font-family: 'Orbitron', sans-serif;
+  --background-color: linear-gradient(135deg, #1b0035, #ff0057);
+  --color: #ffffff;
+  --primary: #ff00c8;
+  --primary-hover: #ff66e6;
+  --primary-focus: rgba(255, 0, 200, 0.25);
+  --border-radius: 0;
+  --form-element-background-color: rgba(255, 255, 255, 0.1);
+  --form-element-border-color: #ff00c8;
+  --form-element-focus-color: #ff66e6;
+  --form-element-placeholder-color: #ffffff99;
+  --code-background-color: rgba(255, 255, 255, 0.1);
+  --scrollbar-color: #ff00c8 #1b0035;
+  --transition: all 0.3s ease-in-out;
+  --link-color: #00ffe7;
+  --link-color-hover: #ffffff;
+}
+
+[data-theme="eighties"] body {
+  background: var(--background-color);
+  color: var(--color);
+  font-family: var(--font-family);
+  text-shadow: 0 0 2px #ff00c8;
+}
+
+[data-theme="eighties"] a {
+  color: var(--link-color);
+}
+
+[data-theme="eighties"] a:hover {
+  color: var(--link-color-hover);
+}
+
+[data-theme="eighties"] button,
+[data-theme="eighties"] .theme-icon {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 0;
+}
+
+[data-theme="eighties"] button:hover {
+  background: var(--primary);
+  color: #1b0035;
+}*/
 
   .theme-icon.glitch {
     animation: glitch 0.3s steps(2, end) 1;
