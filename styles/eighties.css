@@ -41,45 +41,40 @@
   transition: all 0.3s ease-in-out;
 }
 
-/* Gradient background animation (optional) */
+/* Add the grid background */
 [data-theme="eighties"] body {
+  position: relative;
   background: linear-gradient(135deg, #0d0221, #1a103d, #2c1a60);
   background-size: 400% 400%;
   animation: eightiesBackground 20s ease infinite;
 }
 
-@keyframes eightiesBackground {
+/* Neon Grid Effect */
+[data-theme="eighties"] .neon-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 78, 195, 0.2) 1%, transparent 1%) center center;
+  background-size: 20px 20px;
+  z-index: -1; /* Set behind the content */
+  pointer-events: none; /* Ignore clicks */
+  animation: neonGridAnimation 5s linear infinite;
+}
+
+@keyframes neonGridAnimation {
   0% {
-    background-position: 0% 50%;
+    transform: translateY(0);
   }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
   100% {
-    background-position: 0% 50%;
+    transform: translateY(100%);
   }
 }
 
-/* Glowing button effect */
-[data-theme="eighties"] button,
-[data-theme="eighties"] .contrast,
-[data-theme="eighties"] .primary {
-  background: linear-gradient(145deg, #ff4ec3, #ffe600);
-  color: #000;
-  box-shadow: 0 0 12px #ff4ec3, 0 0 24px #ffe600;
-  border: none;
-  transition: all 0.3s ease-in-out;
-}
-
-[data-theme="eighties"] button:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 16px #ff84d6, 0 0 32px #ffe600;
-}
-
-/* Glowing heading text */
-[data-theme="eighties"] h1,
-[data-theme="eighties"] h2 {
-  text-shadow: 0 0 8px #ffe600, 0 0 16px #ff4ec3;
+/* Neon grid lines flicker effect */
+@keyframes eightiesBackground {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
