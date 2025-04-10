@@ -1,51 +1,44 @@
 @charset "UTF-8";
 /*:root*/
 [data-theme="eighties"] {
-  --font-family: 'Orbitron', sans-serif;
-  --background-color: linear-gradient(135deg, #1b0035, #ff0057);
-  --color: #ffffff;
-  --primary: #ff00c8;
-  --primary-hover: #ff66e6;
-  --primary-focus: rgba(255, 0, 200, 0.25);
-  --border-radius: 0;
-  --form-element-background-color: rgba(255, 255, 255, 0.1);
-  --form-element-border-color: #ff00c8;
-  --form-element-focus-color: #ff66e6;
-  --form-element-placeholder-color: #ffffff99;
-  --code-background-color: rgba(255, 255, 255, 0.1);
-  --scrollbar-color: #ff00c8 #1b0035;
-  --transition: all 0.3s ease-in-out;
-  --link-color: #00ffe7;
+  --font-family: 'Press Start 2P', monospace;
+  --background-color: #000;
+  --color: #39ff14;
+  --primary: #ff00ff;
+  --primary-hover: #ff66ff;
+  --primary-focus: rgba(255, 0, 255, 0.3);
+  --form-element-background-color: rgba(57, 255, 20, 0.1);
+  --form-element-border-color: #ff00ff;
+  --form-element-focus-color: #ff66ff;
+  --form-element-placeholder-color: #39ff1499;
+  --code-background-color: #111;
+  --scrollbar-color: #ff00ff #000;
+  --link-color: #00ffff;
   --link-color-hover: #ffffff;
+  --transition: all 0.2s ease-out;
 }
 
 [data-theme="eighties"] body {
-  background: var(--background-color);
+  background-color: var(--background-color);
   color: var(--color);
   font-family: var(--font-family);
-  text-shadow: 0 0 2px #ff00c8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-[data-theme="eighties"] a {
-  color: var(--link-color);
-}
-
-[data-theme="eighties"] a:hover {
-  color: var(--link-color-hover);
-}
-
-[data-theme="eighties"] button,
-[data-theme="eighties"] .theme-icon {
-  background: transparent;
+[data-theme="eighties"] a,
+[data-theme="eighties"] button {
   color: var(--primary);
-  border: 2px solid var(--primary);
-  border-radius: 0;
+  border: 2px dashed var(--primary);
+  background: transparent;
 }
 
+[data-theme="eighties"] a:hover,
 [data-theme="eighties"] button:hover {
-  background: var(--primary);
-  color: #1b0035;
-}*/
+  background-color: var(--primary);
+  color: #000;
+  border-style: solid;
+}*
 
   .theme-icon.glitch {
     animation: glitch 0.3s steps(2, end) 1;
