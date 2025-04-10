@@ -1,84 +1,74 @@
-@charset "UTF-8";
-
-:root [data-theme="eighties"] {
-  /* Base colors */
+[data-theme="eighties"] {
   --primary: #ff4ec3;
-  /* Neon pink */
   --primary-hover: #ff84d6;
-  /* Lighter pink */
   --primary-focus: #e600a4;
-  --primary-inverse: #000000;
+  --primary-inverse: #000;
 
   --background-color: #0d0221;
-  /* Deep space violet */
   --muted-color: #a7a1ae;
   --muted-border-color: #302253;
   --card-background-color: #1a103d;
 
   --h1-color: #ffe600;
-  /* Electric yellow */
   --h2-color: #61eaff;
-  /* Cyan glow */
   --h3-color: #ff4ec3;
   --h4-color: var(--muted-color);
   --text-color: #e6e0f8;
 
-  /* Borders and accents */
   --border-radius: 12px;
   --border-color: #3c2b5f;
 
-  /* Buttons */
   --form-element-background-color: #1e124a;
   --form-element-border-color: #5e4b8b;
   --form-element-focus-color: #ff4ec3;
   --form-element-active-background-color: #2c1a60;
 
-  /* Effects */
   --box-shadow: 0 0 12px #ff4ec3;
   --focus-ring-color: rgba(255, 78, 195, 0.5);
 
-  /* Code blocks */
   --code-background-color: #241142;
   --code-color: #ffe600;
 
-  /* Links */
   --link-color: #61eaff;
   --link-hover-color: #ffe600;
 
-  /* Toggles, switches, etc. */
   --switch-color: #ff4ec3;
   --switch-checked-color: #ffe600;
 
-  /* Transitions for slick theme change */
   transition: all 0.3s ease-in-out;
 }
 
-.theme-icon.glitch {
-  animation: glitch 0.3s steps(2, end) 1;
+/* Gradient background animation (optional) */
+body[data-theme="eighties"] {
+  background: linear-gradient(135deg, #0d0221, #1a103d, #2c1a60);
+  background-size: 400% 400%;
+  animation: eightiesBackground 20s ease infinite;
 }
 
-@keyframes glitch {
-  0% {
-    transform: translate(0);
-  }
+@keyframes eightiesBackground {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-  20% {
-    transform: translate(-1px, 1px);
-  }
+/* Glowing button effect */
+[data-theme="eighties"] button,
+[data-theme="eighties"] .contrast,
+[data-theme="eighties"] .primary {
+  background: linear-gradient(145deg, #ff4ec3, #ffe600);
+  color: #000;
+  box-shadow: 0 0 12px #ff4ec3, 0 0 24px #ffe600;
+  border: none;
+  transition: all 0.3s ease-in-out;
+}
 
-  40% {
-    transform: translate(1px, -1px);
-  }
+[data-theme="eighties"] button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 16px #ff84d6, 0 0 32px #ffe600;
+}
 
-  60% {
-    transform: translate(-1px, 0);
-  }
-
-  80% {
-    transform: translate(1px, 1px);
-  }
-
-  100% {
-    transform: translate(0);
-  }
+/* Glowing heading text */
+[data-theme="eighties"] h1,
+[data-theme="eighties"] h2 {
+  text-shadow: 0 0 8px #ffe600, 0 0 16px #ff4ec3;
 }
