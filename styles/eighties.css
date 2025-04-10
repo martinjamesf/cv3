@@ -42,7 +42,7 @@
 }
 
 /* Gradient background animation (optional) */
-body[data-theme="eighties"] {
+[data-theme="eighties"] body {
   background: linear-gradient(135deg, #0d0221, #1a103d, #2c1a60);
   background-size: 400% 400%;
   animation: eightiesBackground 20s ease infinite;
