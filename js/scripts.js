@@ -29,11 +29,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const moon = '<svg class="theme-icon" viewBox="0 0 16 16"><g fill="currentColor"><path d="M6 .278a.768.768 0 0 1 .08.858a7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277c.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316a.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71C0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></g></svg>';
 
   const eighties = `
- <svg class="theme-icon" viewBox="0 0 24 24"><g fill="var(--primary">
-    <rect x="3" y="6" width="18" height="12" rx="2" ry="2" stroke="var(--primary" stroke-width="2" fill="none"/>
-    <circle cx="8" cy="12" r="2" fill="var(--primary)"/>
-    <circle cx="16" cy="12" r="2" fill="var(--primary)"/>
-    <path d="M3 16h18v2H3z" fill="var(--primary)"/>
+ <svg class="theme-icon" viewBox="0 0 24 24"><g fill="var(--pico-primary)">
+    <rect x="3" y="6" width="18" height="12" rx="2" ry="2" stroke="var(--pico-primary)" stroke-width="2" fill="none"/>
+    <circle cx="8" cy="12" r="2" fill="var(--pico-primary)"/>
+    <circle cx="16" cy="12" r="2" fill="var(--pico-primary)"/>
+    <path d="M3 16h18v2H3z" fill="var(--pico-primary)"/>
   </svg>
   `;
   const themes = ["light", "dark", "eighties"];
