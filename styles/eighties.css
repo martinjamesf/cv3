@@ -42,7 +42,7 @@
 }
 
 /* Neon grid background */
-body[data-theme="eighties"] {
+[data-theme="eighties"] body {
   background: #0d0221;
   background-image: 
     linear-gradient(0deg, rgba(255, 78, 195, 0.1) 1px, transparent 1px),
