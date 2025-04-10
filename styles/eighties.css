@@ -1,146 +1,84 @@
 @charset "UTF-8";
-:root
-[data-theme="eighties"] {
-  --font-family: 'Press Start 2P', monospace;
-  --background-color: #000;
-  --color: #39ff14;
-  --primary: #ff00ff;
-  --primary-hover: #ff66ff;
-  --primary-focus: rgba(255, 0, 255, 0.3);
-  --form-element-background-color: rgba(57, 255, 20, 0.1);
-  --form-element-border-color: #ff00ff;
-  --form-element-focus-color: #ff66ff;
-  --form-element-placeholder-color: #39ff1499;
-  --code-background-color: #111;
-  --scrollbar-color: #ff00ff #000;
-  --link-color: #00ffff;
-  --link-color-hover: #ffffff;
-  --transition: all 0.2s ease-out;
+
+:root [data-theme="eighties"] {
+  /* Base colors */
+  --primary: #ff4ec3;
+  /* Neon pink */
+  --primary-hover: #ff84d6;
+  /* Lighter pink */
+  --primary-focus: #e600a4;
+  --primary-inverse: #000000;
+
+  --background-color: #0d0221;
+  /* Deep space violet */
+  --muted-color: #a7a1ae;
+  --muted-border-color: #302253;
+  --card-background-color: #1a103d;
+
+  --h1-color: #ffe600;
+  /* Electric yellow */
+  --h2-color: #61eaff;
+  /* Cyan glow */
+  --h3-color: #ff4ec3;
+  --h4-color: var(--muted-color);
+  --text-color: #e6e0f8;
+
+  /* Borders and accents */
+  --border-radius: 12px;
+  --border-color: #3c2b5f;
+
+  /* Buttons */
+  --form-element-background-color: #1e124a;
+  --form-element-border-color: #5e4b8b;
+  --form-element-focus-color: #ff4ec3;
+  --form-element-active-background-color: #2c1a60;
+
+  /* Effects */
+  --box-shadow: 0 0 12px #ff4ec3;
+  --focus-ring-color: rgba(255, 78, 195, 0.5);
+
+  /* Code blocks */
+  --code-background-color: #241142;
+  --code-color: #ffe600;
+
+  /* Links */
+  --link-color: #61eaff;
+  --link-hover-color: #ffe600;
+
+  /* Toggles, switches, etc. */
+  --switch-color: #ff4ec3;
+  --switch-checked-color: #ffe600;
+
+  /* Transitions for slick theme change */
+  transition: all 0.3s ease-in-out;
 }
 
-[data-theme="eighties"] body {
-  background-color: var(--background-color);
-  color: var(--color);
-  font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.theme-icon.glitch {
+  animation: glitch 0.3s steps(2, end) 1;
 }
 
-[data-theme="eighties"] a,
-[data-theme="eighties"] button {
-  color: var(--primary);
-  border: 2px dashed var(--primary);
-  background: transparent;
-}
-
-[data-theme="eighties"] a:hover,
-[data-theme="eighties"] button:hover {
-  background-color: var(--primary);
-  color: #000;
-  border-style: solid;
-}*
-
-  .theme-icon.glitch {
-    animation: glitch 0.3s steps(2, end) 1;
+@keyframes glitch {
+  0% {
+    transform: translate(0);
   }
-  
-  @keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-1px, 1px); }
-    40% { transform: translate(1px, -1px); }
-    60% { transform: translate(-1px, 0); }
-    80% { transform: translate(1px, 1px); }
-    100% { transform: translate(0); }
+
+  20% {
+    transform: translate(-1px, 1px);
   }
 
-/* eighties.css – Retro Gradient Glow 
-/* if selected - add this to the header of html - <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
-[data-theme="eighties"] {
-  --font-family: 'Orbitron', sans-serif;
-  --background-color: linear-gradient(135deg, #1b0035, #ff0057);
-  --color: #ffffff;
-  --primary: #ff00c8;
-  --primary-hover: #ff66e6;
-  --primary-focus: rgba(255, 0, 200, 0.25);
-  --border-radius: 0;
-  --form-element-background-color: rgba(255, 255, 255, 0.1);
-  --form-element-border-color: #ff00c8;
-  --form-element-focus-color: #ff66e6;
-  --form-element-placeholder-color: #ffffff99;
-  --code-background-color: rgba(255, 255, 255, 0.1);
-  --scrollbar-color: #ff00c8 #1b0035;
-  --transition: all 0.3s ease-in-out;
-  --link-color: #00ffe7;
-  --link-color-hover: #ffffff;
-}
-
-[data-theme="eighties"] body {
-  background: var(--background-color);
-  color: var(--color);
-  font-family: var(--font-family);
-  text-shadow: 0 0 2px #ff00c8;
-}
-
-[data-theme="eighties"] a {
-  color: var(--link-color);
-}
-
-[data-theme="eighties"] a:hover {
-  color: var(--link-color-hover);
-}
-
-[data-theme="eighties"] button,
-[data-theme="eighties"] .theme-icon {
-  background: transparent;
-  color: var(--primary);
-  border: 2px solid var(--primary);
-  border-radius: 0;
-}
-
-[data-theme="eighties"] button:hover {
-  background: var(--primary);
-  color: #1b0035;
-}*/
-
-/* eighties.css – Bold Neon UI 
-/* if selected - add this to the header of html - <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
-[data-theme="eighties"] {
-    --font-family: 'Press Start 2P', monospace;
-    --background-color: #000;
-    --color: #39ff14;
-    --primary: #ff00ff;
-    --primary-hover: #ff66ff;
-    --primary-focus: rgba(255, 0, 255, 0.3);
-    --form-element-background-color: rgba(57, 255, 20, 0.1);
-    --form-element-border-color: #ff00ff;
-    --form-element-focus-color: #ff66ff;
-    --form-element-placeholder-color: #39ff1499;
-    --code-background-color: #111;
-    --scrollbar-color: #ff00ff #000;
-    --link-color: #00ffff;
-    --link-color-hover: #ffffff;
-    --transition: all 0.2s ease-out;
+  40% {
+    transform: translate(1px, -1px);
   }
-  
-  [data-theme="eighties"] body {
-    background-color: var(--background-color);
-    color: var(--color);
-    font-family: var(--font-family);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+
+  60% {
+    transform: translate(-1px, 0);
   }
-  
-  [data-theme="eighties"] a,
-  [data-theme="eighties"] button {
-    color: var(--primary);
-    border: 2px dashed var(--primary);
-    background: transparent;
+
+  80% {
+    transform: translate(1px, 1px);
   }
-  
-  [data-theme="eighties"] a:hover,
-  [data-theme="eighties"] button:hover {
-    background-color: var(--primary);
-    color: #000;
-    border-style: solid;
-  }*/
+
+  100% {
+    transform: translate(0);
+  }
+}
