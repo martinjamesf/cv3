@@ -1,11 +1,4 @@
 @charset "UTF-8";
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5); /* dim effect */
-  z-index: -1;
-}
 
 /* Core theme variables */
 :root[data-theme="eighties"] {
@@ -62,7 +55,10 @@ body::before {
 [data-theme="eighties"] body {
   background: url('../images/bkg80.png') center center / cover no-repeat fixed;
   color: var(--text-color);
+  background: rgba(0, 0, 0, 0.5); /* dim effect */
+  z-index: -1;
 }
+
 @keyframes gridFade {
   0% {
     background-position: 0 0, 0 0, 0 0;
