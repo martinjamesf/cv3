@@ -155,3 +155,7 @@
   transform: scaleX(1);
   transform-origin: left;
 }
+[data-theme="eighties"] .theme-switcher {
+  border-radius: 64px;
+  background: linear-gradient(145deg, #ff4ec3, #ffe600);
+}
