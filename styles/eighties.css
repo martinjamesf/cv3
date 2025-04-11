@@ -53,7 +53,7 @@
   color: var(--text-color);
 }*/
 [data-theme="eighties"] body {
-  background: url('../images/bkg80.png') center center / cover no-repeat fixed;
+  background: url('../images/bkg80.webp') center center / cover no-repeat fixed;
   color: var(--text-color);
   z-index: -1;
 }
