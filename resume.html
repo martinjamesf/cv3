@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
   <title>James Martin | Resume</title>
-  <link rel="stylesheet" href="styles/pico.jade.css">
-  <link rel="stylesheet" href="styles/main.css">
-  <!-- 80s theme overrides -->
-  <link rel="stylesheet" href="styles/eighties.css">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <style is:global>
+  <link rel="stylesheet" href="styles/pico.jade.css" />
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/eighties.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <style>
     #theme-switcher {
       background: none;
       border: 0;
@@ -22,151 +21,136 @@
       height: 1rem;
       color: var(--pico-contrast);
     }
+
+    footer p {
+      text-align: center;
+    }
+
+    .resume-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
   </style>
 </head>
 
-<header class="container-fluid">
-  <nav>
-    <ul>
-      <li><strong><a href="index.html">James Martin</a></strong></li>
-    </ul>
-    <ul class="secondary">
-      <li>Resume</li>
-      <li><a href="work/index.html">Work</a></li>
-      <li><a href="bio.html">Bio</a></li>
-      <li><a href="notes/index.html">Notes</a></li>
-      <li><a href="https://www.linkedin.com/in/martinjamesf" target="_blank"
-          aria-label="Visit James Martin's LinkedIn Profile">
-          <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 48 48" fill="none">
-            <circle cx="24" cy="24" r="20" fill="#0077B5" />
-            <path fill-rule="evenodd" clip-rule="evenodd"
-              d="M18.7747 14.2839C18.7747 15.529 17.8267 16.5366 16.3442 16.5366C14.9194 16.5366 13.9713 15.529 14.0007 14.2839C13.9713 12.9783 14.9193 12 16.3726 12C17.8267 12 18.7463 12.9783 18.7747 14.2839ZM14.1199 32.8191V18.3162H18.6271V32.8181H14.1199V32.8191Z"
-              fill="white" />
-            <path fill-rule="evenodd" clip-rule="evenodd"
-              d="M22.2393 22.9446C22.2393 21.1357 22.1797 19.5935 22.1201 18.3182H26.0351L26.2432 20.305H26.3322C26.9254 19.3854 28.4079 17.9927 30.8101 17.9927C33.7752 17.9927 35.9995 19.9502 35.9995 24.219V32.821H31.4922V24.7838C31.4922 22.9144 30.8404 21.6399 29.2093 21.6399C27.9633 21.6399 27.2224 22.4999 26.9263 23.3297C26.8071 23.6268 26.7484 24.0412 26.7484 24.4574V32.821H22.2411V22.9446H22.2393Z"
-              fill="white" />
-          </svg>
-        </a>
-      </li>
-      <li><button id="theme-switcher" data-tooltip="Bottom" data-placement="bottom"></button></li>
-    </ul>
-  </nav>
-</header>
-
-
-<main class="container">
-  <section class="hero">
-    <div class="grid" style="align-items: center;">
-      <div>
-        <h1>James Martin</h1>
-        <p style="font-size: 1.25rem; max-width: 40ch;">
-          Design leader shaping digital experiences that deliver business impact and user delight.
-        </p>
-      </div>
-      <div>
-        <img src="images/jamesIndoors.jpg" alt="James Martin" style="max-width: 150px; border-radius: 50%; box-shadow: 0 0 10px var(--pico-primary);" />
-      </div>
-    </div>
-  </section>
-  <div class="grid">
-    <section>
-      <h2>Experience</h2>
+<body>
+  <header class="container-fluid">
+    <nav>
       <ul>
-        <li><strong>Lead Experience Design</strong> - Northwestern Mutual Insurance (06/22 - Present)</li>
-        <li><strong>Experience Design Specialist</strong> - American Family Insurance (11/20 - 06/22)</li>
-        <li><strong>Experience Design Lead</strong> - Singlewire Software (10/19 - 11/20)</li>
-        <li><strong>Experience Design Specialist & Manager</strong> - American Family Insurance (07/15 - 05/19)</li>
-        <li><strong>User Experience Designer</strong> - Johnson Health Tech (11/13 - 07/15)</li>
-        <li><strong>Independent Design Consultant</strong> - Medical/Pharmaceutical Industry (07/11 - 11/13)</li>
-        <li><strong>Interactive Designer</strong> - HellermannTyton (04/10 - 07/11)</li>
-        <li><strong>Interactive Designer</strong> - B2B/B2C Agency (11/07 - 04/10)</li>
-        <li><strong>Graphic Design Intern</strong> - Northwestern Mutual (05/06 - 08/07)</li>
-        <li><strong>Sergeant</strong> - United States Army (03/99 - 03/07)</li>
+        <li><strong><a href="index.html">James Martin</a></strong></li>
       </ul>
-    </section>
+      <ul class="secondary">
+        <li>Resume</li>
+        <li><a href="work/index.html">Work</a></li>
+        <li><a href="bio.html">Bio</a></li>
+        <li><a href="notes/index.html">Notes</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/martinjamesf" target="_blank" aria-label="Visit LinkedIn Profile">
+            <!-- LinkedIn SVG -->
+          </a>
+        </li>
+        <li><button id="theme-switcher" data-tooltip="Toggle theme" data-placement="bottom"></button></li>
+      </ul>
+    </nav>
+  </header>
 
-    <section>
+  <main class="container">
+    <h1>Experience</h1>
+    <div class="resume-grid">
       <section>
-        <h2>Education</h2>
         <ul>
-          <li><strong>Waukesha County Technical College</strong> - AAS Graphic Design (2007)</li>
-          <li><strong>University of Wisconsin-Milwaukee</strong> - Web Design/Development Series (2011-2012)</li>
-          <li><strong>University Wisconsin School of Business</strong> - Web Marketing for Small Business Series
-            (2012)
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Certificates</h2>
-        <ul>
-          <li>Human-Centered Service Design - IDEO U (2021)</li>
-          <li>Advanced Design Thinking - IDEO U (2020)</li>
-          <li>User Experience Certified (UXC) - Nielsen Norman Group (2016)</li>
+          <li><strong>Lead Experience Design</strong> – Northwestern Mutual Insurance (06/22–Present)</li>
+          <li><strong>Experience Design Specialist</strong> – American Family Insurance (11/20–06/22)</li>
+          <li><strong>Experience Design Lead</strong> – Singlewire Software (10/19–11/20)</li>
+          <li><strong>Experience Design Specialist & Manager</strong> – American Family Insurance (07/15–05/19)</li>
+          <li><strong>User Experience Designer</strong> – Johnson Health Tech (11/13–07/15)</li>
+          <li><strong>Independent Design Consultant</strong> – Medical/Pharmaceutical (07/11–11/13)</li>
+          <li><strong>Interactive Designer</strong> – HellermannTyton (04/10–07/11)</li>
+          <li><strong>Interactive Designer</strong> – B2B/B2C Agency (11/07–04/10)</li>
+          <li><strong>Graphic Design Intern</strong> – Northwestern Mutual (05/06–08/07)</li>
+          <li><strong>Sergeant</strong> – U.S. Army (03/99–03/07)</li>
         </ul>
       </section>
 
       <aside>
-        <h2>Skills</h2>
-        <h3>Strategic & Process-Oriented</h3>
+        <h2>Education</h2>
+        <ul>
+          <li><strong>WCTC</strong> – AAS Graphic Design (2007)</li>
+          <li><strong>UW-Milwaukee</strong> – Web Design/Dev Series (2011–2012)</li>
+          <li><strong>UW School of Business</strong> – Web Marketing Series (2012)</li>
+        </ul>
+
+        <h2>Certificates</h2>
+        <ul>
+          <li>Human-Centered Service Design – IDEO U (2021)</li>
+          <li>Advanced Design Thinking – IDEO U (2020)</li>
+          <li>UX Certified – Nielsen Norman Group (2016)</li>
+        </ul>
+      </aside>
+    </div>
+
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div>
+        <h3>Strategy & Process</h3>
         <ul>
           <li>Product Design Leadership</li>
           <li>Thought Leadership</li>
           <li>Team Development</li>
-          <li>Planning & Innovation Strategy</li>
+          <li>Innovation Strategy</li>
           <li>Brand Strategy</li>
           <li>Opportunity Identification</li>
           <li>Workshop Facilitation</li>
-          <li>Design Thinking & Systems-Thinking</li>
-          <li>Driving Digital Transformation</li>
+          <li>Design/Systems Thinking</li>
+          <li>Digital Transformation</li>
           <li>Conceptualization</li>
           <li>User Research</li>
           <li>Cross-Functional Collaboration</li>
         </ul>
-  </div>
-  <div>
-    <h3>Execution & Deliverables</h3>
-    <ul>
-      <li>Pitch Decks</li>
-      <li>Graphic Communication</li>
-      <li>Storytelling Execution</li>
-      <li>Motion/Video Editing</li>
-      <li>Front-end Development</li>
-      <li>Interaction Design</li>
-      <li>Prototyping & UX/UI Design</li>
-    </ul>
-  </div>
-  <div>
-    <h3>Industry Knowledge</h3>
-    <ul>
-      <li>Finance</li>
-      <li>Insurance</li>
-      <li>Medical Device</li>
-      <li>Fitness Equipment</li>
-      <li>Marketing & Advertising</li>
-    </ul>
+      </div>
 
-    </aside>
+      <div>
+        <h3>Execution & Deliverables</h3>
+        <ul>
+          <li>Pitch Decks</li>
+          <li>Graphic Communication</li>
+          <li>Storytelling</li>
+          <li>Motion/Video Editing</li>
+          <li>Front-end Development</li>
+          <li>Interaction Design</li>
+          <li>Prototyping & UX/UI</li>
+        </ul>
+      </div>
 
-  </div>
-</main>
-<footer class="container-fluid" style="text-align: center; margin-top: 2rem;">
-  <p>Hand-coded by me |
-    <a href="http://www.github.com/martinjamesf" target="_blank">
-      <svg width="1rem" height="1rem" viewBox="0 -0.5 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
-        <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-          <g id="Color-" transform="translate(-700.000000, -560.000000)" fill="var(--pico-primary)">
-            <path
-              d="M723.9985,560 C710.746,560 700,570.787092 700,584.096644 C700,594.740671 706.876,603.77183 716.4145,606.958412 C717.6145,607.179786 718.0525,606.435849 718.0525,605.797328 C718.0525,605.225068 718.0315,603.710086 718.0195,601.699648 C711.343,603.155898 709.9345,598.469394 709.9345,598.469394 C708.844,595.686405 707.2705,594.94548 707.2705,594.94548 C705.091,593.450075 707.4355,593.480194 707.4355,593.480194 C709.843,593.650366 711.1105,595.963499 711.1105,595.963499 C713.2525,599.645538 716.728,598.58234 718.096,597.964902 C718.3135,596.407754 718.9345,595.346062 719.62,594.743683 C714.2905,594.135281 708.688,592.069123 708.688,582.836167 C708.688,580.205279 709.6225,578.054788 711.1585,576.369634 C710.911,575.759726 710.0875,573.311058 711.3925,569.993458 C711.3925,569.993458 713.4085,569.345902 717.9925,572.46321 C719.908,571.928599 721.96,571.662047 724.0015,571.651505 C726.04,571.662047 728.0935,571.928599 730.0105,572.46321 C734.5915,569.345902 736.603,569.993458 736.603,569.993458 C737.9125,573.311058 737.089,575.759726 736.8415,576.369634 C738.3805,578.054788 739.309,580.205279 739.309,582.836167 C739.309,592.091712 733.6975,594.129257 728.3515,594.725612 C729.2125,595.469549 729.9805,596.939353 729.9805,599.18773 C729.9805,602.408949 729.9505,605.006706 729.9505,605.797328 C729.9505,606.441873 730.3825,607.191834 731.6005,606.9554 C741.13,603.762794 748,594.737659 748,584.096644 C748,570.787092 737.254,560 723.9985,560"
-              id="Github">
-            </path>
-          </g>
-        </g>
-      </svg>
-    </a>
-  </p>
-</footer>
-<script src="js/scripts.js"></script>
+      <div>
+        <h3>Industry Knowledge</h3>
+        <ul>
+          <li>Finance</li>
+          <li>Insurance</li>
+          <li>Medical Device</li>
+          <li>Fitness Equipment</li>
+          <li>Marketing & Advertising</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer class="container-fluid">
+    <p>Hand-coded by me |
+      <a href="http://www.github.com/martinjamesf" target="_blank" aria-label="Visit GitHub">
+        <!-- GitHub SVG -->
+      </a>
+    </p>
+  </footer>
+
+  <script src="js/scripts.js"></script>
 </body>
+
 </html>
