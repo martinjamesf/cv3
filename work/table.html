@@ -37,6 +37,7 @@
 
     .bulk-actions {
       margin-bottom: 10px;
+      display: none;
     }
 
     .task-cell {
@@ -57,6 +58,28 @@
     .task-form select {
       padding: 8px;
       margin-right: 10px;
+    }
+
+    .task-name {
+      cursor: pointer;
+      padding: 5px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      min-width: 100px;
+    }
+
+    .apply-workflow-btn {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .apply-workflow-btn:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
@@ -80,12 +103,14 @@
     <button onclick="markSelected('group-parallel')">Mark as Parallel</button>
   </div>
 
+  <button class="apply-workflow-btn" onclick="applyWorkflow()">Apply Workflow</button>
+
   <table id="taskTable">
     <thead>
       <tr>
         <th><input type="checkbox" id="selectAll" /></th>
-        <th>Task</th> <!-- Combined Task and Number column -->
-        <th>Task Name</th> <!-- Task Name column -->
+        <th>Task</th>
+        <th>Task Name</th>
         <th>Status</th>
         <th>Group</th>
       </tr>
@@ -138,13 +163,14 @@
         row.innerHTML = `
                     <td>
                         <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
-                        <input type="checkbox" class="task-checkbox" data-index="${index}" />
+                        <input type="checkbox" class="task-checkbox" data-index="${index}" onchange="toggleBulkActions()" />
                     </td>
                     <td class="task-cell">
                         <span class="task-number">${taskNumber}</span>
-                        <span>${task.name}</span>
-                    </td> <!-- Combined Task and Number -->
-                    <td>${task.name}</td> <!-- Task Name column -->
+                    </td>
+                    <td>
+                        <span class="task-name" contenteditable="true" onblur="updateTaskName(event, ${index})">${task.name}</span>
+                    </td>
                     <td>${task.status}</td>
                     <td>${task.group.replace('group-', '').replace('-', ' ')}</td>
                 `;
@@ -156,7 +182,9 @@
 
         taskTable.appendChild(row);
       });
+
       bindCheckboxes();
+      toggleBulkActions(); // Hide or show bulk actions based on selection
     }
 
     function handleDragStart(e) {
@@ -192,11 +220,18 @@
       renderTable(); // Re-render the table with updated groups
     }
 
+    function toggleBulkActions() {
+      const selectedCheckboxes = document.querySelectorAll('.task-checkbox:checked');
+      const bulkActions = document.querySelector('.bulk-actions');
+      bulkActions.style.display = selectedCheckboxes.length > 0 ? 'block' : 'none';
+    }
+
     function bindCheckboxes() {
       const selectAllCheckbox = document.querySelector('#selectAll');
       selectAllCheckbox.addEventListener('change', () => {
         const allCheckboxes = document.querySelectorAll('.task-checkbox');
         allCheckboxes.forEach(checkbox => checkbox.checked = selectAllCheckbox.checked);
+        toggleBulkActions();
       });
     }
 
@@ -217,6 +252,30 @@
       document.querySelector("#newTaskStatus").value = "Not Started";
 
       renderTable(); // Re-render the table with the new task
+    }
+
+    function updateTaskName(event, index) {
+      const updatedName = event.target.innerText.trim();
+      if (updatedName) {
+        tasks[index].name = updatedName; // Update the task name in the tasks array
+      }
+    }
+
+    function applyWorkflow() {
+      const workflowTasks = [
+        "Gather client information",
+        "Send client online medical",
+        "Complete Application",
+        "Send to client for eSign",
+        "Submit to underwriting",
+        "Delivery policy"
+      ];
+
+      workflowTasks.forEach(taskName => {
+        tasks.push({ name: taskName, status: "Not Started", group: "group-independent" });
+      });
+
+      renderTable(); // Re-render the table with the workflow tasks added
     }
 
     // Initial render
