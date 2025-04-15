@@ -1,377 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Task Manager – Bulk Edit + Drag</title>
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      padding: 2rem;
-      background: #f9f9f9;
-      color: #222;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Table with Bulk Edit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      overflow: hidden;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-    th, td {
-      padding: 1rem;
-      border-bottom: 1px solid #eee;
-    }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
 
-    th {
-      background: #f1f1f1;
-      text-align: left;
-    }
+        th {
+            background-color: #f4f4f4;
+        }
 
-    tr.selected {
-      background: #e6f2ff;
-    }
+        .drag-handle {
+            cursor: grab;
+        }
 
-    tr.group-independent td {
-      border-left: 4px solid #4caf50;
-    }
+        .task-checkbox {
+            margin-right: 10px;
+        }
 
-    tr.group-sequential td {
-      border-left: 4px solid #2196f3;
-    }
-
-    tr.group-parallel td {
-      border-left: 4px solid #ff9800;
-    }
-
-    .bulk-actions {
-      display: none;
-      background: #ffffff;
-      color: #333;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
-
-    .bulk-actions.visible {
-      display: flex;
-    }
-
-    .action-btn,
-    select,
-    input[type="text"] {
-      padding: 0.5rem 0.75rem;
-      font-size: 0.95rem;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      background: #f7f7f7;
-      cursor: pointer;
-    }
-
-    .action-btn:hover,
-    select:hover {
-      background: #eaeaea;
-    }
-
-    select {
-      min-width: 160px;
-    }
-
-    .action-btn:active {
-      background: #ddd;
-    }
-
-    #addTaskBtn {
-      margin: 1rem 0;
-    }
-
-    .drag-handle {
-      cursor: grab;
-      display: inline-block;
-      margin-right: 0.5rem;
-      font-size: 1.2rem;
-      user-select: none;
-      color: #aaa;
-    }
-
-    .drag-handle:active {
-      cursor: grabbing;
-    }
-
-    /* Modal styles */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.3);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .modal-content {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 6px;
-      width: 300px;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .modal.show {
-      display: flex;
-    }
-
-    .modal-content button {
-      align-self: flex-end;
-    }
-  </style>
+        .bulk-actions {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
 
-  <div id="bulkActions" class="bulk-actions">
-    <span>Bulk Actions:</span>
-    <select id="groupSelect">
-      <option value="">Move to Group...</option>
-      <option value="group-independent">Independent</option>
-      <option value="group-sequential">Sequential</option>
-      <option value="group-parallel">Parallel</option>
-    </select>
-    <select id="statusSelect">
-      <option value="">Change Status...</option>
-      <option>To Do</option>
-      <option>In Progress</option>
-      <option>Done</option>
-    </select>
-    <button class="action-btn" id="deleteSelected">Delete</button>
-  </div>
-
-  <button class="action-btn" id="addTaskBtn">+ Add Task</button>
-
-  <table>
-    <thead>
-      <tr>
-        <th><input type="checkbox" id="selectAll" /></th>
-        <th>Task</th>
-        <th>Status</th>
-        <th>Group</th>
-      </tr>
-    </thead>
-    <tbody id="taskTable"></tbody>
-  </table>
-
-  <!-- Modal -->
-  <div class="modal" id="taskModal">
-    <div class="modal-content">
-      <label>
-        Task Name:
-        <input type="text" id="newTaskName">
-      </label>
-      <label>
-        Status:
-        <select id="newTaskStatus">
-          <option>To Do</option>
-          <option>In Progress</option>
-          <option>Done</option>
-        </select>
-      </label>
-      <label>
-        Group:
-        <select id="newTaskGroup">
-          <option value="group-independent">Independent</option>
-          <option value="group-sequential">Sequential</option>
-          <option value="group-parallel">Parallel</option>
-        </select>
-      </label>
-      <div style="display: flex; justify-content: space-between;">
-        <button class="action-btn" onclick="closeModal()">Cancel</button>
-        <button class="action-btn" onclick="addTask()">Add</button>
-      </div>
+    <div class="bulk-actions">
+        <button onclick="markSelected('group-independent')">Mark as Independent</button>
+        <button onclick="markSelected('group-sequential')">Mark as Sequential</button>
+        <button onclick="markSelected('group-parallel')">Mark as Parallel</button>
     </div>
-  </div>
 
-  <script>
-    const taskTable = document.getElementById('taskTable');
-    const selectAll = document.getElementById('selectAll');
-    const bulkActions = document.getElementById('bulkActions');
-    const groupSelect = document.getElementById('groupSelect');
-    const statusSelect = document.getElementById('statusSelect');
-    const deleteBtn = document.getElementById('deleteSelected');
-    const addTaskBtn = document.getElementById('addTaskBtn');
+    <table id="taskTable">
+        <thead>
+            <tr>
+                <th><input type="checkbox" id="selectAll" /></th>
+                <th>#</th> <!-- Number column -->
+                <th>Task</th>
+                <th>Status</th>
+                <th>Group</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be dynamically added here -->
+        </tbody>
+    </table>
 
-    const modal = document.getElementById('taskModal');
-    const newTaskName = document.getElementById('newTaskName');
-    const newTaskStatus = document.getElementById('newTaskStatus');
-    const newTaskGroup = document.getElementById('newTaskGroup');
+    <script>
+        const taskTable = document.querySelector("#taskTable tbody");
 
-    let tasks = [];
-    let draggedIndex = null;
+        let tasks = [
+            { name: "Task 1", status: "Not Started", group: "group-parallel" },
+            { name: "Task 2", status: "In Progress", group: "group-parallel" },
+            { name: "Task 3", status: "Completed", group: "group-sequential" },
+            { name: "Task 4", status: "Not Started", group: "group-sequential" },
+            { name: "Task 5", status: "Not Started", group: "group-independent" },
+            { name: "Task 6", status: "In Progress", group: "group-independent" },
+        ];
 
-    function saveTasks() {
-      localStorage.setItem('taskList', JSON.stringify(tasks));
-    }
+        // Render the table
+        function renderTable() {
+            taskTable.innerHTML = '';
+            let parallelCounter = 1; // Start counting for parallel group
+            let sequentialGroupCounter = 1; // Start counting sequential groups
+            let sequentialStepCounter = 1; // Step counter for sequential tasks
 
-    function loadTasks() {
-      const stored = localStorage.getItem('taskList');
-      tasks = stored ? JSON.parse(stored) : [
-        { name: 'Write copy for homepage', status: 'In Progress', group: 'group-independent' },
-        { name: 'Design wireframes', status: 'To Do', group: 'group-sequential' },
-        { name: 'Prototype in Figma', status: 'To Do', group: 'group-sequential' },
-        { name: 'Develop backend API', status: 'In Progress', group: 'group-parallel' },
-        { name: 'Develop frontend UI', status: 'In Progress', group: 'group-parallel' }
-      ];
-    }
+            tasks.forEach((task, index) => {
+                const row = document.createElement('tr');
+                row.classList.add(task.group);
+                row.setAttribute('draggable', true);
+                row.setAttribute('data-index', index);
 
-    function renderTable() {
-      taskTable.innerHTML = '';
-      tasks.forEach((task, index) => {
-        const row = document.createElement('tr');
-        row.classList.add(task.group);
-        row.setAttribute('draggable', true);
-        row.setAttribute('data-index', index);
+                // Assign the number based on the group
+                let taskNumber = index + 1; // Default is a unique number for each task
 
-        row.innerHTML = `
-          <td>
-            <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
-            <input type="checkbox" class="task-checkbox" data-index="${index}" />
-          </td>
-          <td>${task.name}</td>
-          <td>${task.status}</td>
-          <td>${task.group.replace('group-', '').replace('-', ' ')}</td>
-        `;
+                if (task.group === 'group-parallel') {
+                    taskNumber = parallelCounter; // Use the same number for parallel tasks
+                } else if (task.group === 'group-sequential') {
+                    taskNumber = `${sequentialGroupCounter}.${sequentialStepCounter}`; // Sequential numbering with .1, .2 etc.
+                    sequentialStepCounter++; // Increment for the next step within the sequential group
+                }
 
-        row.addEventListener('dragstart', handleDragStart);
-        row.addEventListener('dragover', handleDragOver);
-        row.addEventListener('drop', handleDrop);
-        row.addEventListener('dragend', handleDragEnd);
+                if (task.group !== 'group-sequential') {
+                    sequentialStepCounter = 1; // Reset sequential step counter when it's not sequential
+                    sequentialGroupCounter++; // Increment for the next sequential group
+                }
 
-        taskTable.appendChild(row);
-      });
-      bindCheckboxes();
-    }
+                row.innerHTML = `
+                    <td>
+                        <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
+                        <input type="checkbox" class="task-checkbox" data-index="${index}" />
+                    </td>
+                    <td>${taskNumber}</td> <!-- Number column -->
+                    <td>${task.name}</td>
+                    <td>${task.status}</td>
+                    <td>${task.group.replace('group-', '').replace('-', ' ')}</td>
+                `;
 
-    function bindCheckboxes() {
-      const checkboxes = document.querySelectorAll('.task-checkbox');
-      checkboxes.forEach(cb => cb.addEventListener('change', updateBulkActions));
-    }
+                row.addEventListener('dragstart', handleDragStart);
+                row.addEventListener('dragover', handleDragOver);
+                row.addEventListener('drop', handleDrop);
+                row.addEventListener('dragend', handleDragEnd);
 
-    function updateBulkActions() {
-      const selected = document.querySelectorAll('.task-checkbox:checked');
-      bulkActions.classList.toggle('visible', selected.length > 0);
+                taskTable.appendChild(row);
+            });
+            bindCheckboxes();
+        }
 
-      document.querySelectorAll('#taskTable tr').forEach((row, index) => {
-        row.classList.toggle('selected', selected[index]?.checked);
-      });
-    }
+        function handleDragStart(e) {
+            e.dataTransfer.setData("text/plain", e.target.getAttribute("data-index"));
+        }
 
-    selectAll.addEventListener('change', (e) => {
-      const checkboxes = document.querySelectorAll('.task-checkbox');
-      checkboxes.forEach(cb => cb.checked = e.target.checked);
-      updateBulkActions();
-    });
+        function handleDragOver(e) {
+            e.preventDefault();
+        }
 
-    groupSelect.addEventListener('change', () => {
-      if (!groupSelect.value) return;
-      document.querySelectorAll('.task-checkbox:checked').forEach(cb => {
-        const index = parseInt(cb.dataset.index);
-        tasks[index].group = groupSelect.value;
-      });
-      saveTasks();
-      renderTable();
-      groupSelect.value = '';
-    });
+        function handleDrop(e) {
+            e.preventDefault();
+            const draggedIndex = e.dataTransfer.getData("text/plain");
+            const droppedIndex = e.target.closest("tr").getAttribute("data-index");
 
-    statusSelect.addEventListener('change', () => {
-      if (!statusSelect.value) return;
-      document.querySelectorAll('.task-checkbox:checked').forEach(cb => {
-        const index = parseInt(cb.dataset.index);
-        tasks[index].status = statusSelect.value;
-      });
-      saveTasks();
-      renderTable();
-      statusSelect.value = '';
-    });
+            // Swap the tasks in the array
+            [tasks[draggedIndex], tasks[droppedIndex]] = [tasks[droppedIndex], tasks[draggedIndex]];
 
-    deleteBtn.addEventListener('click', () => {
-      tasks = tasks.filter((task, index) => {
-        const cb = document.querySelector(`.task-checkbox[data-index="${index}"]`);
-        return !cb || !cb.checked;
-      });
-      saveTasks();
-      renderTable();
-    });
+            renderTable(); // Re-render the table
+        }
 
-    addTaskBtn.addEventListener('click', () => {
-      modal.classList.add('show');
-    });
+        function handleDragEnd(e) {
+            // Reset the drag handle style
+        }
 
-    function closeModal() {
-      modal.classList.remove('show');
-      newTaskName.value = '';
-    }
+        function markSelected(group) {
+            const selectedCheckboxes = document.querySelectorAll('.task-checkbox:checked');
+            selectedCheckboxes.forEach(checkbox => {
+                const taskIndex = checkbox.getAttribute('data-index');
+                tasks[taskIndex].group = group; // Mark the task with the selected group
+            });
 
-    function addTask() {
-      if (!newTaskName.value.trim()) return;
-      tasks.push({
-        name: newTaskName.value.trim(),
-        status: newTaskStatus.value,
-        group: newTaskGroup.value
-      });
-      saveTasks();
-      renderTable();
-      closeModal();
-    }
+            renderTable(); // Re-render the table with updated groups
+        }
 
-    // Drag logic for multi-select
-    function handleDragStart(e) {
-      draggedIndex = parseInt(this.dataset.index);
-      e.dataTransfer.effectAllowed = 'move';
-      this.style.opacity = '0.5';
-    }
+        function bindCheckboxes() {
+            const selectAllCheckbox = document.querySelector('#selectAll');
+            selectAllCheckbox.addEventListener('change', () => {
+                const allCheckboxes = document.querySelectorAll('.task-checkbox');
+                allCheckboxes.forEach(checkbox => checkbox.checked = selectAllCheckbox.checked);
+            });
+        }
 
-    function handleDragOver(e) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      this.style.borderTop = '2px dashed #4caf50';
-    }
-
-    function handleDrop(e) {
-      e.preventDefault();
-      const dropIndex = parseInt(this.dataset.index);
-
-      const selectedIndexes = [...document.querySelectorAll('.task-checkbox:checked')]
-        .map(cb => parseInt(cb.dataset.index))
-        .sort((a, b) => a - b);
-
-      const movingTasks = selectedIndexes.map(i => tasks[i]);
-      tasks = tasks.filter((_, i) => !selectedIndexes.includes(i));
-
-      tasks.splice(dropIndex, 0, ...movingTasks);
-      saveTasks();
-      renderTable();
-    }
-
-    function handleDragEnd(e) {
-      draggedIndex = null;
-      this.style.opacity = '';
-      document.querySelectorAll('#taskTable tr').forEach(row => {
-        row.style.borderTop = '';
-      });
-    }
-
-    // Init
-    loadTasks();
-    renderTable();
-  </script>
+        // Initial render
+        renderTable();
+    </script>
 </body>
 </html>
