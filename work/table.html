@@ -36,6 +36,17 @@
         .bulk-actions {
             margin-bottom: 10px;
         }
+
+        .task-cell {
+            display: flex;
+            align-items: center;
+        }
+
+        .task-number {
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
     </style>
 </head>
 <body>
@@ -50,8 +61,7 @@
         <thead>
             <tr>
                 <th><input type="checkbox" id="selectAll" /></th>
-                <th>#</th> <!-- Number column -->
-                <th>Task</th>
+                <th>Task</th> <!-- Combined Task and Number column -->
                 <th>Status</th>
                 <th>Group</th>
             </tr>
@@ -106,8 +116,10 @@
                         <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
                         <input type="checkbox" class="task-checkbox" data-index="${index}" />
                     </td>
-                    <td>${taskNumber}</td> <!-- Number column -->
-                    <td>${task.name}</td>
+                    <td class="task-cell">
+                        <span class="task-number">${taskNumber}</span>
+                        <span>${task.name}</span>
+                    </td> <!-- Combined Task and Number -->
                     <td>${task.status}</td>
                     <td>${task.group.replace('group-', '').replace('-', ' ')}</td>
                 `;
@@ -168,3 +180,4 @@
     </script>
 </body>
 </html>
+
