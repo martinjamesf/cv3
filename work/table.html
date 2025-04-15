@@ -173,7 +173,26 @@
 
   <script>
     let tasks = [];
+    // Step 1: Normalize group membership based on adjacency
+    tasks.forEach((task, index) => {
+      const prev = tasks[index - 1];
+      const next = tasks[index + 1];
 
+      const isPrevSeq = prev && prev.group === 'group-sequential';
+      const isNextSeq = next && next.group === 'group-sequential';
+
+      // If current task was sequential but no longer has neighbors, convert to independent
+      if (task.group === 'group-sequential' && !isPrevSeq && !isNextSeq) {
+        task.group = 'group-independent';
+        task.groupKey = crypto.randomUUID();
+      }
+
+      // If current task is not sequential, but is surrounded by sequential, make it sequential
+      if (task.group !== 'group-sequential' && (isPrevSeq || isNextSeq)) {
+        task.group = 'group-sequential';
+        task.groupKey = (isPrevSeq ? prev.groupKey : next.groupKey) || crypto.randomUUID();
+      }
+    });
     function renderTable() {
       const tbody = document.querySelector("#taskTable tbody");
       tbody.innerHTML = "";
