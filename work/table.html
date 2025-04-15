@@ -1,40 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Task Table</title>
+  <meta charset="UTF-8">
+  <title>Task Manager</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: sans-serif;
       padding: 20px;
+    }
+
+    .task-form {
+      margin-bottom: 20px;
+    }
+
+    .action-btn {
+      padding: 10px 16px;
+      margin-right: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .action-btn:hover {
+      background-color: #0056b3;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
+      table-layout: fixed;
     }
 
-    th,
-    td {
-      padding: 10px;
-      text-align: left;
-      border: 1px solid #ddd;
-      vertical-align: middle;
-    }
-
-    th {
-      background-color: #f4f4f4;
-    }
-
-    tr,
-    td,
-    th {
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0 8px;
       height: 48px;
-      line-height: 1.2;
+      text-align: left;
       vertical-align: middle;
-      box-sizing: border-box;
+    }
+
+    tr {
+      height: 48px;
     }
 
     .task-name {
@@ -66,305 +76,181 @@
 
     .drag-handle {
       cursor: grab;
-      padding-right: 6px;
-      font-size: 18px;
-      line-height: 1;
     }
 
-    .bulk-actions {
+    #bulkActions {
+      display: none;
       margin-bottom: 10px;
-      display: none;
-    }
-
-    .task-cell {
-      align-items: center;
-    }
-
-    .task-select {
-      display: flex;
-      align-items: center;
-    }
-
-    .task-number {
-      font-weight: bold;
-      margin-right: 8px;
-    }
-
-    .task-form {
-      margin-bottom: 20px;
-    }
-
-    .task-form input,
-    .task-form select {
-      padding: 8px;
-      margin-right: 10px;
-    }
-
-    .task-name {
-      cursor: text;
-      padding: 5px;
-      border: 1px solid #ddd;
-      border-radius: 3px;
-      min-width: 150px;
-      display: inline-block;
-    }
-
-    .apply-workflow-btn {
-      margin-top: 10px;
-      padding: 10px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .apply-workflow-btn:hover {
-      background-color: #45a049;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .action-btn {
-      padding: 10px 16px;
-      margin-right: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-
-    .action-btn:hover {
-      background-color: #0056b3;
     }
   </style>
 </head>
-
 <body>
 
-  <div class="task-form">
-    <button class="action-btn" onclick="addTask()">Add Task</button>
-    <button class="action-btn" onclick="applyWorkflow()">Apply Workflow</button>
-  </div>
-  <div class="bulk-actions" id="bulkActions">
-    <button onclick="markSelected('group-independent')">Mark as Independent</button>
-    <button onclick="markSelected('group-sequential')">Mark as Sequential</button>
-    <button onclick="markSelected('group-parallel')">Mark as Parallel</button>
-    <button onclick="deleteSelected()">Delete</button>
-  </div>
+<div class="task-form">
+  <button class="action-btn" onclick="addTask()">Add Task</button>
+  <button class="action-btn" onclick="applyWorkflow()">Apply Workflow</button>
+</div>
 
-  <table id="taskTable">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Task</th>
-        <th>Task Name</th>
-        <th>Status</th>
-        <th>Group</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+<div id="bulkActions">
+  <button class="action-btn" onclick="deleteSelected()">Delete</button>
+</div>
 
-  <script>
-    let tasks = [];
-    // Step 1: Normalize group membership based on adjacency
-    tasks.forEach((task, index) => {
-      const prev = tasks[index - 1];
-      const next = tasks[index + 1];
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>#</th>
+      <th>Task</th>
+      <th>Task Name</th>
+      <th>Status</th>
+      <th>Group</th>
+    </tr>
+  </thead>
+  <tbody id="taskTableBody"></tbody>
+</table>
 
-      const isPrevSeq = prev && prev.group === 'group-sequential';
-      const isNextSeq = next && next.group === 'group-sequential';
+<script>
+let tasks = [];
 
-      // If current task was sequential but no longer has neighbors, convert to independent
-      if (task.group === 'group-sequential' && !isPrevSeq && !isNextSeq) {
-        task.group = 'group-independent';
-        task.groupKey = crypto.randomUUID();
+function renderTable() {
+  const tbody = document.getElementById('taskTableBody');
+  tbody.innerHTML = "";
+
+  // Step 1: Recalculate grouping based on neighbors
+  tasks.forEach((task, i) => {
+    const prev = tasks[i - 1];
+    const next = tasks[i + 1];
+    const isPrevSeq = prev && prev.group === 'group-sequential';
+    const isNextSeq = next && next.group === 'group-sequential';
+
+    if (task.group === 'group-sequential' && !isPrevSeq && !isNextSeq) {
+      task.group = 'group-independent';
+      task.groupKey = crypto.randomUUID();
+    }
+
+    if (task.group !== 'group-sequential' && (isPrevSeq || isNextSeq)) {
+      task.group = 'group-sequential';
+      task.groupKey = (isPrevSeq ? prev.groupKey : next.groupKey) || crypto.randomUUID();
+    }
+  });
+
+  // Step 2: Renumber tasks
+  let currentNumber = 1;
+  let lastGroupKeys = { 'group-parallel': {}, 'group-sequential': {} };
+
+  tasks.forEach((task, index) => {
+    let taskNumber = "";
+
+    if (task.group === "group-independent") {
+      taskNumber = currentNumber++;
+    } else if (task.group === "group-parallel") {
+      if (!(task.groupKey in lastGroupKeys['group-parallel'])) {
+        lastGroupKeys['group-parallel'][task.groupKey] = currentNumber++;
       }
-
-      // If current task is not sequential, but is surrounded by sequential, make it sequential
-      if (task.group !== 'group-sequential' && (isPrevSeq || isNextSeq)) {
-        task.group = 'group-sequential';
-        task.groupKey = (isPrevSeq ? prev.groupKey : next.groupKey) || crypto.randomUUID();
+      taskNumber = lastGroupKeys['group-parallel'][task.groupKey];
+    } else if (task.group === "group-sequential") {
+      if (!(task.groupKey in lastGroupKeys['group-sequential'])) {
+        lastGroupKeys['group-sequential'][task.groupKey] = { main: currentNumber++, sub: 1 };
+      } else {
+        lastGroupKeys['group-sequential'][task.groupKey].sub++;
       }
-    });
-    function renderTable() {
-      const tbody = document.querySelector("#taskTable tbody");
-      tbody.innerHTML = "";
-
-      let currentNumber = 1;
-      let sequenceMap = {};
-      let lastGroupKeys = {
-        'group-parallel': {},
-        'group-sequential': {}
-      };
-
-      tasks.forEach((task, index) => {
-        let taskNumber = "";
-
-        if (task.group === "group-independent") {
-          taskNumber = currentNumber++;
-        }
-
-        else if (task.group === "group-parallel") {
-          // If this groupKey has been assigned a number, use it; otherwise assign one
-          if (!(task.groupKey in lastGroupKeys['group-parallel'])) {
-            lastGroupKeys['group-parallel'][task.groupKey] = currentNumber++;
-          }
-          taskNumber = lastGroupKeys['group-parallel'][task.groupKey];
-        }
-
-        else if (task.group === "group-sequential") {
-          // If this groupKey has not been seen before, assign a new main number
-          if (!(task.groupKey in lastGroupKeys['group-sequential'])) {
-            lastGroupKeys['group-sequential'][task.groupKey] = {
-              main: currentNumber++,
-              sub: 1
-            };
-          } else {
-            lastGroupKeys['group-sequential'][task.groupKey].sub += 1;
-          }
-          const { main, sub } = lastGroupKeys['group-sequential'][task.groupKey];
-          taskNumber = `${main}.${sub}`;
-        }
-
-        const row = document.createElement("tr");
-        row.setAttribute("draggable", "true");
-        row.dataset.index = index;
-
-        row.innerHTML = `
-          <td>
-            <div class="task-select">
-              <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
-              <input type="checkbox" class="task-checkbox" data-index="${index}" onchange="toggleBulkActions()" />
-            </div>
-          </td>
-          <td class="task-cell"><span class="task-number">${taskNumber}</span></td>
-          <td>
-            <span class="task-name" contenteditable="true" onblur="updateTaskName(event, ${index})">${task.name}</span>
-          </td>
-          <td>
-            <select onchange="updateStatus(${index}, this.value)">
-              <option value="Not Started" ${task.status === "Not Started" ? "selected" : ""}>Not Started</option>
-              <option value="In Progress" ${task.status === "In Progress" ? "selected" : ""}>In Progress</option>
-              <option value="Completed" ${task.status === "Completed" ? "selected" : ""}>Completed</option>
-              <option value="Waiting on Someone" ${task.status === "Waiting on Someone" ? "selected" : ""}>Waiting on Someone</option>
-            </select>
-          </td>
-          <td>
-            <select onchange="updateGroup(${index}, this.value)">
-              <option value="group-independent" ${task.group === "group-independent" ? "selected" : ""}>Independent</option>
-              <option value="group-sequential" ${task.group === "group-sequential" ? "selected" : ""}>Sequential</option>
-              <option value="group-parallel" ${task.group === "group-parallel" ? "selected" : ""}>Parallel</option>
-            </select>
-          </td>
-        `;
-
-        tbody.appendChild(row);
-      });
-
-      toggleBulkActions();
-      addDragEvents();
+      const { main, sub } = lastGroupKeys['group-sequential'][task.groupKey];
+      taskNumber = main + "." + sub;
     }
 
-    function addTask(name = "New Task", status = "Not Started", group = "group-independent") {
-      const groupKey = Date.now();
-      tasks.push({ name, status, group, groupKey });
-      renderTable();
-    }
+    task.number = taskNumber;
+  });
 
-    function applyWorkflow() {
-      const steps = [
-        "Gather client information",
-        "Send client online medical",
-        "Complete Application",
-        "Send to client for eSign",
-        "Submit to underwriting",
-        "Delivery policy"
-      ];
-      const groupKey = Date.now();
+  // Step 3: Render tasks
+  tasks.forEach((task, i) => {
+    const row = document.createElement('tr');
+    row.setAttribute('draggable', 'true');
+    row.ondragstart = (e) => { e.dataTransfer.setData("text/plain", i); };
+    row.ondragover = (e) => { e.preventDefault(); };
+    row.ondrop = (e) => {
+      const from = +e.dataTransfer.getData("text/plain");
+      const to = i;
+      if (from !== to) {
+        const moved = tasks.splice(from, 1)[0];
+        tasks.splice(to, 0, moved);
+        renderTable();
+      }
+    };
 
-      steps.forEach(name => {
-        tasks.push({ name, status: "Not Started", group: "group-sequential", groupKey });
-      });
+    row.innerHTML = `
+      <td><input type="checkbox" onchange="toggleBulkActions()" /></td>
+      <td>${task.number}</td>
+      <td class="drag-handle">☰</td>
+      <td contenteditable="true" oninput="tasks[${i}].name = this.textContent">${task.name}</td>
+      <td>
+        <select onchange="tasks[${i}].status = this.value">
+          ${['Not Started', 'In Progress', 'Completed', 'Waiting on Someone'].map(
+            s => `<option value="${s}" ${task.status === s ? 'selected' : ''}>${s}</option>`
+          ).join('')}
+        </select>
+      </td>
+      <td>
+        <select onchange="updateGroup(${i}, this.value)">
+          ${['group-independent', 'group-parallel', 'group-sequential'].map(
+            g => `<option value="${g}" ${task.group === g ? 'selected' : ''}>${g.replace('group-', '')}</option>`
+          ).join('')}
+        </select>
+      </td>
+    `;
 
-      renderTable();
-    }
+    tbody.appendChild(row);
+  });
+  toggleBulkActions();
+}
 
-    function updateTaskName(event, index) {
-      tasks[index].name = event.target.textContent.trim();
-    }
+function updateGroup(index, newGroup) {
+  tasks[index].group = newGroup;
+  tasks[index].groupKey = crypto.randomUUID();
+  renderTable();
+}
 
-    function updateStatus(index, newStatus) {
-      tasks[index].status = newStatus;
-    }
+function addTask() {
+  tasks.push({
+    name: "New Task",
+    status: "Not Started",
+    group: "group-independent",
+    groupKey: crypto.randomUUID()
+  });
+  renderTable();
+}
 
-    function updateGroup(index, newGroup) {
-      tasks[index].group = newGroup;
-      tasks[index].groupKey = Date.now(); // new group if changing
-      renderTable();
-    }
+function applyWorkflow() {
+  const workflow = [
+    "Gather client information",
+    "Send client online medical",
+    "Complete Application",
+    "Send to client for eSign",
+    "Submit to underwriting",
+    "Delivery policy"
+  ];
+  const key = crypto.randomUUID();
+  workflow.forEach(name => tasks.push({
+    name,
+    status: "Not Started",
+    group: "group-sequential",
+    groupKey: key
+  }));
+  renderTable();
+}
 
-    function toggleBulkActions() {
-      const selected = document.querySelectorAll('.task-checkbox:checked').length > 0;
-      document.getElementById('bulkActions').style.display = selected ? 'block' : 'none';
-    }
+function toggleBulkActions() {
+  const anyChecked = [...document.querySelectorAll("tbody input[type='checkbox']")].some(cb => cb.checked);
+  document.getElementById("bulkActions").style.display = anyChecked ? "block" : "none";
+}
 
-    function markSelected(groupType) {
-      const checkboxes = document.querySelectorAll('.task-checkbox:checked');
-      const groupKey = Date.now();
-      checkboxes.forEach(cb => {
-        const index = parseInt(cb.dataset.index);
-        tasks[index].group = groupType;
-        tasks[index].groupKey = groupKey;
-      });
-      renderTable();
-    }
+function deleteSelected() {
+  const checkboxes = [...document.querySelectorAll("tbody input[type='checkbox']")];
+  tasks = tasks.filter((_, i) => !checkboxes[i].checked);
+  renderTable();
+}
 
-    function deleteSelected() {
-      const checkboxes = document.querySelectorAll('.task-checkbox:checked');
-      const indicesToDelete = Array.from(checkboxes).map(cb => parseInt(cb.dataset.index));
-      tasks = tasks.filter((_, index) => !indicesToDelete.includes(index));
-      renderTable();
-    }
-
-    function addDragEvents() {
-      const rows = document.querySelectorAll("tbody tr");
-
-      rows.forEach(row => {
-        row.addEventListener("dragstart", e => {
-          e.dataTransfer.setData("text/plain", row.dataset.index);
-        });
-
-        row.addEventListener("dragover", e => {
-          e.preventDefault();
-          row.style.borderTop = "2px solid #333";
-        });
-
-        row.addEventListener("dragleave", () => {
-          row.style.borderTop = "";
-        });
-
-        row.addEventListener("drop", e => {
-          e.preventDefault();
-          const fromIndex = parseInt(e.dataTransfer.getData("text/plain"));
-          const toIndex = parseInt(row.dataset.index);
-          const movedTask = tasks.splice(fromIndex, 1)[0];
-          tasks.splice(toIndex, 0, movedTask);
-          renderTable();
-        });
-      });
-    }
-
-    // Initial render with one task
-    addTask("Sample Task");
-  </script>
+addTask(); // Initialize with one task
+</script>
 
 </body>
-
 </html>
