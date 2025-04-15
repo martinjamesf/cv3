@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Table - Bulk Edit</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #111;
+      color: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #222;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid #444;
+    }
+
+    th {
+      background: #333;
+      text-align: left;
+    }
+
+    tr.group-independent td {
+      border-left: 4px solid #4caf50;
+    }
+
+    tr.group-sequential td {
+      border-left: 4px solid #2196f3;
+    }
+
+    tr.group-parallel td {
+      border-left: 4px solid #ff9800;
+    }
+
+    .bulk-actions {
+      display: none;
+      background: #000;
+      color: #0ff;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid #0ff;
+      border-radius: 6px;
+    }
+
+    .bulk-actions.visible {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .task-checkbox:checked ~ .bulk-actions-toggle {
+      display: block;
+    }
+
+    .action-btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      background: #0ff;
+      color: #000;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bulk Actions Bar (Initially hidden) -->
+  <div id="bulkActions" class="bulk-actions">
+    <span>Bulk Actions:</span>
+    <button class="action-btn">Move to Group</button>
+    <button class="action-btn">Change Status</button>
+    <button class="action-btn">Delete</button>
+  </div>
+
+  <!-- Task Table -->
+  <table>
+    <thead>
+      <tr>
+        <th><input type="checkbox" id="selectAll" /></th>
+        <th>Task</th>
+        <th>Status</th>
+        <th>Group</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="group-independent">
+        <td><input type="checkbox" class="task-checkbox" /></td>
+        <td>Write copy for homepage</td>
+        <td>In Progress</td>
+        <td>Independent</td>
+      </tr>
+      <tr class="group-sequential">
+        <td><input type="checkbox" class="task-checkbox" /></td>
+        <td>Design wireframes</td>
+        <td>To Do</td>
+        <td>Sequential</td>
+      </tr>
+      <tr class="group-sequential">
+        <td><input type="checkbox" class="task-checkbox" /></td>
+        <td>Prototype in Figma</td>
+        <td>To Do</td>
+        <td>Sequential</td>
+      </tr>
+      <tr class="group-parallel">
+        <td><input type="checkbox" class="task-checkbox" /></td>
+        <td>Develop backend API</td>
+        <td>In Progress</td>
+        <td>Parallel</td>
+      </tr>
+      <tr class="group-parallel">
+        <td><input type="checkbox" class="task-checkbox" /></td>
+        <td>Develop frontend UI</td>
+        <td>In Progress</td>
+        <td>Parallel</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    const checkboxes = document.querySelectorAll('.task-checkbox');
+    const selectAll = document.getElementById('selectAll');
+    const bulkActions = document.getElementById('bulkActions');
+
+    function updateBulkActions() {
+      const selected = document.querySelectorAll('.task-checkbox:checked');
+      bulkActions.classList.toggle('visible', selected.length > 0);
+    }
+
+    checkboxes.forEach(cb => cb.addEventListener('change', updateBulkActions));
+    selectAll.addEventListener('change', (e) => {
+      checkboxes.forEach(cb => cb.checked = e.target.checked);
+      updateBulkActions();
+    });
+  </script>
+
+</body>
+</html>
