@@ -32,14 +32,18 @@
     }
 
     .theme-image img {
-      transition: opacity 0.3s ease;
       display: none;
+      transition: opacity 0.3s ease;
+      opacity: 0;
+      height: 0;
     }
 
     html[data-theme="light"] .theme-light,
     html[data-theme="dark"] .theme-dark,
     html[data-theme="eighties"] .theme-eighties {
       display: block;
+      opacity: 1;
+      height: auto;
     }
   </style>
 </head>
