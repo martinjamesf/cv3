@@ -49,9 +49,19 @@
     }
 
     select {
-      height: 36px;
-      padding: 6px;
+      height: 34px;
+      padding: 6px 10px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      background-color: #fff;
+      font-size: 14px;
       vertical-align: middle;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2210%22%20height%3D%227%22%20viewBox%3D%220%200%2010%207%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M0%200l5%207%205-7z%22%20fill%3D%22%23666%22/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 10px 7px;
+      padding-right: 30px;
     }
 
     .drag-handle {
@@ -170,25 +180,38 @@
 
       let currentNumber = 1;
       let sequenceMap = {};
+      let lastGroupKeys = {
+        'group-parallel': {},
+        'group-sequential': {}
+      };
 
       tasks.forEach((task, index) => {
         let taskNumber = "";
 
         if (task.group === "group-independent") {
           taskNumber = currentNumber++;
-        } else if (task.group === "group-parallel") {
-          if (!sequenceMap[task.groupKey]) {
-            sequenceMap[task.groupKey] = currentNumber++;
+        }
+
+        else if (task.group === "group-parallel") {
+          // If this groupKey has been assigned a number, use it; otherwise assign one
+          if (!(task.groupKey in lastGroupKeys['group-parallel'])) {
+            lastGroupKeys['group-parallel'][task.groupKey] = currentNumber++;
           }
-          taskNumber = sequenceMap[task.groupKey];
-        } else if (task.group === "group-sequential") {
-          if (!sequenceMap[task.groupKey]) {
-            sequenceMap[task.groupKey] = { main: currentNumber++, sub: 1 };
+          taskNumber = lastGroupKeys['group-parallel'][task.groupKey];
+        }
+
+        else if (task.group === "group-sequential") {
+          // If this groupKey has not been seen before, assign a new main number
+          if (!(task.groupKey in lastGroupKeys['group-sequential'])) {
+            lastGroupKeys['group-sequential'][task.groupKey] = {
+              main: currentNumber++,
+              sub: 1
+            };
           } else {
-            sequenceMap[task.groupKey].sub++;
+            lastGroupKeys['group-sequential'][task.groupKey].sub += 1;
           }
-          const g = sequenceMap[task.groupKey];
-          taskNumber = `${g.main}.${g.sub}`;
+          const { main, sub } = lastGroupKeys['group-sequential'][task.groupKey];
+          taskNumber = `${main}.${sub}`;
         }
 
         const row = document.createElement("tr");
