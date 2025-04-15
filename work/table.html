@@ -3,31 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Task Table - Bulk Edit</title>
+  <title>Bulk Edit Task Table</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Courier New', monospace;
       padding: 2rem;
-      background: #111;
-      color: #fff;
+      background: #0a0a0a;
+      color: #00ffff;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      background: #222;
-      border-radius: 8px;
+      background: #111;
+      border: 1px solid #00ffff44;
+      border-radius: 10px;
       overflow: hidden;
     }
 
     th, td {
       padding: 1rem;
-      border-bottom: 1px solid #444;
+      border-bottom: 1px solid #222;
     }
 
     th {
-      background: #333;
-      text-align: left;
+      background: #222;
+      color: #0ff;
+    }
+
+    tr {
+      transition: background 0.2s;
+    }
+
+    tr.selected {
+      background: #003333;
     }
 
     tr.group-independent td {
@@ -50,19 +59,16 @@
       margin-bottom: 1rem;
       border: 1px solid #0ff;
       border-radius: 6px;
+      gap: 1rem;
+      align-items: center;
+      animation: fadeIn 0.3s ease-in-out;
     }
 
     .bulk-actions.visible {
       display: flex;
-      gap: 1rem;
-      align-items: center;
     }
 
-    .task-checkbox:checked ~ .bulk-actions-toggle {
-      display: block;
-    }
-
-    .action-btn {
+    .action-btn, select {
       padding: 0.5rem 1rem;
       border: none;
       background: #0ff;
@@ -70,16 +76,36 @@
       cursor: pointer;
       border-radius: 4px;
     }
+
+    .action-btn:hover {
+      background: #00cccc;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
   </style>
 </head>
 <body>
 
-  <!-- Bulk Actions Bar (Initially hidden) -->
+  <!-- Bulk Actions Bar -->
   <div id="bulkActions" class="bulk-actions">
     <span>Bulk Actions:</span>
-    <button class="action-btn">Move to Group</button>
-    <button class="action-btn">Change Status</button>
-    <button class="action-btn">Delete</button>
+    <select id="groupSelect">
+      <option value="">Move to Group...</option>
+      <option value="group-independent">Independent</option>
+      <option value="group-sequential">Sequential</option>
+      <option value="group-parallel">Parallel</option>
+    </select>
+    <select id="statusSelect">
+      <option value="">Change Status...</option>
+      <option>To Do</option>
+      <option>In Progress</option>
+      <option>Done</option>
+    </select>
+    <button class="action-btn" id="deleteSelected">Delete</button>
   </div>
 
   <!-- Task Table -->
@@ -130,15 +156,54 @@
     const checkboxes = document.querySelectorAll('.task-checkbox');
     const selectAll = document.getElementById('selectAll');
     const bulkActions = document.getElementById('bulkActions');
+    const groupSelect = document.getElementById('groupSelect');
+    const statusSelect = document.getElementById('statusSelect');
+    const deleteBtn = document.getElementById('deleteSelected');
 
     function updateBulkActions() {
       const selected = document.querySelectorAll('.task-checkbox:checked');
       bulkActions.classList.toggle('visible', selected.length > 0);
+
+      document.querySelectorAll('tbody tr').forEach((row, index) => {
+        row.classList.toggle('selected', checkboxes[index].checked);
+      });
     }
 
     checkboxes.forEach(cb => cb.addEventListener('change', updateBulkActions));
     selectAll.addEventListener('change', (e) => {
       checkboxes.forEach(cb => cb.checked = e.target.checked);
+      updateBulkActions();
+    });
+
+    groupSelect.addEventListener('change', () => {
+      if (!groupSelect.value) return;
+      checkboxes.forEach((cb, index) => {
+        if (cb.checked) {
+          const row = cb.closest('tr');
+          row.classList.remove('group-independent', 'group-sequential', 'group-parallel');
+          row.classList.add(groupSelect.value);
+          row.cells[3].textContent = groupSelect.options[groupSelect.selectedIndex].text;
+        }
+      });
+      groupSelect.value = '';
+    });
+
+    statusSelect.addEventListener('change', () => {
+      if (!statusSelect.value) return;
+      checkboxes.forEach((cb, index) => {
+        if (cb.checked) {
+          cb.closest('tr').cells[2].textContent = statusSelect.value;
+        }
+      });
+      statusSelect.value = '';
+    });
+
+    deleteBtn.addEventListener('click', () => {
+      checkboxes.forEach(cb => {
+        if (cb.checked) {
+          cb.closest('tr').remove();
+        }
+      });
       updateBulkActions();
     });
   </script>
