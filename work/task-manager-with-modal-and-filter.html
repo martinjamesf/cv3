@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Manager</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+
+    .task-form {
+      margin-bottom: 20px;
+    }
+
+    .action-btn {
+      padding: 10px 16px;
+      margin-right: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .action-btn:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0 8px;
+      height: 48px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f5f5f5;
+    }
+
+    tr {
+      height: 48px;
+    }
+
+    .task-name {
+      display: inline-block;
+      height: 34px;
+      line-height: 34px;
+      padding: 0 10px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      min-width: 150px;
+      vertical-align: middle;
+      background: white;
+    }
+
+    select, input[type="text"] {
+      height: 34px;
+      padding: 6px 10px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      background-color: #fff;
+      font-size: 14px;
+      vertical-align: middle;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='7' viewBox='0 0 10 7' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 7 5-7z' fill='%23666'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 10px 7px;
+      padding-right: 30px;
+    }
+
+    .drag-handle {
+      cursor: grab;
+      margin-right: 8px;
+    }
+
+    #bulkActions {
+      display: none;
+      margin-bottom: 10px;
+    }
+
+    .drag-select {
+      display: flex;
+      align-items: center;
+    }
+
+    .filter-bar {
+      margin-bottom: 15px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 50%;
+      border-radius: 5px;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .modal input, .modal select {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="task-form">
+  <button class="action-btn" onclick="addTask()">Add Task</button>
+  <button class="action-btn" onclick="applyWorkflow()">Apply Workflow</button>
+</div>
+
+<div class="filter-bar">
+  <label>Filter Status:
+    <select onchange="filterTasks(this.value)">
+      <option value="">All</option>
+      <option value="Not Started">Not Started</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Completed">Completed</option>
+      <option value="Waiting on Someone">Waiting on Someone</option>
+    </select>
+  </label>
+</div>
+
+<div id="bulkActions">
+  <button class="action-btn" onclick="deleteSelected()">Delete</button>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th># + Task</th>
+      <th>Status</th>
+      <th>Group</th>
+    </tr>
+  </thead>
+  <tbody id="taskTableBody"></tbody>
+</table>
+
+<!-- Modal for Task Editing -->
+<div id="taskModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3>Edit Task</h3>
+    <input type="text" id="modalTaskName" placeholder="Task Name">
+    <select id="modalTaskStatus">
+      <option>Not Started</option>
+      <option>In Progress</option>
+      <option>Completed</option>
+      <option>Waiting on Someone</option>
+    </select>
+    <select id="modalTaskGroup">
+      <option value="group-independent">Independent</option>
+      <option value="group-sequential">Sequential</option>
+      <option value="group-parallel">Parallel</option>
+    </select>
+    <button class="action-btn" onclick="saveTaskEdit()">Save</button>
+  </div>
+</div>
+
+<script>
+// Placeholder JavaScript — extend this section with your logic
+let tasks = [
+  { name: "Initial Task", status: "Not Started", group: "group-independent", selected: false }
+];
+
+function renderTable() {
+  // Re-render table logic
+  const tbody = document.getElementById('taskTableBody');
+  tbody.innerHTML = '';
+  tasks.forEach((task, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="drag-select">
+        <span class="drag-handle">&#9776;</span>
+        <input type="checkbox" onchange="toggleSelection(${i})" ${task.selected ? 'checked' : ''}>
+      </td>
+      <td onclick="openModal(${i})">${i + 1}. ${task.name}</td>
+      <td>${task.status}</td>
+      <td>${task.group.replace('group-', '')}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('bulkActions').style.display = tasks.some(t => t.selected) ? 'block' : 'none';
+}
+
+function addTask() {
+  tasks.push({ name: "New Task", status: "Not Started", group: "group-independent", selected: false });
+  renderTable();
+}
+
+function applyWorkflow() {
+  const workflowTasks = [
+    "Gather client information",
+    "Send client online medical",
+    "Complete Application",
+    "Send to client for eSign",
+    "Submit to underwriting",
+    "Delivery policy"
+  ];
+  workflowTasks.forEach(name => {
+    tasks.push({ name, status: "Not Started", group: "group-sequential", selected: false });
+  });
+  renderTable();
+}
+
+function toggleSelection(index) {
+  tasks[index].selected = !tasks[index].selected;
+  renderTable();
+}
+
+function deleteSelected() {
+  tasks = tasks.filter(t => !t.selected);
+  renderTable();
+}
+
+let editIndex = null;
+
+function openModal(index) {
+  editIndex = index;
+  document.getElementById('modalTaskName').value = tasks[index].name;
+  document.getElementById('modalTaskStatus').value = tasks[index].status;
+  document.getElementById('modalTaskGroup').value = tasks[index].group;
+  document.getElementById('taskModal').style.display = 'block';
+}
+
+function closeModal() {
+  document.getElementById('taskModal').style.display = 'none';
+}
+
+function saveTaskEdit() {
+  if (editIndex !== null) {
+    tasks[editIndex].name = document.getElementById('modalTaskName').value;
+    tasks[editIndex].status = document.getElementById('modalTaskStatus').value;
+    tasks[editIndex].group = document.getElementById('modalTaskGroup').value;
+    renderTable();
+    closeModal();
+  }
+}
+
+function filterTasks(status) {
+  const tbody = document.getElementById('taskTableBody');
+  tbody.innerHTML = '';
+  tasks.forEach((task, i) => {
+    if (!status || task.status === status) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="drag-select">
+          <span class="drag-handle">&#9776;</span>
+          <input type="checkbox" onchange="toggleSelection(${i})" ${task.selected ? 'checked' : ''}>
+        </td>
+        <td onclick="openModal(${i})">${i + 1}. ${task.name}</td>
+        <td>${task.status}</td>
+        <td>${task.group.replace('group-', '')}</td>
+      `;
+      tbody.appendChild(tr);
+    }
+  });
+}
+
+renderTable();
+</script>
+
+</body>
+</html>
