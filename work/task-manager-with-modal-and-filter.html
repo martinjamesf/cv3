@@ -1,210 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Task Manager</title>
   <style>
     body {
       font-family: sans-serif;
-      padding: 20px;
+      margin: 2rem;
     }
-
     table {
       width: 100%;
       border-collapse: collapse;
+      margin-bottom: 1rem;
     }
-
-    th,
-    td {
-      border: 1px solid #ddd;
-      padding: 6px 10px;
-      vertical-align: middle;
-      height: 44px;
-    }
-
-    th {
-      background-color: #f4f4f4;
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
       text-align: left;
     }
-
-    .action-btn {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      margin-right: 10px;
-      border-radius: 4px;
-      cursor: pointer;
+    th {
+      background: #f0f0f0;
     }
-
     .drag-handle {
       cursor: grab;
       margin-right: 8px;
     }
-
-    .inline-input {
-      width: 100%;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      height: 32px;
-      padding: 4px 8px;
-    }
-
-    select.inline-input {
-      appearance: none;
-      background-color: white;
-      background-image: url("data:image/svg+xml,%3Csvg width='10' height='7' viewBox='0 0 10 7' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 7 5-7z' fill='%23666'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 8px center;
-      background-size: 10px 7px;
-    }
-
-    #bulkActions {
-      display: none;
-      margin-bottom: 10px;
-    }
-
-    .drag-select {
+    .bulk-actions {
       display: flex;
-      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .bulk-actions select, .bulk-actions button, .bulk-actions input[type="file"] {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 5;
+    }
+    .show {
+      display: block;
+    }
+    .edit-btn {
+      float: right;
+      margin-bottom: 0.5rem;
     }
   </style>
 </head>
-
 <body>
 
-  <div class="task-form">
-    <button class="action-btn" onclick="addTask()">Add Task</button>
-    <button class="action-btn" onclick="applyWorkflow()">Apply Workflow</button>
+  <h1>Task Manager</h1>
+  <button onclick="addTask()">Add Task</button>
+  <button onclick="applyWorkflow()">Apply Workflow</button>
+
+  <div class="bulk-actions" id="bulkActions" style="display: none;">
+    <select onchange="bulkGroup(this.value)">
+      <option disabled selected>Group by</option>
+      <option value="Independent">Set Independent</option>
+      <option value="Sequential">Set Sequential</option>
+      <option value="Parallel">Set Parallel</option>
+    </select>
+
+    <select onchange="bulkStatus(this.value)">
+      <option disabled selected>Status</option>
+      <option value="Not Started">Mark Not Started</option>
+      <option value="In Progress">Mark In Progress</option>
+      <option value="Completed">Mark Completed</option>
+      <option value="Waiting on Someone">Mark Waiting</option>
+    </select>
+
+    <button onclick="deleteSelected()">Delete</button>
+    <button onclick="exportTasks()">Download JSON</button>
+    <input type="file" onchange="importTasks(event)">
   </div>
 
-  <div id="bulkActions">
-    <button class="action-btn" onclick="deleteSelected()">Delete</button>
-    <button class="action-btn" onclick="setBulkGroup('independent')">Set Independent</button>
-    <button class="action-btn" onclick="setBulkGroup('sequential')">Set Sequential</button>
-    <button class="action-btn" onclick="setBulkGroup('parallel')">Set Parallel</button>
-    <button class="action-btn" onclick="setBulkStatus('Not Started')">Mark Not Started</button>
-    <button class="action-btn" onclick="setBulkStatus('In Progress')">Mark In Progress</button>
-    <button class="action-btn" onclick="setBulkStatus('Completed')">Mark Completed</button>
-    <button class="action-btn" onclick="setBulkStatus('Waiting on Someone')">Mark Waiting</button>
-  </div>
+  <button class="edit-btn" onclick="toggleEditMode()">Edit</button>
 
-  <table>
+  <table id="taskTable">
     <thead>
       <tr>
         <th></th>
-        <th>Task</th>
+        <th>#</th>
+        <th>Task Name</th>
         <th>Status</th>
         <th>Group</th>
       </tr>
     </thead>
-    <tbody id="taskTableBody"></tbody>
+    <tbody id="taskBody">
+      <!-- Tasks will be injected here -->
+    </tbody>
   </table>
 
+  <div class="overlay" id="overlay"></div>
+  <div class="modal" id="modal">
+    <h2>Edit Task</h2>
+    <input type="text" id="modalTaskName"/>
+    <button onclick="saveModal()">Save</button>
+    <button onclick="closeModal()">Close</button>
+  </div>
+
   <script>
-    let tasks = [
-      { name: "Initial Task", status: "Not Started", group: "independent", selected: false }
-    ];
+    let tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    let editMode = false;
+    let currentEditIndex = null;
 
-    function renderTable() {
-      const tbody = document.getElementById('taskTableBody');
-      tbody.innerHTML = '';
-
-      let numbering = [];
-      let seqGroup = 0;
-      let parallelCounter = 1;
-
-      tasks.forEach((task, i) => {
-        let number = '';
-
-        if (task.group === 'independent') {
-          number = (i + 1) + '.';
-        }
-
-        if (task.group === 'sequential') {
-          if (i === 0 || tasks[i - 1].group !== 'sequential') {
-            seqGroup++;
-            numbering[seqGroup] = 1;
-          } else {
-            numbering[seqGroup]++;
-          }
-          number = `${seqGroup}.${numbering[seqGroup]}`;
-        }
-
-        if (task.group === 'parallel') {
-          if (i === 0 || tasks[i - 1].group !== 'parallel') {
-            parallelCounter++;
-          }
-          number = `${parallelCounter}.`;
-        }
-
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td class="drag-select">
-            <span class="drag-handle">&#9776;</span>
-            <input type="checkbox" onchange="toggleSelect(${i})" ${task.selected ? 'checked' : ''}>
-          </td>
-          <td><strong>${number}</strong> <input class="inline-input" type="text" value="${task.name}" onchange="updateTask(${i}, 'name', this.value)"></td>
-          <td>
-            <select class="inline-input" onchange="updateTask(${i}, 'status', this.value)">
-              ${["Not Started", "In Progress", "Completed", "Waiting on Someone"].map(opt => `
-                <option value="${opt}" ${task.status === opt ? 'selected' : ''}>${opt}</option>
-              `).join('')}
-            </select>
-          </td>
-          <td>
-            <select class="inline-input" onchange="updateTask(${i}, 'group', this.value)">
-              ${["independent", "sequential", "parallel"].map(opt => `
-                <option value="${opt}" ${task.group === opt ? 'selected' : ''}>${opt.charAt(0).toUpperCase() + opt.slice(1)}</option>
-              `).join('')}
-            </select>
-          </td>
-        `;
-        tbody.appendChild(row);
-      });
-
-      document.getElementById('bulkActions').style.display = tasks.some(t => t.selected) ? 'block' : 'none';
+    function saveTasks() {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      renderTasks();
     }
 
-    function toggleSelect(index) {
-      tasks[index].selected = !tasks[index].selected;
-      renderTable();
-    }
-
-    function updateTask(index, field, value) {
-      tasks[index][field] = value;
-      renderTable();
-    }
-
-    function deleteSelected() {
-      tasks = tasks.filter(t => !t.selected);
-      renderTable();
-    }
-
-    function setBulkGroup(group) {
-      tasks.forEach(t => {
-        if (t.selected) t.group = group;
-      });
-      renderTable();
-    }
-
-    function setBulkStatus(status) {
-      tasks.forEach(t => {
-        if (t.selected) t.status = status;
-      });
-      renderTable();
-    }
-
-    function addTask() {
-      tasks.push({ name: "New Task", status: "Not Started", group: "independent", selected: false });
-      renderTable();
+    function addTask(name = '', status = 'Not Started', group = 'Independent') {
+      tasks.push({ name, status, group });
+      saveTasks();
     }
 
     function applyWorkflow() {
-      const workflow = [
+      const steps = [
         "Gather client information",
         "Send client online medical",
         "Complete Application",
@@ -212,14 +139,158 @@
         "Submit to underwriting",
         "Delivery policy"
       ];
-      workflow.forEach(name => {
-        tasks.push({ name, status: "Not Started", group: "sequential", selected: false });
-      });
-      renderTable();
+      steps.forEach(step => addTask(step));
     }
 
-    renderTable();
+    function deleteSelected() {
+      const checkboxes = document.querySelectorAll('.select-row:checked');
+      const indexes = Array.from(checkboxes).map(cb => +cb.dataset.index);
+      tasks = tasks.filter((_, i) => !indexes.includes(i));
+      saveTasks();
+    }
+
+    function bulkGroup(value) {
+      document.querySelectorAll('.select-row:checked').forEach(cb => {
+        tasks[+cb.dataset.index].group = value;
+      });
+      saveTasks();
+    }
+
+    function bulkStatus(value) {
+      document.querySelectorAll('.select-row:checked').forEach(cb => {
+        tasks[+cb.dataset.index].status = value;
+      });
+      saveTasks();
+    }
+
+    function toggleEditMode() {
+      editMode = !editMode;
+      document.querySelector('.edit-btn').textContent = editMode ? "Save" : "Edit";
+      renderTasks();
+    }
+
+    function openModal(index) {
+      currentEditIndex = index;
+      document.getElementById('modalTaskName').value = tasks[index].name;
+      document.getElementById('modal').classList.add('show');
+      document.getElementById('overlay').classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('show');
+      document.getElementById('overlay').classList.remove('show');
+    }
+
+    function saveModal() {
+      tasks[currentEditIndex].name = document.getElementById('modalTaskName').value;
+      saveTasks();
+      closeModal();
+    }
+
+    function renderTasks() {
+      const tbody = document.getElementById('taskBody');
+      tbody.innerHTML = '';
+      document.getElementById('bulkActions').style.display = tasks.some((_, i) =>
+        document.querySelector(`.select-row[data-index="${i}"]`)?.checked) ? 'flex' : 'none';
+
+      tasks.forEach((task, i) => {
+        const row = document.createElement('tr');
+
+        const selectTd = document.createElement('td');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'select-row';
+        checkbox.dataset.index = i;
+        checkbox.onclick = () => renderTasks();
+        selectTd.innerHTML = '☰ ';
+        selectTd.appendChild(checkbox);
+        row.appendChild(selectTd);
+
+        const numberTd = document.createElement('td');
+        numberTd.textContent = task.group === 'Sequential' ? `${i + 1}.1` : `${i + 1}`;
+        row.appendChild(numberTd);
+
+        const nameTd = document.createElement('td');
+        if (editMode) {
+          const input = document.createElement('input');
+          input.value = task.name;
+          input.onchange = (e) => {
+            task.name = e.target.value;
+            saveTasks();
+          };
+          nameTd.appendChild(input);
+        } else {
+          const link = document.createElement('a');
+          link.href = "#";
+          link.textContent = task.name;
+          link.onclick = () => openModal(i);
+          nameTd.appendChild(link);
+        }
+        row.appendChild(nameTd);
+
+        const statusTd = document.createElement('td');
+        if (editMode) {
+          const sel = document.createElement('select');
+          ["Not Started", "In Progress", "Completed", "Waiting on Someone"].forEach(s => {
+            const opt = new Option(s, s, s === task.status, s === task.status);
+            sel.appendChild(opt);
+          });
+          sel.onchange = e => {
+            task.status = e.target.value;
+            saveTasks();
+          };
+          statusTd.appendChild(sel);
+        } else {
+          statusTd.textContent = task.status;
+        }
+        row.appendChild(statusTd);
+
+        const groupTd = document.createElement('td');
+        if (editMode) {
+          const sel = document.createElement('select');
+          ["Independent", "Sequential", "Parallel"].forEach(s => {
+            const opt = new Option(s, s, s === task.group, s === task.group);
+            sel.appendChild(opt);
+          });
+          sel.onchange = e => {
+            task.group = e.target.value;
+            saveTasks();
+          };
+          groupTd.appendChild(sel);
+        } else {
+          groupTd.textContent = task.group;
+        }
+        row.appendChild(groupTd);
+
+        tbody.appendChild(row);
+      });
+    }
+
+    function exportTasks() {
+      const blob = new Blob([JSON.stringify(tasks)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'tasks.json';
+      a.click();
+    }
+
+    function importTasks(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          tasks = JSON.parse(e.target.result);
+          saveTasks();
+        } catch (err) {
+          alert("Invalid JSON file");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    renderTasks();
   </script>
 </body>
-
 </html>
