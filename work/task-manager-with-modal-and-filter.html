@@ -1,380 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Task Manager</title>
   <style>
     body {
       font-family: sans-serif;
-      margin: 2rem;
-      background: #f9f9f9;
+      padding: 1rem;
+      background-color: #f0f0f0;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1rem;
+      background: white;
     }
-    th, td {
+
+    th,
+    td {
       border: 1px solid #ccc;
       padding: 0.5rem;
       text-align: left;
-      height: 40px;
     }
-    thead {
+
+    th {
       background-color: #eee;
     }
-    tr.dragging {
-      opacity: 0.5;
+
+    tr {
+      height: 48px;
+      transition: box-shadow 0.2s ease;
     }
-    .bulk-actions {
-      display: none;
-      margin-bottom: 1rem;
-      gap: 1rem;
-      align-items: center;
+
+    tr.drag-over {
+      box-shadow: inset 0 0 0 2px #007bff;
     }
-    .bulk-actions.active {
-      display: flex;
-    }
-    .add-buttons {
-      margin-top: 1rem;
-      display: flex;
-      gap: 1rem;
-    }
-    input[type="text"], select {
-      padding: 5px;
-      border: 1px solid #ccc;
-      background: #f2f2f2;
-    }
+
     .drag-handle {
       cursor: grab;
+      font-size: 18px;
+      color: #666;
     }
-    .edit-mode input, .edit-mode select {
-      pointer-events: auto;
+
+    .drag-handle:hover {
+      color: #007bff;
     }
-    .edit-toggle {
-      float: right;
-      margin-bottom: 1rem;
+
+    select {
+      width: 100%;
     }
-    a.task-link {
-      color: #0077cc;
-      cursor: pointer;
-      text-decoration: underline;
+
+    input[type="text"] {
+      width: 100%;
+      box-sizing: border-box;
     }
   </style>
 </head>
+
 <body>
-
-  <h2>Task Manager</h2>
-
-  <button class="edit-toggle">Edit</button>
-
-  <div class="bulk-actions" id="bulkActions">
-    <select id="bulkGroup">
-      <option disabled selected>Group by</option>
-      <option value="Independent">Set Independent</option>
-      <option value="Sequential">Set Sequential</option>
-      <option value="Parallel">Set Parallel</option>
-    </select>
-
-    <select id="bulkStatus">
-      <option disabled selected>Status</option>
-      <option value="Not Started">Mark Not Started</option>
-      <option value="In Progress">Mark In Progress</option>
-      <option value="Completed">Mark Completed</option>
-      <option value="Waiting on Someone">Mark Waiting</option>
-    </select>
-
-    <button onclick="bulkDelete()">Delete</button>
-  </div>
-
-  <table id="taskTable">
+  <h1>Task Manager</h1>
+  <table>
     <thead>
       <tr>
-        <th></th>
+        <th>Drag</th>
         <th>#</th>
         <th>Task Name</th>
-        <th>Status</th>
-        <th>Group</th>
+        <th>Group Type</th>
       </tr>
     </thead>
-    <tbody id="taskBody"></tbody>
+    <tbody id="taskTable"></tbody>
   </table>
+  <br />
+  <button onclick="addTask()">Add Task</button>
 
-  <div class="add-buttons">
-    <button onclick="addTask()">Add Task</button>
-    <button onclick="addWorkflow()">Apply Workflow</button>
-    <button onclick="exportTasks()">Download JSON</button>
-    <input type="file" id="fileInput" />
-  </div>
-
-  <!-- Modal -->
-  <dialog id="taskModal">
-    <h3>Edit Task</h3>
-    <label>Task Name: <input id="modalTaskName" /></label><br><br>
-    <label>Status:
-      <select id="modalStatus">
-        <option>Not Started</option>
-        <option>In Progress</option>
-        <option>Completed</option>
-        <option>Waiting on Someone</option>
-      </select>
-    </label><br><br>
-    <label>Group:
-      <select id="modalGroup">
-        <option>Independent</option>
-        <option>Sequential</option>
-        <option>Parallel</option>
-      </select>
-    </label><br><br>
-    <button onclick="saveModal()">Save</button>
-    <button onclick="closeModal()">Cancel</button>
-  </dialog>
-
-<script>
-  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-  let editMode = false;
-  let currentEditIndex = null;
-
-  const taskBody = document.getElementById('taskBody');
-  const bulkActions = document.getElementById('bulkActions');
-
-  function saveToLocalStorage() {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }
-
-  function addTask(task = { name: 'New Task', status: 'Not Started', group: 'Independent' }) {
-    tasks.push(task);
-    renderTasks();
-  }
-
-  function addWorkflow() {
-    const workflow = [
-      'Gather client information',
-      'Send client online medical',
-      'Complete Application',
-      'Send to client for eSign',
-      'Submit to underwriting',
-      'Delivery policy'
+  <script>
+    let tasks = [
+      { name: "Independent A", group: "group-independent" },
+      { name: "Independent B", group: "group-independent" },
+      { name: "Independent C", group: "group-independent" },
+      { name: "Sequential A", group: "group-sequential" },
+      { name: "Sequential B", group: "group-sequential" },
+      { name: "Parallel A", group: "group-parallel" },
+      { name: "Parallel B", group: "group-parallel" },
+      { name: "Independent D", group: "group-independent" },
     ];
-    workflow.forEach(name => addTask({ name, status: 'Not Started', group: 'Sequential' }));
-  }
 
-  function bulkDelete() {
-    const checked = document.querySelectorAll('.row-checkbox:checked');
-    const indexes = Array.from(checked).map(cb => Number(cb.dataset.index));
-    tasks = tasks.filter((_, i) => !indexes.includes(i));
-    renderTasks();
-  }
+    function renderTable() {
+      const tbody = document.getElementById("taskTable");
+      tbody.innerHTML = "";
 
-  function updateBulkGroup(value) {
-    const checked = document.querySelectorAll('.row-checkbox:checked');
-    checked.forEach(cb => {
-      tasks[Number(cb.dataset.index)].group = value;
-    });
-    renderTasks();
-  }
+      // Assign numbers based on grouping
+      let number = 1;
+      for (let i = 0; i < tasks.length; i++) {
+        const current = tasks[i];
+        const prev = tasks[i - 1];
+        const next = tasks[i + 1];
 
-  function updateBulkStatus(value) {
-    const checked = document.querySelectorAll('.row-checkbox:checked');
-    checked.forEach(cb => {
-      tasks[Number(cb.dataset.index)].status = value;
-    });
-    renderTasks();
-  }
-
-  document.getElementById('bulkGroup').addEventListener('change', e => {
-    updateBulkGroup(e.target.value);
-    e.target.selectedIndex = 0;
-  });
-
-  document.getElementById('bulkStatus').addEventListener('change', e => {
-    updateBulkStatus(e.target.value);
-    e.target.selectedIndex = 0;
-  });
-
-  function renderTasks() {
-    taskBody.innerHTML = '';
-    let seqMap = new Map();
-    tasks.forEach((task, i) => {
-      const row = document.createElement('tr');
-      row.setAttribute('draggable', true);
-      row.dataset.index = i;
-
-      // Drag + Select column
-      const selectTd = document.createElement('td');
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.className = 'row-checkbox';
-      checkbox.dataset.index = i;
-      checkbox.addEventListener('change', toggleBulkBar);
-
-      const drag = document.createElement('span');
-      drag.textContent = '☰';
-      drag.className = 'drag-handle';
-      drag.style.marginRight = '10px';
-      selectTd.appendChild(drag);
-      selectTd.appendChild(checkbox);
-      row.appendChild(selectTd);
-
-      // Numbering logic
-      let number;
-      if (task.group === 'Parallel') {
-        number = [...seqMap.values()].includes(i) ? Array.from(seqMap.keys()).find(k => seqMap.get(k) === i) : i + 1;
-        seqMap.set(number, i);
-      } else if (task.group === 'Sequential') {
-        let groupNum = tasks.findIndex(t => t.group === 'Sequential');
-        let subNum = [...tasks].slice(0, i).filter(t => t.group === 'Sequential').length;
-        number = `${groupNum + 1}.${subNum + 1}`;
-      } else {
-        number = i + 1;
+        if (current.group === "group-sequential") {
+          if (!prev || prev.group !== "group-sequential") {
+            current.number = `${number}.1`;
+            let sub = 2;
+            let j = i + 1;
+            while (j < tasks.length && tasks[j].group === "group-sequential") {
+              tasks[j].number = `${number}.${sub++}`;
+              j++;
+            }
+            i = j - 1;
+            number++;
+            continue;
+          }
+        } else if (current.group === "group-parallel") {
+          if (!prev || prev.group !== "group-parallel") {
+            current.number = number;
+            let j = i + 1;
+            while (j < tasks.length && tasks[j].group === "group-parallel") {
+              tasks[j].number = number;
+              j++;
+            }
+            i = j - 1;
+            number++;
+            continue;
+          }
+        } else {
+          current.number = number++;
+        }
       }
 
-      const numberTd = document.createElement('td');
-      numberTd.textContent = number;
-      row.appendChild(numberTd);
+      // Render rows
+      tasks.forEach((task, i) => {
+        const row = document.createElement("tr");
+        row.draggable = true;
 
-      // Task name
-      const nameTd = document.createElement('td');
-      if (editMode) {
-        const input = document.createElement('input');
-        input.value = task.name;
-        input.onchange = e => {
-          task.name = e.target.value;
-          saveToLocalStorage();
+        row.ondragstart = (e) => {
+          e.dataTransfer.setData("text/plain", i);
+          row.classList.add("drag-over");
         };
-        nameTd.appendChild(input);
-      } else {
-        const link = document.createElement('a');
-        link.textContent = task.name;
-        link.href = "#";
-        link.className = 'task-link';
-        link.onclick = () => openModal(i);
-        nameTd.appendChild(link);
-      }
-      row.appendChild(nameTd);
 
-      // Status
-      const statusTd = document.createElement('td');
-      if (editMode) {
-        const sel = document.createElement('select');
-        ['Not Started', 'In Progress', 'Completed', 'Waiting on Someone'].forEach(val => {
-          const opt = new Option(val, val, task.status === val, task.status === val);
-          sel.add(opt);
-        });
-        sel.onchange = e => {
-          task.status = e.target.value;
-          saveToLocalStorage();
+        row.ondragover = (e) => {
+          e.preventDefault();
+          row.classList.add("drag-over");
         };
-        statusTd.appendChild(sel);
-      } else {
-        statusTd.textContent = task.status;
-      }
-      row.appendChild(statusTd);
 
-      // Group
-      const groupTd = document.createElement('td');
-      if (editMode) {
-        const sel = document.createElement('select');
-        ['Independent', 'Sequential', 'Parallel'].forEach(val => {
-          const opt = new Option(val, val, task.group === val, task.group === val);
-          sel.add(opt);
-        });
-        sel.onchange = e => {
-          task.group = e.target.value;
-          saveToLocalStorage();
-          renderTasks();
+        row.ondragleave = () => {
+          row.classList.remove("drag-over");
         };
-        groupTd.appendChild(sel);
-      } else {
-        groupTd.textContent = task.group;
-      }
-      row.appendChild(groupTd);
 
-      taskBody.appendChild(row);
-    });
-    saveToLocalStorage();
-  }
+        row.ondrop = (e) => {
+          const from = +e.dataTransfer.getData("text/plain");
+          const to = i;
+          if (from !== to) {
+            const moved = tasks.splice(from, 1)[0];
+            tasks.splice(to, 0, moved);
+            renderTable();
+          }
+        };
 
-  function toggleBulkBar() {
-    const selected = document.querySelectorAll('.row-checkbox:checked').length > 0;
-    bulkActions.classList.toggle('active', selected);
-  }
+        row.ondragend = () => {
+          row.classList.remove("drag-over");
+        };
 
-  document.querySelector('.edit-toggle').addEventListener('click', () => {
-    editMode = !editMode;
-    document.querySelector('.edit-toggle').textContent = editMode ? 'Save' : 'Edit';
-    renderTasks();
-  });
-
-  // Drag and drop logic
-  let dragSrcIndex = null;
-  taskBody.addEventListener('dragstart', e => {
-    dragSrcIndex = +e.target.dataset.index;
-    e.dataTransfer.effectAllowed = 'move';
-    e.target.classList.add('dragging');
-  });
-
-  taskBody.addEventListener('dragend', e => {
-    e.target.classList.remove('dragging');
-  });
-
-  taskBody.addEventListener('dragover', e => {
-    e.preventDefault();
-    const target = e.target.closest('tr');
-    if (target && target.dataset.index !== dragSrcIndex) {
-      taskBody.insertBefore(tasks[dragSrcIndex], target);
+        row.innerHTML = `
+          <td class="drag-handle">&#x2630;</td>
+          <td>${task.number}</td>
+          <td><input type="text" value="${task.name}" onchange="tasks[${i}].name = this.value" /></td>
+          <td>
+            <select onchange="tasks[${i}].group = this.value; renderTable()">
+              <option value="group-independent" ${task.group === "group-independent" ? "selected" : ""}>Independent</option>
+              <option value="group-sequential" ${task.group === "group-sequential" ? "selected" : ""}>Sequential</option>
+              <option value="group-parallel" ${task.group === "group-parallel" ? "selected" : ""}>Parallel</option>
+            </select>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
     }
-  });
 
-  taskBody.addEventListener('drop', e => {
-    e.preventDefault();
-    const targetIndex = +e.target.closest('tr').dataset.index;
-    const [moved] = tasks.splice(dragSrcIndex, 1);
-    tasks.splice(targetIndex, 0, moved);
-    renderTasks();
-  });
+    function addTask() {
+      tasks.push({ name: "New Task", group: "group-independent" });
+      renderTable();
+    }
 
-  // Modal
-  function openModal(index) {
-    currentEditIndex = index;
-    document.getElementById('modalTaskName').value = tasks[index].name;
-    document.getElementById('modalStatus').value = tasks[index].status;
-    document.getElementById('modalGroup').value = tasks[index].group;
-    document.getElementById('taskModal').showModal();
-  }
-
-  function saveModal() {
-    const task = tasks[currentEditIndex];
-    task.name = document.getElementById('modalTaskName').value;
-    task.status = document.getElementById('modalStatus').value;
-    task.group = document.getElementById('modalGroup').value;
-    closeModal();
-    renderTasks();
-  }
-
-  function closeModal() {
-    document.getElementById('taskModal').close();
-  }
-
-  function exportTasks() {
-    const blob = new Blob([JSON.stringify(tasks)], { type: 'application/json' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'tasks.json';
-    a.click();
-  }
-
-  document.getElementById('fileInput').addEventListener('change', e => {
-    const reader = new FileReader();
-    reader.onload = function(evt) {
-      tasks = JSON.parse(evt.target.result);
-      renderTasks();
-    };
-    reader.readAsText(e.target.files[0]);
-  });
-
-  renderTasks();
-</script>
+    renderTable();
+  </script>
 </body>
+
 </html>
