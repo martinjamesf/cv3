@@ -73,6 +73,11 @@
       padding: 0.4rem 0.8rem;
       font-size: 1rem;
     }
+
+    .group-indicator {
+      display: inline-block;
+      margin-right: 0.3rem;
+    }
   </style>
 </head>
 <body>
@@ -111,9 +116,7 @@
         <th>Group</th>
       </tr>
     </thead>
-    <tbody id="taskList">
-      <!-- Tasks will be rendered here -->
-    </tbody>
+    <tbody id="taskList"></tbody>
   </table>
 
   <script>
@@ -176,37 +179,6 @@
     function renderTasks() {
       const tbody = document.getElementById("taskList");
       tbody.innerHTML = "";
-      let groupNum = 1;
-      let subCount = 1;
-
-      const getDisplayNumbers = () => {
-        const numbers = [];
-        let groupId = 1;
-        for (let i = 0; i < tasks.length; i++) {
-          const prev = tasks[i - 1];
-          const curr = tasks[i];
-          const next = tasks[i + 1];
-
-          if (curr.group === "Sequential") {
-            if (!prev || prev.group !== "Sequential") {
-              subCount = 1;
-              numbers.push(`${groupId}.${subCount}`);
-            } else {
-              subCount++;
-              numbers.push(`${groupId}.${subCount}`);
-            }
-            if (!next || next.group !== "Sequential") groupId++;
-          } else if (curr.group === "Parallel") {
-            if (!prev || prev.group !== "Parallel") groupId++;
-            numbers.push(`${groupId}`);
-            if (!next || next.group !== "Parallel") groupId++;
-          } else {
-            numbers.push(`${groupId}`);
-            groupId++;
-          }
-        }
-        return numbers;
-      };
 
       const displayNumbers = getDisplayNumbers();
 
@@ -218,12 +190,16 @@
         row.addEventListener("dragover", onDragOver);
         row.addEventListener("drop", onDrop);
 
+        let icon = "💡"; // Independent default
+        if (task.group === "Sequential") icon = "🔁";
+        else if (task.group === "Parallel") icon = "🔀";
+
         row.innerHTML = `
           <td>
             <span class="drag-handle" title="Drag to reorder">☰</span>
             <input type="checkbox" id="select-${index}" onchange="toggleBulkBar()">
           </td>
-          <td>${displayNumbers[index]}</td>
+          <td><span class="group-indicator">${icon}</span>${displayNumbers[index]}</td>
           <td>
             <input type="text" value="${task.name}" onchange="tasks[${index}].name=this.value; saveAndRender()">
           </td>
@@ -247,6 +223,41 @@
       });
 
       toggleBulkBar();
+    }
+
+    function getDisplayNumbers() {
+      const numbers = [];
+      let groupId = 1;
+      let subCount = 1;
+
+      for (let i = 0; i < tasks.length; i++) {
+        const prev = tasks[i - 1];
+        const curr = tasks[i];
+        const next = tasks[i + 1];
+
+        if (curr.group === "Sequential") {
+          if (!prev || prev.group !== "Sequential") {
+            subCount = 1;
+            numbers.push(`${groupId}.${subCount}`);
+          } else {
+            subCount++;
+            numbers.push(`${groupId}.${subCount}`);
+          }
+          if (!next || next.group !== "Sequential") groupId++;
+        } else if (curr.group === "Parallel") {
+          if (!prev || prev.group !== "Parallel") {
+            numbers.push(`${groupId}`);
+          } else {
+            numbers.push(`${groupId}`);
+          }
+          if (!next || next.group !== "Parallel") groupId++;
+        } else {
+          numbers.push(`${groupId}`);
+          groupId++;
+        }
+      }
+
+      return numbers;
     }
 
     function toggleBulkBar() {
