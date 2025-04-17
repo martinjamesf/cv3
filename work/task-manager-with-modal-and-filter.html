@@ -4,141 +4,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Task Table</title>
+  <title>Task Manager</title>
   <style>
     body {
       font-family: sans-serif;
-      padding: 2rem;
-      background: #f7f7f7;
+      padding: 1rem;
     }
 
-    .table-container {
-      overflow-x: auto;
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      gap: 1rem;
+    }
+
+    .action-buttons,
+    .bulk-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      background-color: #eee;
       border: 1px solid #ccc;
-      border-radius: 6px;
-      background: #fff;
+      border-radius: 4px;
+      cursor: pointer;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 800px;
+      margin-top: 1rem;
     }
 
     th,
     td {
-      border-bottom: 1px solid #ddd;
-      padding: 8px 10px;
-      text-align: left;
-      vertical-align: middle;
-      height: 48px;
-    }
-
-    th {
-      background: #f0f0f0;
-      font-weight: bold;
-    }
-
-    td input[type="text"],
-    td select,
-    td input[type="number"] {
-      width: 100%;
-      padding: 4px 6px;
-      font-size: 14px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      padding: 0.5rem;
+      text-align: left;
+      height: 44px;
+    }
+
+    tr.dragging {
+      opacity: 0.5;
     }
 
     .drag-handle {
       cursor: move;
-      margin-right: 8px;
     }
 
-    .bulk-actions {
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 4px 6px;
+      font-size: 0.9rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .hidden {
       display: none;
-      margin-bottom: 0.5rem;
-      gap: 1rem;
-      align-items: center;
     }
 
-    .bulk-actions.active {
-      display: flex;
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      background: white;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      transform: translate(-50%, -50%);
+      z-index: 999;
+      min-width: 300px;
     }
 
-    .top-bar {
+    .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-      gap: 1rem;
+      margin-bottom: 0.5rem;
     }
 
-    .action-buttons {
-      display: flex;
-      gap: 0.75rem;
-    }
-
-    .bulk-actions select,
-    .bulk-actions button {
-      margin-right: 0.5rem;
-    }
-
-    .btn {
-      padding: 6px 12px;
-      font-size: 14px;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      background: #0056b3;
-    }
-
-    .flex {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-
-    .edit-toggle {
-      float: right;
-    }
-
-    a.task-link {
-      color: #007bff;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-
-    /* Modal Styles */
-    .modal {
-      display: none;
+    .overlay {
       position: fixed;
-      z-index: 10;
-      left: 0;
       top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background: rgba(0, 0, 0, 0.4);
-    }
-
-    .modal-content {
-      background: white;
-      margin: 10% auto;
-      padding: 1rem;
-      width: 400px;
-      border-radius: 8px;
-    }
-
-    .modal-close {
-      float: right;
-      cursor: pointer;
-      font-weight: bold;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 998;
     }
   </style>
 </head>
@@ -149,19 +107,19 @@
     <div class="action-buttons">
       <button class="btn" onclick="addTask()">Add Task</button>
       <button class="btn" onclick="applyWorkflow()">Apply Workflows</button>
-      <button class="btn edit-toggle" onclick="toggleEdit()">
+      <button class="btn" onclick="toggleEditMode()">
         <span id="editToggleText">Edit</span>
       </button>
     </div>
     <div class="bulk-actions" id="bulkActions">
-      <select id="bulkGroup" onchange="applyBulkGroup(this.value)">
+      <select onchange="applyBulkGroup(this.value)">
         <option value="">Group by</option>
         <option value="Independent">Independent</option>
         <option value="Sequential">Sequential</option>
         <option value="Parallel">Parallel</option>
       </select>
 
-      <select id="bulkStatus" onchange="applyBulkStatus(this.value)">
+      <select onchange="applyBulkStatus(this.value)">
         <option value="">Status</option>
         <option value="Not Started">Not Started</option>
         <option value="In Progress">In Progress</option>
@@ -173,147 +131,56 @@
     </div>
   </div>
 
-
-  <div class="table-container">
-    <table id="taskTable">
-      <thead>
-        <tr>
-          <th></th>
-          <th>#</th>
-          <th>Task Name</th>
-          <th>Status</th>
-          <th>Group</th>
-          <th>Task Creation Sequence</th>
-        </tr>
-      </thead>
-      <tbody id="taskBody"></tbody>
-    </table>
-  </div>
+  <table id="taskTable">
+    <thead>
+      <tr>
+        <th></th>
+        <th>#</th>
+        <th>Task Name</th>
+        <th>Status</th>
+        <th>Group</th>
+        <th>Task Creation Sequence</th>
+      </tr>
+    </thead>
+    <tbody id="taskBody"></tbody>
+  </table>
 
   <!-- Modal -->
-  <div id="taskModal" class="modal">
-    <div class="modal-content">
-      <span class="modal-close" onclick="closeModal()">×</span>
-      <h3>Edit Task</h3>
-      <div id="modalContent"></div>
+  <div class="overlay hidden" id="modalOverlay" onclick="closeModal()"></div>
+  <div class="modal hidden" id="taskModal">
+    <div class="modal-header">
+      <strong>Edit Task</strong>
+      <button onclick="closeModal()">✕</button>
+    </div>
+    <div>
+      <label>Task Name:</label>
+      <input type="text" id="modalTaskName" />
     </div>
   </div>
 
   <script>
     let tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-    let editing = false;
+    let editMode = false;
+    let currentEditIndex = null;
 
-    function saveTasks() {
+    const taskBody = document.getElementById('taskBody');
+
+    function saveToLocalStorage() {
       localStorage.setItem('tasks', JSON.stringify(tasks));
-      render();
-    }
-
-    function render() {
-      const tbody = document.getElementById("taskBody");
-      tbody.innerHTML = "";
-
-      let numbering = [];
-      let currentGroup = null;
-      let groupCount = 0;
-      let seqSub = 1;
-
-      tasks.forEach((task, index) => {
-        const prev = tasks[index - 1];
-        const next = tasks[index + 1];
-        let number = "";
-
-        if (task.group === "Sequential") {
-          if (!prev || prev.group !== "Sequential") {
-            groupCount++;
-            seqSub = 1;
-          }
-          number = `${groupCount}.${seqSub++}`;
-        } else if (task.group === "Parallel") {
-          if (!prev || prev.group !== "Parallel") groupCount++;
-          number = groupCount;
-        } else {
-          groupCount++;
-          number = groupCount;
-        }
-
-        const tr = document.createElement("tr");
-
-        // Drag handle + checkbox
-        const drag = document.createElement("td");
-        drag.innerHTML = `<span class="drag-handle">☰</span> <input type="checkbox" onchange="toggleBulkActions()" data-index="${index}"/>`;
-        tr.appendChild(drag);
-
-        const tdNum = document.createElement("td");
-        tdNum.textContent = number;
-        tr.appendChild(tdNum);
-
-        // Task Name
-        const tdTask = document.createElement("td");
-        if (editing) {
-          const input = document.createElement("input");
-          input.type = "text";
-          input.value = task.name || "";
-          input.onchange = e => { task.name = e.target.value; saveTasks(); };
-          tdTask.appendChild(input);
-        } else {
-          const link = document.createElement("a");
-          link.textContent = task.name || "Untitled";
-          link.className = "task-link";
-          link.onclick = () => openModal(index);
-          tdTask.appendChild(link);
-        }
-        tr.appendChild(tdTask);
-
-        // Status
-        const tdStatus = document.createElement("td");
-        if (editing) {
-          const sel = document.createElement("select");
-          ["Not Started", "In Progress", "Completed", "Waiting on Someone"].forEach(status => {
-            const option = new Option(status, status, task.status === status, task.status === status);
-            sel.appendChild(option);
-          });
-          sel.onchange = e => { task.status = e.target.value; saveTasks(); };
-          tdStatus.appendChild(sel);
-        } else {
-          tdStatus.textContent = task.status || "Not Started";
-        }
-        tr.appendChild(tdStatus);
-
-        // Group
-        const tdGroup = document.createElement("td");
-        if (editing) {
-          const sel = document.createElement("select");
-          ["Independent", "Sequential", "Parallel"].forEach(group => {
-            const option = new Option(group, group, task.group === group, task.group === group);
-            sel.appendChild(option);
-          });
-          sel.onchange = e => { task.group = e.target.value; saveTasks(); };
-          tdGroup.appendChild(sel);
-        } else {
-          tdGroup.textContent = task.group || "Independent";
-        }
-        tr.appendChild(tdGroup);
-
-        // Task Creation Sequence
-        const tdCreate = document.createElement("td");
-        const input = document.createElement("input");
-        input.type = "number";
-        input.value = task.creation || index + 1;
-        input.onchange = e => { task.creation = parseInt(e.target.value, 10); saveTasks(); };
-        tdCreate.appendChild(input);
-        tr.appendChild(tdCreate);
-
-        tbody.appendChild(tr);
-      });
     }
 
     function addTask() {
-      tasks.push({ name: "", status: "Not Started", group: "Independent", creation: tasks.length + 1 });
-      saveTasks();
+      tasks.push({
+        name: 'New Task',
+        status: 'Not Started',
+        group: 'Independent',
+        creationSequence: ''
+      });
+      render();
     }
 
     function applyWorkflow() {
-      const steps = [
+      const workflowSteps = [
         "Gather client information",
         "Send client online medical",
         "Complete Application",
@@ -321,70 +188,169 @@
         "Submit to underwriting",
         "Delivery policy"
       ];
-      steps.forEach(name => tasks.push({ name, status: "Not Started", group: "Independent", creation: tasks.length + 1 }));
-      saveTasks();
-    }
-
-    function toggleEdit() {
-      editing = !editing;
-      document.getElementById("editToggleText").textContent = editing ? "Save" : "Edit";
+      workflowSteps.forEach(name => {
+        tasks.push({ name, status: 'Not Started', group: 'Independent', creationSequence: '' });
+      });
       render();
     }
 
-    function openModal(index) {
-      const modal = document.getElementById("taskModal");
-      const content = document.getElementById("modalContent");
-      const task = tasks[index];
-      content.innerHTML = `
-        <label>Task Name:</label>
-        <input type="text" value="${task.name}" onchange="tasks[${index}].name=this.value; saveTasks()" />
-        <br/><br/>
-        <label>Status:</label>
-        <select onchange="tasks[${index}].status=this.value; saveTasks()">
-          <option ${task.status === "Not Started" ? "selected" : ""}>Not Started</option>
-          <option ${task.status === "In Progress" ? "selected" : ""}>In Progress</option>
-          <option ${task.status === "Completed" ? "selected" : ""}>Completed</option>
-          <option ${task.status === "Waiting on Someone" ? "selected" : ""}>Waiting on Someone</option>
-        </select>
-        <br/><br/>
-        <label>Group:</label>
-        <select onchange="tasks[${index}].group=this.value; saveTasks()">
-          <option ${task.group === "Independent" ? "selected" : ""}>Independent</option>
-          <option ${task.group === "Sequential" ? "selected" : ""}>Sequential</option>
-          <option ${task.group === "Parallel" ? "selected" : ""}>Parallel</option>
-        </select>
-      `;
-      modal.style.display = "block";
+    function render() {
+      taskBody.innerHTML = '';
+      let numbering = [];
+      let count = 1;
+
+      for (let i = 0; i < tasks.length; i++) {
+        const prev = tasks[i - 1];
+        const curr = tasks[i];
+        const next = tasks[i + 1];
+        let num = '';
+
+        if (curr.group === 'Sequential') {
+          if (!prev || prev.group !== 'Sequential') {
+            num = count + '.1';
+          } else {
+            let last = numbering[numbering.length - 1];
+            let base = parseInt(last.split('.')[0]);
+            let sub = parseInt(last.split('.')[1] || 0) + 1;
+            num = `${base}.${sub}`;
+          }
+        } else if (curr.group === 'Parallel') {
+          if (!prev || prev.group !== 'Parallel') {
+            num = count;
+          } else {
+            num = numbering[numbering.length - 1];
+          }
+        } else {
+          num = count;
+        }
+
+        numbering.push(num);
+        if (!next || next.group !== curr.group) count++;
+
+        const row = document.createElement('tr');
+        row.setAttribute('draggable', 'true');
+        row.className = 'task-row';
+
+        row.innerHTML = `
+          <td>
+            <span class="drag-handle">☰</span>
+            <input type="checkbox" onchange="toggleCheckbox(${i})">
+          </td>
+          <td>${num}</td>
+          <td>
+            ${editMode
+            ? `<input type="text" value="${curr.name}" onchange="updateTaskName(${i}, this.value)">`
+            : `<a href="#" onclick="openModal(${i})">${curr.name}</a>`}
+          </td>
+          <td>
+            ${editMode
+            ? `<select onchange="updateStatus(${i}, this.value)">
+                  ${["Not Started", "In Progress", "Completed", "Waiting on Someone"].map(
+              s => `<option ${s === curr.status ? "selected" : ""}>${s}</option>`
+            ).join('')}
+                </select>`
+            : curr.status}
+          </td>
+          <td>
+            ${editMode
+            ? `<select onchange="updateGroup(${i}, this.value)">
+                  ${["Independent", "Sequential", "Parallel"].map(
+              g => `<option ${g === curr.group ? "selected" : ""}>${g}</option>`
+            ).join('')}
+                </select>`
+            : curr.group}
+          </td>
+          <td><input type="text" value="${curr.creationSequence || ''}" onchange="updateTaskSequence(${i}, this.value)"></td>
+        `;
+
+        taskBody.appendChild(row);
+
+        // Drag logic
+        row.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('text/plain', i);
+          row.classList.add('dragging');
+        });
+        row.addEventListener('dragend', () => row.classList.remove('dragging'));
+        row.addEventListener('dragover', e => e.preventDefault());
+        row.addEventListener('drop', e => {
+          const from = +e.dataTransfer.getData('text/plain');
+          const to = i;
+          const moved = tasks.splice(from, 1)[0];
+          tasks.splice(to, 0, moved);
+          render();
+          saveToLocalStorage();
+        });
+      }
+
+      saveToLocalStorage();
     }
 
-    function closeModal() {
-      document.getElementById("taskModal").style.display = "none";
+    function updateTaskName(i, value) {
+      tasks[i].name = value;
+      saveToLocalStorage();
     }
 
-    function toggleBulkActions() {
-      const checked = [...document.querySelectorAll("input[type=checkbox]:checked")];
-      document.getElementById("bulkActions").classList.toggle("active", checked.length > 0);
+    function updateStatus(i, value) {
+      tasks[i].status = value;
+      saveToLocalStorage();
     }
 
-    function applyBulkGroup(group) {
-      document.querySelectorAll("input[type=checkbox]:checked").forEach(cb => {
-        const index = cb.dataset.index;
-        tasks[index].group = group;
-      });
-      saveTasks();
+    function updateGroup(i, value) {
+      tasks[i].group = value;
+      saveToLocalStorage();
     }
 
-    function applyBulkStatus(status) {
-      document.querySelectorAll("input[type=checkbox]:checked").forEach(cb => {
-        const index = cb.dataset.index;
-        tasks[index].status = status;
-      });
-      saveTasks();
+    function updateTaskSequence(i, value) {
+      tasks[i].creationSequence = value;
+      saveToLocalStorage();
+    }
+
+    function toggleCheckbox(index) {
+      tasks[index].checked = !tasks[index].checked;
+      render();
     }
 
     function deleteSelected() {
-      tasks = tasks.filter((_, i) => !document.querySelector(`input[type=checkbox][data-index="${i}"]`)?.checked);
-      saveTasks();
+      tasks = tasks.filter(task => !task.checked);
+      render();
+    }
+
+    function applyBulkGroup(group) {
+      tasks.forEach(task => {
+        if (task.checked) task.group = group;
+      });
+      render();
+    }
+
+    function applyBulkStatus(status) {
+      tasks.forEach(task => {
+        if (task.checked) task.status = status;
+      });
+      render();
+    }
+
+    function toggleEditMode() {
+      editMode = !editMode;
+      document.getElementById('editToggleText').innerText = editMode ? 'Save' : 'Edit';
+      render();
+    }
+
+    function openModal(i) {
+      currentEditIndex = i;
+      document.getElementById('modalTaskName').value = tasks[i].name;
+      document.getElementById('taskModal').classList.remove('hidden');
+      document.getElementById('modalOverlay').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('taskModal').classList.add('hidden');
+      document.getElementById('modalOverlay').classList.add('hidden');
+      if (currentEditIndex !== null) {
+        tasks[currentEditIndex].name = document.getElementById('modalTaskName').value;
+        render();
+        saveToLocalStorage();
+      }
+      currentEditIndex = null;
     }
 
     render();
