@@ -1,256 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Task Manager</title>
   <style>
     body {
       font-family: sans-serif;
-      padding: 20px;
-    }
-
-    .task-form {
-      margin-bottom: 20px;
-    }
-
-    .action-btn {
-      padding: 10px 16px;
-      margin-right: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-
-    .action-btn:hover {
-      background-color: #0056b3;
+      padding: 2rem;
+      background: #f9f9f9;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      table-layout: fixed;
+      margin-top: 1rem;
     }
 
     th, td {
       border: 1px solid #ccc;
-      padding: 0 8px;
-      height: 48px;
+      padding: 0.6rem 0.8rem;
       text-align: left;
       vertical-align: middle;
+      background: #fff;
     }
 
-    tr {
-      height: 48px;
+    th {
+      background: #eee;
     }
 
-    .task-name {
-      display: inline-block;
-      height: 34px;
-      line-height: 34px;
-      padding: 0 10px;
-      border: 1px solid #ddd;
-      border-radius: 3px;
-      min-width: 150px;
-      vertical-align: middle;
-    }
-
-    select {
-      height: 34px;
-      padding: 6px 10px;
-      border: 1px solid #ddd;
-      border-radius: 3px;
-      background-color: #fff;
-      font-size: 14px;
-      vertical-align: middle;
-      appearance: none;
-      background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2210%22%20height%3D%227%22%20viewBox%3D%220%200%2010%207%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M0%200l5%207%205-7z%22%20fill%3D%22%23666%22/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      background-size: 10px 7px;
-      padding-right: 30px;
+    tr.dragging {
+      opacity: 0.6;
+      background: #f0f0f0;
     }
 
     .drag-handle {
       cursor: grab;
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-right: 0.5rem;
     }
 
-    #bulkActions {
+    input[type="text"], select {
+      width: 100%;
+      padding: 0.3rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      background: #f0f0f0;
+    }
+
+    .actions {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .hidden {
       display: none;
-      margin-bottom: 10px;
+    }
+
+    .bulk-bar {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      background: #ddd;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+
+    .bulk-bar select, .bulk-bar button {
+      padding: 0.4rem 0.8rem;
+      font-size: 1rem;
     }
   </style>
 </head>
 <body>
 
-<div class="task-form">
-  <button class="action-btn" onclick="addTask()">Add Task</button>
-  <button class="action-btn" onclick="applyWorkflow()">Apply Workflow</button>
-</div>
+  <h1>Task Manager</h1>
 
-<div id="bulkActions">
-  <button class="action-btn" onclick="deleteSelected()">Delete</button>
-</div>
+  <div class="actions">
+    <button onclick="addTask()">➕ Add Task</button>
+    <button onclick="applyWorkflow()">📋 Apply Workflow</button>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th>#</th>
-      <th>Task</th>
-      <th>Task Name</th>
-      <th>Status</th>
-      <th>Group</th>
-    </tr>
-  </thead>
-  <tbody id="taskTableBody"></tbody>
-</table>
+  <div id="bulkActions" class="bulk-bar hidden">
+    <select id="bulkGroupSelect" onchange="applyBulkGroup(this.value)">
+      <option value="">Group by…</option>
+      <option value="Independent">Set Independent</option>
+      <option value="Sequential">Set Sequential</option>
+      <option value="Parallel">Set Parallel</option>
+    </select>
+    <select id="bulkStatusSelect" onchange="applyBulkStatus(this.value)">
+      <option value="">Status…</option>
+      <option value="Not Started">Mark Not Started</option>
+      <option value="In Progress">Mark In Progress</option>
+      <option value="Completed">Mark Completed</option>
+      <option value="Waiting on Someone">Mark Waiting</option>
+    </select>
+    <button onclick="deleteSelected()">🗑️ Delete</button>
+  </div>
 
-<script>
-let tasks = [];
+  <table id="taskTable">
+    <thead>
+      <tr>
+        <th></th>
+        <th>#</th>
+        <th>Task Name</th>
+        <th>Status</th>
+        <th>Group</th>
+      </tr>
+    </thead>
+    <tbody id="taskList">
+      <!-- Tasks will be rendered here -->
+    </tbody>
+  </table>
 
-function renderTable() {
-  const tbody = document.getElementById('taskTableBody');
-  tbody.innerHTML = "";
+  <script>
+    let tasks = [];
+    let draggingEl;
 
-  // Step 1: Recalculate grouping based on neighbors
-  tasks.forEach((task, i) => {
-    const prev = tasks[i - 1];
-    const next = tasks[i + 1];
-    const isPrevSeq = prev && prev.group === 'group-sequential';
-    const isNextSeq = next && next.group === 'group-sequential';
-
-    if (task.group === 'group-sequential' && !isPrevSeq && !isNextSeq) {
-      task.group = 'group-independent';
-      task.groupKey = crypto.randomUUID();
+    function addTask(name = '', status = 'Not Started', group = 'Independent') {
+      tasks.push({ name, status, group });
+      saveAndRender();
     }
 
-    if (task.group !== 'group-sequential' && (isPrevSeq || isNextSeq)) {
-      task.group = 'group-sequential';
-      task.groupKey = (isPrevSeq ? prev.groupKey : next.groupKey) || crypto.randomUUID();
-    }
-  });
-
-  // Step 2: Renumber tasks
-  let currentNumber = 1;
-  let lastGroupKeys = { 'group-parallel': {}, 'group-sequential': {} };
-
-  tasks.forEach((task, index) => {
-    let taskNumber = "";
-
-    if (task.group === "group-independent") {
-      taskNumber = currentNumber++;
-    } else if (task.group === "group-parallel") {
-      if (!(task.groupKey in lastGroupKeys['group-parallel'])) {
-        lastGroupKeys['group-parallel'][task.groupKey] = currentNumber++;
-      }
-      taskNumber = lastGroupKeys['group-parallel'][task.groupKey];
-    } else if (task.group === "group-sequential") {
-      if (!(task.groupKey in lastGroupKeys['group-sequential'])) {
-        lastGroupKeys['group-sequential'][task.groupKey] = { main: currentNumber++, sub: 1 };
-      } else {
-        lastGroupKeys['group-sequential'][task.groupKey].sub++;
-      }
-      const { main, sub } = lastGroupKeys['group-sequential'][task.groupKey];
-      taskNumber = main + "." + sub;
+    function applyWorkflow() {
+      const workflowTasks = [
+        "Gather client information",
+        "Send client online medical",
+        "Complete Application",
+        "Send to client for eSign",
+        "Submit to underwriting",
+        "Delivery policy"
+      ];
+      workflowTasks.forEach(name => addTask(name));
     }
 
-    task.number = taskNumber;
-  });
+    function deleteSelected() {
+      tasks = tasks.filter((_, i) => !document.getElementById(`select-${i}`).checked);
+      saveAndRender();
+    }
 
-  // Step 3: Render tasks
-  tasks.forEach((task, i) => {
-    const row = document.createElement('tr');
-    row.setAttribute('draggable', 'true');
-    row.ondragstart = (e) => { e.dataTransfer.setData("text/plain", i); };
-    row.ondragover = (e) => { e.preventDefault(); };
-    row.ondrop = (e) => {
-      const from = +e.dataTransfer.getData("text/plain");
-      const to = i;
-      if (from !== to) {
-        const moved = tasks.splice(from, 1)[0];
-        tasks.splice(to, 0, moved);
-        renderTable();
-      }
-    };
+    function applyBulkGroup(value) {
+      if (!value) return;
+      tasks.forEach((t, i) => {
+        if (document.getElementById(`select-${i}`).checked) {
+          t.group = value;
+        }
+      });
+      saveAndRender();
+    }
 
-    row.innerHTML = `
-      <td><input type="checkbox" onchange="toggleBulkActions()" /></td>
-      <td>${task.number}</td>
-      <td class="drag-handle">☰</td>
-      <td contenteditable="true" oninput="tasks[${i}].name = this.textContent">${task.name}</td>
-      <td>
-        <select onchange="tasks[${i}].status = this.value">
-          ${['Not Started', 'In Progress', 'Completed', 'Waiting on Someone'].map(
-            s => `<option value="${s}" ${task.status === s ? 'selected' : ''}>${s}</option>`
-          ).join('')}
-        </select>
-      </td>
-      <td>
-        <select onchange="updateGroup(${i}, this.value)">
-          ${['group-independent', 'group-parallel', 'group-sequential'].map(
-            g => `<option value="${g}" ${task.group === g ? 'selected' : ''}>${g.replace('group-', '')}</option>`
-          ).join('')}
-        </select>
-      </td>
-    `;
+    function applyBulkStatus(value) {
+      if (!value) return;
+      tasks.forEach((t, i) => {
+        if (document.getElementById(`select-${i}`).checked) {
+          t.status = value;
+        }
+      });
+      saveAndRender();
+    }
 
-    tbody.appendChild(row);
-  });
-  toggleBulkActions();
-}
+    function saveAndRender() {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      renderTasks();
+    }
 
-function updateGroup(index, newGroup) {
-  tasks[index].group = newGroup;
-  tasks[index].groupKey = crypto.randomUUID();
-  renderTable();
-}
+    function loadTasks() {
+      const stored = localStorage.getItem("tasks");
+      tasks = stored ? JSON.parse(stored) : [];
+      renderTasks();
+    }
 
-function addTask() {
-  tasks.push({
-    name: "New Task",
-    status: "Not Started",
-    group: "group-independent",
-    groupKey: crypto.randomUUID()
-  });
-  renderTable();
-}
+    function renderTasks() {
+      const tbody = document.getElementById("taskList");
+      tbody.innerHTML = "";
+      let groupNum = 1;
+      let subCount = 1;
 
-function applyWorkflow() {
-  const workflow = [
-    "Gather client information",
-    "Send client online medical",
-    "Complete Application",
-    "Send to client for eSign",
-    "Submit to underwriting",
-    "Delivery policy"
-  ];
-  const key = crypto.randomUUID();
-  workflow.forEach(name => tasks.push({
-    name,
-    status: "Not Started",
-    group: "group-sequential",
-    groupKey: key
-  }));
-  renderTable();
-}
+      const getDisplayNumbers = () => {
+        const numbers = [];
+        let groupId = 1;
+        for (let i = 0; i < tasks.length; i++) {
+          const prev = tasks[i - 1];
+          const curr = tasks[i];
+          const next = tasks[i + 1];
 
-function toggleBulkActions() {
-  const anyChecked = [...document.querySelectorAll("tbody input[type='checkbox']")].some(cb => cb.checked);
-  document.getElementById("bulkActions").style.display = anyChecked ? "block" : "none";
-}
+          if (curr.group === "Sequential") {
+            if (!prev || prev.group !== "Sequential") {
+              subCount = 1;
+              numbers.push(`${groupId}.${subCount}`);
+            } else {
+              subCount++;
+              numbers.push(`${groupId}.${subCount}`);
+            }
+            if (!next || next.group !== "Sequential") groupId++;
+          } else if (curr.group === "Parallel") {
+            if (!prev || prev.group !== "Parallel") groupId++;
+            numbers.push(`${groupId}`);
+            if (!next || next.group !== "Parallel") groupId++;
+          } else {
+            numbers.push(`${groupId}`);
+            groupId++;
+          }
+        }
+        return numbers;
+      };
 
-function deleteSelected() {
-  const checkboxes = [...document.querySelectorAll("tbody input[type='checkbox']")];
-  tasks = tasks.filter((_, i) => !checkboxes[i].checked);
-  renderTable();
-}
+      const displayNumbers = getDisplayNumbers();
 
-addTask(); // Initialize with one task
-</script>
+      tasks.forEach((task, index) => {
+        const row = document.createElement("tr");
+        row.draggable = true;
+        row.dataset.index = index;
+        row.addEventListener("dragstart", onDragStart);
+        row.addEventListener("dragover", onDragOver);
+        row.addEventListener("drop", onDrop);
 
+        row.innerHTML = `
+          <td>
+            <span class="drag-handle" title="Drag to reorder">☰</span>
+            <input type="checkbox" id="select-${index}" onchange="toggleBulkBar()">
+          </td>
+          <td>${displayNumbers[index]}</td>
+          <td>
+            <input type="text" value="${task.name}" onchange="tasks[${index}].name=this.value; saveAndRender()">
+          </td>
+          <td>
+            <select onchange="tasks[${index}].status=this.value; saveAndRender()">
+              <option${task.status === "Not Started" ? " selected" : ""}>Not Started</option>
+              <option${task.status === "In Progress" ? " selected" : ""}>In Progress</option>
+              <option${task.status === "Completed" ? " selected" : ""}>Completed</option>
+              <option${task.status === "Waiting on Someone" ? " selected" : ""}>Waiting on Someone</option>
+            </select>
+          </td>
+          <td>
+            <select onchange="tasks[${index}].group=this.value; saveAndRender()">
+              <option${task.group === "Independent" ? " selected" : ""}>Independent</option>
+              <option${task.group === "Sequential" ? " selected" : ""}>Sequential</option>
+              <option${task.group === "Parallel" ? " selected" : ""}>Parallel</option>
+            </select>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      toggleBulkBar();
+    }
+
+    function toggleBulkBar() {
+      const anyChecked = tasks.some((_, i) =>
+        document.getElementById(`select-${i}`)?.checked
+      );
+      document.getElementById("bulkActions").classList.toggle("hidden", !anyChecked);
+    }
+
+    function onDragStart(e) {
+      draggingEl = e.currentTarget;
+      e.dataTransfer.effectAllowed = "move";
+    }
+
+    function onDragOver(e) {
+      e.preventDefault();
+      const target = e.currentTarget;
+      if (draggingEl === target) return;
+      const draggingIndex = +draggingEl.dataset.index;
+      const targetIndex = +target.dataset.index;
+      const draggedTask = tasks.splice(draggingIndex, 1)[0];
+      tasks.splice(targetIndex, 0, draggedTask);
+      saveAndRender();
+    }
+
+    loadTasks();
+  </script>
 </body>
 </html>
