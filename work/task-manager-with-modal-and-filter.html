@@ -236,7 +236,7 @@
 
     function updateNumbering() {
       const rows = [...taskTable.querySelectorAll('tr')];
-      let groupIndex = 1, subIndex = 1, previousGroup = "";
+      let groupIndex = 0, subIndex = 1, previousGroup = "";
 
       rows.forEach((row, idx) => {
         const group = row.cells[5].querySelector('select')?.value;
@@ -256,6 +256,7 @@
         previousGroup = group;
       });
     }
+
 
     document.getElementById('addTask').onclick = () => createTaskRow();
 
