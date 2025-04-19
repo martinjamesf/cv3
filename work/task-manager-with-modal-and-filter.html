@@ -1,141 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Task Manager</title>
   <style>
     body {
-      font-family: sans-serif;
-      padding: 2rem;
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background: #f9f9f9;
     }
+
     .actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: 1rem;
       margin-bottom: 1rem;
     }
-    .btn {
+
+    .actions button,
+    .actions select {
       padding: 0.5rem 1rem;
-      background: #007bff;
+      background: #007BFF;
       color: white;
       border: none;
+      border-radius: 4px;
       cursor: pointer;
-      border-radius: 4px;
     }
-    .btn[disabled] {
-      opacity: 0.6;
-      cursor: not-allowed;
+
+    .actions select {
+      background: #eee;
+      color: black;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      vertical-align: middle;
-    }
-    input[type="text"], select {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 4px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .drag-handle {
-      cursor: move;
-      font-weight: bold;
-      padding-right: 8px;
-      color: #888;
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      min-width: 300px;
-    }
-    .dropdown {
-      position: relative;
-    }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background: white;
-      border: 1px solid #ccc;
-      z-index: 1;
-      min-width: 200px;
-    }
-    .dropdown-content a {
-      display: block;
-      padding: 0.5rem 1rem;
-      text-decoration: none;
-      color: #333;
-    }
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
+
     .bulk-actions {
       display: none;
       margin-bottom: 1rem;
-      padding: 0.5rem;
-      background: #f5f5f5;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      gap: 0.75rem;
-      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
     }
-    .bulk-actions.show {
+
+    .bulk-actions.active {
       display: flex;
     }
-    .number-column {
-      white-space: nowrap;
-      font-weight: bold;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th,
+    td {
+      padding: 0.5rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f0f0f0;
+    }
+
+    .drag-handle {
+      cursor: move;
+      color: #666;
+      padding: 0 0.5rem;
+    }
+
+    td input,
+    td select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.4rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    td input[type="text"] {
+      font-size: 1rem;
+    }
+
+    .editable-cell {
+      cursor: pointer;
+    }
+
+    .editable-cell[contenteditable="true"] {
+      background: #e9f5ff;
+    }
+
+    .task-link {
+      color: #007BFF;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .modal {
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      display: none;
+      width: 400px;
+    }
+
+    .modal.active {
+      display: block;
+    }
+
+    .modal h3 {
+      margin-top: 0;
+    }
+
+    .modal input {
+      margin-top: 0.5rem;
+      width: 100%;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 999;
+      display: none;
+    }
+
+    .overlay.active {
+      display: block;
     }
   </style>
 </head>
+
 <body>
 
   <div class="actions">
-    <button id="addTask" class="btn">Add Task</button>
-
+    <button id="addTask">Add Task</button>
+    <!--<button id="applyWorkflow">Apply Workflow</button>-->
     <div class="dropdown">
-      <button class="btn">Apply Workflow</button>
+      <button class="btn blue">Apply Workflow</button>
       <div class="dropdown-content">
         <a href="#" data-template="Risk Policy Opening">Risk Policy Opening</a>
         <a href="#" data-template="Wealth Account Opening">Wealth Account Opening</a>
       </div>
     </div>
-
-    <button id="importTasks" class="btn">Import</button>
-    <input type="file" id="importInput" style="display:none">
-    <button id="editToggle" class="btn">Edit</button>
+    <button id="toggleEdit">Edit</button>
   </div>
 
-  <div id="bulkActions" class="bulk-actions">
-    <select id="bulkGroup" class="btn">
-      <option disabled selected>Group by</option>
-      <option value="Independent">Set Independent</option>
-      <option value="Sequential">Set Sequential</option>
-      <option value="Parallel">Set Parallel</option>
+  <div class="bulk-actions" id="bulkActions">
+    <select id="bulkGroup">
+      <option value="">Group by</option>
+      <option value="Independent">Independent</option>
+      <option value="Sequential">Sequential</option>
+      <option value="Parallel">Parallel</option>
     </select>
 
-    <select id="bulkStatus" class="btn">
-      <option disabled selected>Status</option>
-      <option value="Not Started">Mark Not Started</option>
-      <option value="In Progress">Mark In Progress</option>
-      <option value="Completed">Mark Completed</option>
-      <option value="Waiting on Someone">Mark Waiting</option>
+    <select id="bulkStatus">
+      <option value="">Status</option>
+      <option value="Not Started">Not Started</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Completed">Completed</option>
+      <option value="Waiting on Someone">Waiting on Someone</option>
     </select>
 
-    <button id="deleteSelected" class="btn">Delete</button>
+    <button id="bulkDelete">Delete</button>
   </div>
 
   <table id="taskTable">
@@ -153,19 +188,25 @@
     <tbody></tbody>
   </table>
 
-  <div id="taskModal" class="modal">
-    <div class="modal-content">
-      <p id="modalTaskName"></p>
-      <button onclick="closeModal()" class="btn">Close</button>
-    </div>
+  <div class="overlay" id="modalOverlay"></div>
+  <div class="modal" id="taskModal">
+    <h3>Edit Task</h3>
+    <input id="modalTaskName" type="text" />
+    <button onclick="closeModal()">Close</button>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
   <script>
-    const taskTable = document.querySelector("#taskTable tbody");
-    const bulkActions = document.getElementById("bulkActions");
-    const editToggle = document.getElementById("editToggle");
-    let editMode = true;
+    let taskId = 1;
+    let editMode = false;
+    let currentModalRow = null;
 
+    const taskTable = document.querySelector('#taskTable tbody');
+    const bulkActions = document.getElementById('bulkActions');
+    const toggleEditBtn = document.getElementById('toggleEdit');
+
+    const statusOptions = ["Not Started", "In Progress", "Completed", "Waiting on Someone"];
+    const groupOptions = ["Independent", "Sequential", "Parallel"];
     const workflowTemplates = {
       "Risk Policy Opening": [
         "Gather client information",
@@ -185,173 +226,139 @@
       ]
     };
 
-    function addTask(name = "") {
-      const row = document.createElement("tr");
+
+    function createTaskRow(taskName = "", status = "Not Started", group = "Independent") {
+      const row = document.createElement('tr');
 
       row.innerHTML = `
-        <td><input type="checkbox" class="rowCheck"></td>
+        <td><input type="checkbox" class="select-row" /></td>
         <td class="drag-handle">☰</td>
-        <td class="number-column"></td>
-        <td class="task-name-cell">
-          <span class="task-link">${name}</span>
-          <input type="text" class="task-input" value="${name}" style="display:none">
-        </td>
+        <td class="task-number"></td>
+        <td class="task-name-cell">${editMode ? `<input type="text" value="${taskName}" />` : `<span class="task-link">${taskName}</span>`}</td>
         <td>
-          <select class="status-input">
-            <option>Not Started</option>
-            <option>In Progress</option>
-            <option>Completed</option>
-            <option>Waiting on Someone</option>
+          <select ${!editMode ? 'disabled' : ''}>
+            ${statusOptions.map(opt => `<option value="${opt}" ${opt === status ? "selected" : ""}>${opt}</option>`).join('')}
           </select>
         </td>
         <td>
-          <select class="group-input">
-            <option>Independent</option>
-            <option>Sequential</option>
-            <option>Parallel</option>
+          <select ${!editMode ? 'disabled' : ''}>
+            ${groupOptions.map(opt => `<option value="${opt}" ${opt === group ? "selected" : ""}>${opt}</option>`).join('')}
           </select>
         </td>
-        <td><input type="text" class="sequence-input" /></td>
+        <td><input type="text" value="" ${!editMode ? 'readonly' : ''}></td>
       `;
 
       taskTable.appendChild(row);
-      addDragHandlers();
       updateNumbering();
-      saveTasksToLocalStorage();
     }
-
-    document.getElementById("addTask").addEventListener("click", () => addTask(""));
-
-    document.querySelectorAll('.dropdown-content a').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const template = e.target.dataset.template;
-        workflowTemplates[template].forEach(name => addTask(name));
-      });
-    });
-
-    document.getElementById("importTasks").addEventListener("click", () => {
-      document.getElementById("importInput").click();
-    });
-
-    document.getElementById("importInput").addEventListener("change", (e) => {
-      const reader = new FileReader();
-      reader.onload = function () {
-        const data = JSON.parse(reader.result);
-        taskTable.innerHTML = "";
-        data.forEach(task => addTask(task.name));
-      };
-      reader.readAsText(e.target.files[0]);
-    });
-
-    editToggle.addEventListener("click", () => {
-      editMode = !editMode;
-      editToggle.textContent = editMode ? "Edit" : "Save";
-      [...document.querySelectorAll(".task-link")].forEach(span => span.style.display = editMode ? "none" : "inline");
-      [...document.querySelectorAll(".task-input")].forEach(input => input.style.display = editMode ? "inline" : "none");
-    });
-
-    function closeModal() {
-      document.getElementById("taskModal").style.display = "none";
-    }
-
-    document.addEventListener("click", e => {
-      if (e.target.classList.contains("task-link") && !editMode) {
-        document.getElementById("modalTaskName").textContent = e.target.textContent;
-        document.getElementById("taskModal").style.display = "flex";
-      }
-    });
-
-    taskTable.addEventListener("change", e => {
-      if (e.target.classList.contains("rowCheck")) {
-        const anyChecked = document.querySelectorAll(".rowCheck:checked").length > 0;
-        bulkActions.classList.toggle("show", anyChecked);
-      }
-      updateNumbering();
-      saveTasksToLocalStorage();
-    });
-
-    document.getElementById("bulkGroup").addEventListener("change", e => {
-      const value = e.target.value;
-      document.querySelectorAll(".rowCheck:checked").forEach(cb => {
-        cb.closest("tr").querySelector(".group-input").value = value;
-      });
-      updateNumbering();
-    });
-
-    document.getElementById("bulkStatus").addEventListener("change", e => {
-      const value = e.target.value;
-      document.querySelectorAll(".rowCheck:checked").forEach(cb => {
-        cb.closest("tr").querySelector(".status-input").value = value;
-      });
-      saveTasksToLocalStorage();
-    });
-
-    document.getElementById("deleteSelected").addEventListener("click", () => {
-      document.querySelectorAll(".rowCheck:checked").forEach(cb => cb.closest("tr").remove());
-      bulkActions.classList.remove("show");
-      updateNumbering();
-      saveTasksToLocalStorage();
-    });
 
     function updateNumbering() {
-      const rows = [...taskTable.querySelectorAll("tr")];
+      const rows = [...taskTable.querySelectorAll('tr')];
       let groupIndex = 0, subIndex = 1, previousGroup = "";
-      rows.forEach(row => {
-        const group = row.querySelector(".group-input").value;
+
+      rows.forEach((row, idx) => {
+        const group = row.cells[5].querySelector('select')?.value;
         if (group === "Sequential") {
           if (previousGroup !== "Sequential") {
             groupIndex++;
             subIndex = 1;
           }
-          row.querySelector(".number-column").textContent = `${groupIndex}.${subIndex++}`;
+          row.cells[2].textContent = `${groupIndex}.${subIndex++}`;
         } else if (group === "Parallel") {
           if (previousGroup !== "Parallel") groupIndex++;
-          row.querySelector(".number-column").textContent = `${groupIndex}`;
+          row.cells[2].textContent = `${groupIndex}`;
         } else {
           groupIndex++;
-          row.querySelector(".number-column").textContent = `${groupIndex}`;
+          row.cells[2].textContent = `${groupIndex}`;
         }
         previousGroup = group;
       });
     }
 
-    function saveTasksToLocalStorage() {
-      const tasks = [...taskTable.querySelectorAll("tr")].map(row => {
-        return {
-          name: row.querySelector(".task-input").value,
-          status: row.querySelector(".status-input").value,
-          group: row.querySelector(".group-input").value,
-          sequence: row.querySelector(".sequence-input").value
-        };
+
+    document.getElementById('addTask').onclick = () => createTaskRow();
+
+    document.getElementById('applyWorkflow').onclick = () => {
+      workflowTasks.forEach(name => createTaskRow(name));
+    };
+
+    toggleEditBtn.onclick = () => {
+      editMode = !editMode;
+      toggleEditBtn.textContent = editMode ? "Save" : "Edit";
+      renderRows();
+    };
+
+    function renderRows() {
+      const data = [...taskTable.querySelectorAll('tr')].map(row => {
+        const task = row.querySelector('.task-name-cell input')?.value || row.querySelector('.task-link')?.textContent || "";
+        const status = row.cells[4].querySelector('select').value;
+        const group = row.cells[5].querySelector('select').value;
+        const seq = row.cells[6].querySelector('input').value;
+        return { task, status, group, seq };
       });
-      localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
 
-    function loadTasksFromLocalStorage() {
-      const data = JSON.parse(localStorage.getItem("tasks") || "[]");
-      taskTable.innerHTML = "";
-      data.forEach(task => addTask(task.name));
-    }
-
-    function addDragHandlers() {
-      let draggedRow;
-      taskTable.querySelectorAll(".drag-handle").forEach(handle => {
-        const row = handle.closest("tr");
-        handle.draggable = true;
-        handle.addEventListener("dragstart", () => draggedRow = row);
-        handle.addEventListener("dragover", e => e.preventDefault());
-        handle.addEventListener("drop", () => {
-          if (draggedRow !== row) {
-            taskTable.insertBefore(draggedRow, row.nextSibling);
-            updateNumbering();
-            saveTasksToLocalStorage();
-          }
-        });
+      taskTable.innerHTML = '';
+      data.forEach(({ task, status, group, seq }) => {
+        createTaskRow(task, status, group);
+        taskTable.querySelector('tr:last-child').cells[6].querySelector('input').value = seq;
       });
     }
 
-    loadTasksFromLocalStorage();
+    function showModal(row) {
+      currentModalRow = row;
+      document.getElementById('modalTaskName').value = row.querySelector('.task-link').textContent;
+      document.getElementById('modalOverlay').classList.add('active');
+      document.getElementById('taskModal').classList.add('active');
+    }
+
+    function closeModal() {
+      if (currentModalRow) {
+        currentModalRow.querySelector('.task-link').textContent = document.getElementById('modalTaskName').value;
+      }
+      document.getElementById('modalOverlay').classList.remove('active');
+      document.getElementById('taskModal').classList.remove('active');
+      currentModalRow = null;
+    }
+
+    document.addEventListener('click', e => {
+      if (e.target.classList.contains('task-link')) {
+        showModal(e.target.closest('tr'));
+      }
+
+      if (e.target.classList.contains('select-row')) {
+        const selected = taskTable.querySelectorAll('.select-row:checked').length;
+        bulkActions.classList.toggle('active', selected > 0);
+      }
+    });
+
+    document.getElementById('bulkDelete').onclick = () => {
+      taskTable.querySelectorAll('.select-row:checked').forEach(cb => cb.closest('tr').remove());
+      bulkActions.classList.remove('active');
+      updateNumbering();
+    };
+
+    document.getElementById('bulkGroup').onchange = e => {
+      taskTable.querySelectorAll('.select-row:checked').forEach(cb => {
+        cb.closest('tr').cells[5].querySelector('select').value = e.target.value;
+      });
+      updateNumbering();
+    };
+
+    document.getElementById('bulkStatus').onchange = e => {
+      taskTable.querySelectorAll('.select-row:checked').forEach(cb => {
+        cb.closest('tr').cells[4].querySelector('select').value = e.target.value;
+      });
+    };
+
+    Sortable.create(taskTable, {
+      handle: '.drag-handle',
+      animation: 150,
+      onEnd: () => updateNumbering()
+    });
+
+    // Initialize
+    createTaskRow("Initial Task");
   </script>
 </body>
+
 </html>
