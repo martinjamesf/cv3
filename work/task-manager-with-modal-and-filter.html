@@ -143,14 +143,7 @@
 
   <div class="actions">
     <button id="addTask">Add Task</button>
-    <!--<button id="applyWorkflow">Apply Workflow</button>-->
-    <div class="dropdown">
-      <button class="btn blue">Apply Workflow</button>
-      <div class="dropdown-content">
-        <a href="#" data-template="Risk Policy Opening">Risk Policy Opening</a>
-        <a href="#" data-template="Wealth Account Opening">Wealth Account Opening</a>
-      </div>
-    </div>
+    <button id="applyWorkflow">Apply Workflow</button>
     <button id="toggleEdit">Edit</button>
   </div>
 
@@ -207,25 +200,14 @@
 
     const statusOptions = ["Not Started", "In Progress", "Completed", "Waiting on Someone"];
     const groupOptions = ["Independent", "Sequential", "Parallel"];
-    const workflowTemplates = {
-      "Risk Policy Opening": [
-        "Gather client information",
-        "Send client online medical",
-        "Complete Application",
-        "Send to client for eSign",
-        "Submit to underwriting",
-        "Delivery policy"
-      ],
-      "Wealth Account Opening": [
-        "Initial client consultation",
-        "Risk profiling",
-        "Create investment strategy",
-        "Compliance documentation",
-        "Account funding",
-        "Portfolio deployment"
-      ]
-    };
-
+    const workflowTasks = [
+      "Gather client information",
+      "Send client online medical",
+      "Complete Application",
+      "Send to client for eSign",
+      "Submit to underwriting",
+      "Delivery policy"
+    ];
 
     function createTaskRow(taskName = "", status = "Not Started", group = "Independent") {
       const row = document.createElement('tr');
