@@ -5,7 +5,7 @@
     padding-right: 16%
 }
 /* Responsive design for smaller screens */
-@media (max-width: 768px) {
+@media (max-width: 1011px) {
     .line-length {
         width: 100%;
         padding-left: 0%;
