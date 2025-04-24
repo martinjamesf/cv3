@@ -15,6 +15,6 @@
         display: none;
     }
 }
-.theme-light, .theme-dark, .theme-eighties {
+.theme-light img, .theme-dark img, .theme-eighties img{
     align-content: end;
 }
