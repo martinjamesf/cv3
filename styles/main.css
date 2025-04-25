@@ -21,6 +21,6 @@
     }
 }
 
-.theme-light figure, .theme-dark figure, .theme-eighties figure{
+figure .theme-light img, figure .theme-dark img, figure .theme-eighties img{
     align-content: end;
 }
