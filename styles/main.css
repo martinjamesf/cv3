@@ -31,5 +31,5 @@ section.grid {
         :root:not([data-theme]),
         :host(:not([data-theme])) {
             section.grid {
-                border-bottom: 1px solid white;}
+                border-bottom: 1px solid white !important;}
         }
