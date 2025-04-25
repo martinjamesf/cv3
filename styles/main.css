@@ -26,3 +26,10 @@ figure.theme-image {
 }
 section.grid {
     border-bottom: 1px solid black;}
+
+    @media only screen and (prefers-color-scheme: dark) {
+        :root:not([data-theme]),
+        :host(:not([data-theme])) {
+            section.grid {
+                border-bottom: 1px solid white;}
+        }
