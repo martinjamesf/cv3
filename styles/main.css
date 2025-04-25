@@ -21,6 +21,8 @@
     }
 }
 
-figure .theme-light img, figure .theme-dark img, figure .theme-eighties img{
+figure .theme-image {
     align-content: end;
 }
+section.grid {
+    border-bottom: 1px solid black;}
