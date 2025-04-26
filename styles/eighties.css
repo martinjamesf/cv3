@@ -53,7 +53,7 @@
   color: var(--text-color);
 }*/
 [data-theme="eighties"] body {
-  background: url('../images/bkg80.webp') center center / cover no-repeat fixed;
+  background: url('../images/bkg80.png') center center / cover no-repeat fixed;
   color: var(--text-color);
   z-index: -1;
 }
@@ -168,14 +168,14 @@
 }
 
 /* 80s */
-section.grid {
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-  background-color: rgba(15, 255, 255, 0.5);
-  border-radius: 16px;
-}
-
-}
-section.grid {
- border-bottom: none;
+:root[data-theme="eighties"] {
+  section.grid {
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    background-color: rgba(15, 255, 255, 0.5);
+    border-radius: 16px;
+  }
+  section.grid {
+    border-bottom: none;
+  }
 }
