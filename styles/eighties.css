@@ -166,3 +166,16 @@
 [data-theme="eighties"] #theme-switcher svg {
   width: 1.3rem;
 }
+
+/* 80s */
+section.grid {
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  background-color: rgba(15, 255, 255, 0.5);
+  border-radius: 16px;
+}
+
+}
+section.grid {
+ border-bottom: none;
+}
