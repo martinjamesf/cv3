@@ -156,7 +156,7 @@
   width: 1.3rem;
 }
 
-/* 80s */
+/* 80s 
 :root[data-theme="eighties"] {
   section.grid {
     -webkit-backdrop-filter: blur(4px);
@@ -167,4 +167,4 @@
   section.grid {
     border-bottom: none;
   }
-}
+}*/
