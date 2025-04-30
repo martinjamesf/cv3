@@ -88,7 +88,7 @@
 /* Glowing headers */
 [data-theme="eighties"] h1,
 [data-theme="eighties"] h2 {
-  text-shadow: 0 0 8px #ffe600, 0 0 16px #ff4ec3;
+  text-shadow: 0 0 2px #ffe600, 0 0 8px #ff4ec3;
 }
 
 /* Cards and sections */
