@@ -41,17 +41,6 @@
   transition: all 0.3s ease-in-out;
 }
 
-/* Neon grid background */
-/*[data-theme="eighties"] body {
-  background: #0d0221;
-  background-image: 
-    linear-gradient(0deg, rgba(255, 78, 195, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 78, 195, 0.1) 1px, transparent 1px),
-    radial-gradient(circle at center, rgba(97, 234, 255, 0.05), transparent 70%);
-  background-size: 40px 40px, 40px 40px, 100% 100%;
-  animation: gridFade 30s linear infinite;
-  color: var(--text-color);
-}*/
 [data-theme="eighties"] body {
   background: url('../images/bkg80.png') center center / cover no-repeat fixed;
   color: var(--text-color);
