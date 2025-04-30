@@ -84,10 +84,10 @@
 [data-theme="eighties"] section,
 [data-theme="eighties"] article,
 [data-theme="eighties"] .card {
-  /*background-color: var(--card-background-color);*/
-  /*border: 1px solid var(--border-color);*/
-  box-shadow: 0 0 20px rgba(255, 78, 195, 0.3);
-  border-radius: var(--border-radius);
+  /*background-color: var(--card-background-color);
+  /*border: 1px solid var(--border-color);
+  /*box-shadow: 0 0 20px rgba(255, 78, 195, 0.3);
+  /*border-radius: var(--border-radius);
   /*padding: 1.5rem;*/
 }
 
