@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function applyTheme(theme) {
     html.setAttribute("data-theme", theme);
     switchTheme.innerHTML = icons[theme];
-    switchTheme.setAttribute("data-tooltip", `${theme} theme`);
+    switchTheme.setAttribute("data-tooltip", `${theme} side`);
     localStorage.setItem("theme", theme);
   }
 
