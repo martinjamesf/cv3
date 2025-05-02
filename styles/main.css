@@ -58,7 +58,7 @@ section.grid {
     transform: translateY(-4px);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1021px) {
     .case-study {
         flex-direction: row;
     }
