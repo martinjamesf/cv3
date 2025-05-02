@@ -19,6 +19,16 @@
             height: 1rem;
             color: var(--pico-contrast);
         }
+
+        body {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-areas: "content content sidebar";
+        }
+
+        main {
+            grid-column: content;
+        }
     </style>
 </head>
 
@@ -53,8 +63,8 @@
         </nav>
     </header>
     <section class="container-fluid"><img src="../images/EverySecondCountsExperiment.png" /></section>
-    <main class="container">
-        <section>
+    <section class="container">
+        <main>
             <h2>Project Overview</h2>
             <div
                 style="display: grid; grid-template-columns: max-content 1fr; gap: 1rem 2rem; align-items: start; margin-bottom: 2rem;">
@@ -71,12 +81,15 @@
                 <div><strong>Timeline</strong></div>
                 <div>2016–2018</div>
             </div>
-        </section>
-        <blockquote>
-            “He recognizes where there is little or no strategy or alignment, and delicately guides his business partner
-            to take a few steps back, get a solid strategy in place…”<br />
-            — <a href="https://www.linkedin.com/in/daniel-j-sarbacker" target="_blank">Daniel J Sarbacker</a>
-        </blockquote>
+        </main>
+        <aside>
+            <blockquote>
+                “He recognizes where there is little or no strategy or alignment, and delicately guides his business
+                partner
+                to take a few steps back, get a solid strategy in place…”<br />
+                — <a href="https://www.linkedin.com/in/daniel-j-sarbacker" target="_blank">Daniel J Sarbacker</a>
+            </blockquote>
+        </aside>
         <header>
             <h1>Case Study: Corporate Communications Research and Design</h1>
             <p class="secondary">Modernizing enterprise communications for a remote-first workforce</p>
@@ -131,8 +144,7 @@
                 employee needs.
             </p>
             <figure>
-                <img src="../images/work/AmFam_01_Employee-Homepage_Live.png"
-                    alt="Final intranet homepage design" />
+                <img src="../images/work/AmFam_01_Employee-Homepage_Live.png" alt="Final intranet homepage design" />
             </figure>
         </section>
 
@@ -144,7 +156,7 @@
             </ul>
             <p><a href="../contact.html" class="button">Get in Touch</a></p>
         </section>
-    </main>
+    </section>
     <script src="../js/scripts.js"></script>
 </body>
 
