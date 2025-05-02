@@ -20,13 +20,13 @@
             color: var(--pico-contrast);
         }
 
-        body {
+        .gridSpecial {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             grid-template-areas: "content content sidebar";
         }
 
-        main {
+        .gridSpecial main {
             grid-column: content;
         }
     </style>
@@ -63,7 +63,7 @@
         </nav>
     </header>
     <section class="container-fluid"><img src="../images/EverySecondCountsExperiment.png" /></section>
-    <section class="container grid">
+    <section class="container gridSpecial">
         <main>
             <h2>Project Overview</h2>
             <div
