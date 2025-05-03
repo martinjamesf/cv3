@@ -20,7 +20,7 @@
   --pico-border-width: 0.0625rem;
   --pico-outline-width: 0.125rem;
   --pico-transition: 0.2s ease-in-out;
-  --pico-spacing: 1rem;
+  --pico-spacing: 4rem; /* original 1rem */
   --pico-typography-spacing-vertical: 1rem;
   --pico-block-spacing-vertical: var(--pico-spacing);
   --pico-block-spacing-horizontal: var(--pico-spacing);
