@@ -138,6 +138,6 @@ section.grid {
    }
  }
 
-section.containerfluid img, section.container img {
+img.center{
     text-align: center;
 }
