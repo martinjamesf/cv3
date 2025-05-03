@@ -137,3 +137,7 @@ section.grid {
       grid-template-columns: repeat(1, 1fr);
    }
  }
+
+ section.container-fluid .heroImage {
+    text-align: center;
+}
