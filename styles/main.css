@@ -138,6 +138,6 @@ section.grid {
    }
  }
 
- section.container-fluid .heroImage {
+.heroImage {
     text-align: center;
 }
