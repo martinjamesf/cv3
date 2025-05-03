@@ -138,6 +138,6 @@ section.grid {
    }
  }
 
-.heroImage {
+section.containerfluid img, section.container img {
     text-align: center;
 }
