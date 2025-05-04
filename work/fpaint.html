@@ -1,25 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light dark">
-    <title>James Martin | notes</title>
-    <link rel="stylesheet" href="../styles/pico.jade.css">
-    <link rel="stylesheet" href="../styles/main.css">
-    <style is:global>
-        #theme-switcher {
-            background: none;
-            border: 0;
-        }
+<!--
+  James Martin's Personal Website
+  Created: 2006
+  Last Updated: April 2025
+  Description: A personal website showcasing design leadership, work, and notes. -->
 
-        #theme-switcher svg {
-            width: 1rem;
-            height: 1rem;
-            color: var(--pico-contrast);
-        }
-    </style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark eighties">
+  <meta name="description"
+    content="James Martin's personal website showcasing design leadership, impactful digital products, and a notes. Explore his resume, bio, and selected work to learn more about his expertise in strategy, creativity, and enterprise design leadership.">
+  <title>James Martin</title>
+  <link rel="stylesheet" href="styles/pico.jade.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- 80s theme overrides -->
+  <link rel="stylesheet" href="styles/eighties.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style is:global>
+    #theme-switcher {
+      background: none;
+      border: 0;
+    }
+
+    #theme-switcher svg {
+      width: 1rem;
+      height: 1rem;
+      color: var(--pico-contrast);
+    }
+
+    .theme-image img {
+      display: none;
+      transition: opacity 0.3s ease;
+      opacity: 0;
+      height: 0;
+    }
+
+    html[data-theme="light"] .theme-light,
+    html[data-theme="dark"] .theme-dark,
+    html[data-theme="eighties"] .theme-eighties {
+      display: block;
+      opacity: 1;
+      height: auto;
+    }
+  </style>
 </head>
 <header class="container">
     <nav>
