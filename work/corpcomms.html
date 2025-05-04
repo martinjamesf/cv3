@@ -8,44 +8,44 @@
   Description: A personal website showcasing design leadership, work, and notes. -->
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark eighties">
-  <meta name="description"
-    content="James Martin's personal website showcasing design leadership, impactful digital products, and a notes. Explore his resume, bio, and selected work to learn more about his expertise in strategy, creativity, and enterprise design leadership.">
-  <title>James Martin</title>
-  <link rel="stylesheet" href="styles/pico.jade.css">
-  <link rel="stylesheet" href="styles/main.css">
-  <!-- 80s theme overrides -->
-  <link rel="stylesheet" href="styles/eighties.css">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <style is:global>
-    #theme-switcher {
-      background: none;
-      border: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark eighties">
+    <meta name="description"
+        content="James Martin's personal website showcasing design leadership, impactful digital products, and a notes. Explore his resume, bio, and selected work to learn more about his expertise in strategy, creativity, and enterprise design leadership.">
+    <title>James Martin</title>
+    <link rel="stylesheet" href="../styles/pico.jade.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <!-- 80s theme overrides -->
+    <link rel="stylesheet" href="../styles/eighties.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style is:global>
+        #theme-switcher {
+            background: none;
+            border: 0;
+        }
 
-    #theme-switcher svg {
-      width: 1rem;
-      height: 1rem;
-      color: var(--pico-contrast);
-    }
+        #theme-switcher svg {
+            width: 1rem;
+            height: 1rem;
+            color: var(--pico-contrast);
+        }
 
-    .theme-image img {
-      display: none;
-      transition: opacity 0.3s ease;
-      opacity: 0;
-      height: 0;
-    }
+        .theme-image img {
+            display: none;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            height: 0;
+        }
 
-    html[data-theme="light"] .theme-light,
-    html[data-theme="dark"] .theme-dark,
-    html[data-theme="eighties"] .theme-eighties {
-      display: block;
-      opacity: 1;
-      height: auto;
-    }
-  </style>
+        html[data-theme="light"] .theme-light,
+        html[data-theme="dark"] .theme-dark,
+        html[data-theme="eighties"] .theme-eighties {
+            display: block;
+            opacity: 1;
+            height: auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -155,27 +155,28 @@
             employee needs.
         </p>
         <figure>
-            <img class="center" src="../images/work/AmFam_01_Employee-Homepage_Live.png" alt="Final intranet homepage design" />
+            <img class="center" src="../images/work/AmFam_01_Employee-Homepage_Live.png"
+                alt="Final intranet homepage design" />
         </figure>
     </section>
     <section>
         <h2>Explore More</h2>
         <ul>
-            <li><a href="work/fpaint.html">Creative Research: Painting with Figma</a></li>
-            <li><a href="work/workshops.html">Workshop Design & Facilitation</a></li>
+            <li><a href="fpaint.html">Creative Research: Painting with Figma</a></li>
+            <li><a href="workshops.html">Workshop Design & Facilitation</a></li>
         </ul>
         <p><a href="../contact.html" class="button">Get in Touch</a></p>
     </section>
     <div id="lockOverlay">
         <div>
-          <h2>Enter Password to Continue</h2>
-          <p>This content is locked. Enter the password to unlock.</p>
-          <input type="password" id="passwordInput" placeholder="Enter password">
-          <br>
-          <button onclick="unlockContent()">Unlock</button>
-          <div id="errorMessage" class="error"></div>
+            <h2>Enter Password to Continue</h2>
+            <p>This content is locked. Enter the password to unlock.</p>
+            <input type="password" id="passwordInput" placeholder="Enter password">
+            <br>
+            <button onclick="unlockContent()">Unlock</button>
+            <div id="errorMessage" class="error"></div>
         </div>
-      </div>
+    </div>
     <script src="../js/scripts.js"></script>
 </body>
 
