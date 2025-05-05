@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// lock
+/* lock
 let isLocked = false;
   let isUnlocked = false; // new flag to prevent relocking
   const overlay = document.getElementById('lockOverlay');
@@ -98,4 +98,4 @@ let isLocked = false;
     } else {
       errorMessage.textContent = 'Incorrect password. Try again.';
     }
-  }
+  }*/
