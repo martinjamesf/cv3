@@ -70,39 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/* lock
-let isLocked = false;
-  let isUnlocked = false; // new flag to prevent relocking
-  const overlay = document.getElementById('lockOverlay');
-  const content = document.getElementById('articleContent');
-  const passwordInput = document.getElementById('passwordInput');
-  const errorMessage = document.getElementById('errorMessage');
-  const correctPassword = "open123";
-
-  window.addEventListener('scroll', () => {
-    if (!isLocked && !isUnlocked && window.scrollY > 300) {
-      overlay.classList.add('show');
-      content.classList.add('blurred');
-      isLocked = true;
-    }
-  });
-
-  function unlockContent() {
-    const entered = passwordInput.value;
-    if (entered === correctPassword) {
-      overlay.classList.remove('show');
-      content.classList.remove('blurred');
-      errorMessage.textContent = '';
-      isUnlocked = true;   // prevent future locking
-      isLocked = false;    // clear lock status
-    } else {
-      errorMessage.textContent = 'Incorrect password. Try again.';
-    }
-  }*/
-
+// lock
 
 document.addEventListener("DOMContentLoaded", () => {
-  const correctPassword = "open123"; // pword
+  const correctPassword = "openSesame"; // 🔑 Change this to your password
   const overlay = document.getElementById("lock-overlay");
   const form = document.getElementById("unlock-form");
   const passwordInput = document.getElementById("unlock-password");
