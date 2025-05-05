@@ -69,14 +69,14 @@
 </head>
 
 <body>
-    <div id="lock-overlay">
+    <div id="lock-overlay" style="display: none;">
         <form id="unlock-form">
-            <label for="unlock-password">Enter password to unlock:</label>
-            <input type="password" id="unlock-password" required />
-            <button type="submit">Unlock</button>
-            <p id="unlock-error" style="color: red; display: none;">Incorrect password. Please try again.</p>
+          <label for="unlock-password">Enter password to unlock:</label>
+          <input type="password" id="unlock-password" required />
+          <button type="submit">Unlock</button>
+          <p id="unlock-error" style="color: red; display: none;">Incorrect password. Please try again.</p>
         </form>
-    </div>
+      </div>
     <header class="container">
         <nav>
             <ul>
@@ -195,33 +195,7 @@
         </ul>
         <p><a href="../contact.html" class="button">Get in Touch</a></p>
     </section>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const correctPassword = "openSesame"; // Replace with your desired password
-            const overlay = document.getElementById("lock-overlay");
-            const form = document.getElementById("unlock-form");
-            const passwordInput = document.getElementById("unlock-password");
-            const errorMsg = document.getElementById("unlock-error");
 
-            // Check localStorage for unlock status
-            if (localStorage.getItem("pageUnlocked") === "true") {
-                overlay.style.display = "none";
-            } else {
-                document.body.style.overflow = "hidden"; // Prevent scrolling while locked
-            }
-
-            form.addEventListener("submit", function (e) {
-                e.preventDefault();
-                if (passwordInput.value === correctPassword) {
-                    localStorage.setItem("pageUnlocked", "true");
-                    overlay.style.display = "none";
-                    document.body.style.overflow = "auto"; // Re-enable scrolling
-                } else {
-                    errorMsg.style.display = "block";
-                }
-            });
-        });
-    </script>
     <script src="../js/scripts.js"></script>
 </body>
 
