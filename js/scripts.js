@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const docHeight = document.body.scrollHeight - window.innerHeight;
     const scrollPercent = scrollTop / docHeight;
 
-    if (scrollPercent > 0.33) {
+    if (scrollPercent > 0.25) {
       lockTriggered = true;
       showOverlay();
     }
