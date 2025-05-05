@@ -100,9 +100,9 @@ let isLocked = false;
     }
   }*/
 
-<script>
+
 document.addEventListener("DOMContentLoaded", () => {
-  const correctPassword = "en123"; // pword
+  const correctPassword = "open123"; // pword
   const overlay = document.getElementById("lock-overlay");
   const form = document.getElementById("unlock-form");
   const passwordInput = document.getElementById("unlock-password");
@@ -112,18 +112,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showOverlay() {
     overlay.style.display = "flex";
-  document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
   }
 
   function hideOverlay() {
     overlay.style.display = "none";
-  document.body.style.overflow = "auto";
+    document.body.style.overflow = "auto";
   }
 
   // Check if previously unlocked
   if (localStorage.getItem(storageKey) === "true") {
     hideOverlay();
-  return;
+    return;
   }
 
   // Watch scroll to lock at threshold
@@ -131,24 +131,23 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", () => {
     if (lockTriggered) return;
 
-  const scrollTop = window.scrollY;
-  const docHeight = document.body.scrollHeight - window.innerHeight;
-  const scrollPercent = scrollTop / docHeight;
+    const scrollTop = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    const scrollPercent = scrollTop / docHeight;
 
     if (scrollPercent > 0.33) {
-    lockTriggered = true;
-  showOverlay();
+      lockTriggered = true;
+      showOverlay();
     }
   });
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-  if (passwordInput.value === correctPassword) {
-    localStorage.setItem(storageKey, "true");
-  hideOverlay();
+    if (passwordInput.value === correctPassword) {
+      localStorage.setItem(storageKey, "true");
+      hideOverlay();
     } else {
-    errorMsg.style.display = "block";
+      errorMsg.style.display = "block";
     }
   });
 });
-</script>
