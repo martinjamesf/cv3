@@ -24,6 +24,7 @@ html, body {
     .smHide {
         display: none;
     }
+    
     blockquote {
         padding: calc(var(--pico-spacing) / 2);
     }
