@@ -53,7 +53,7 @@ figure.theme-image {
 }
 
 section.grid {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #d1d5db;
 }
 
 @media only screen and (prefers-color-scheme: dark) {
