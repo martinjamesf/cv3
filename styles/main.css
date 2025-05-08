@@ -52,8 +52,8 @@ figure.theme-image {
     align-content: end;
 }
 
-section.grid {
-    border-bottom: 1px solid #d1d5db;
+section.hr {
+    border-bottom: 1px solid #d1d5db !important;
 }
 
 @media only screen and (prefers-color-scheme: dark) {
