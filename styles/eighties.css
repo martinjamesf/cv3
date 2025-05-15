@@ -7,16 +7,16 @@
   --pico-primary-inverse: #0pico-00;
   --pico-primary-hover: #ff84d6;
 
-  --pico-background-color: #ecfaff;
+  --pico-background-color: #1c112f;
   --pico-muted-color: #a7a1ae;
   --pico-muted-border-color: #5c5a61;
-  --pico-card-background-color: #1a103d;
+  --pico-card-background-color: #271c4d;
 
   --pico-h1-color: #ff75ff;
   --pico-h2-color:#00bfff;
   --pico-h3-color: #ffb300;
   --pico-h4-color: var(--muted-color);
-  --pico-color: #7e3d99;
+  --pico-color: #f0eaff;
 
   --pico-border-radius: 12px;
   --pico-border-color: #3c2b5f;
@@ -33,7 +33,7 @@
   --pico-code-color: #ffe600;
 
   --pico-link-color: #61eaff;
-  --pico-link-hover-color: #ffe600;
+  --pico-link-hover-color: #ff5c5c;
 
   --pico-switch-color: #ff4ec3;
   --pico-switch-checked-color: #ffe600;
