@@ -41,12 +41,6 @@
   transition: all 0.3s ease-in-out;
 }
 
-[data-theme="eighties"] body {
-  background: url('../images/bkg80.png') center center / cover no-repeat fixed;
-  color: var(--text-color);
-  z-index: -1;
-}
-
 @keyframes gridFade {
   0% {
     background-position: 0 0, 0 0, 0 0;
