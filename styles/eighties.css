@@ -2,7 +2,7 @@
 
 /* Core theme variables */
 :root[data-theme="eighties"] {
-  --pico-primary: #170110;
+  --pico-primary: #7e3d99;
   --pico-primary-focus: #e600a4;
   --pico-primary-inverse: #0pico-00;
   --pico-primary-hover: #ff84d6;
@@ -12,9 +12,9 @@
   --pico-muted-border-color: #5c5a61;
   --pico-card-background-color: #1a103d;
 
-  --pico-h1-color: #b1063f;
-  --pico-h2-color: #00b9d6;
-  --pico-h3-color: #8d7800;
+  --pico-h1-color: #ff75ff;
+  --pico-h2-color:#00bfff;
+  --pico-h3-color: #ffb300;
   --pico-h4-color: var(--muted-color);
   --pico-color: #e6e0f8;
 
@@ -39,6 +39,32 @@
   --pico-switch-checked-color: #ffe600;
 
   transition: all 0.3s ease-in-out;
+}
+
+/* CSS 
+.color-1 {
+  color: #ff75ff;
+}
+.color-2 {
+  color: #00bfff;
+}
+.color-3 {
+  color: #ffb300;
+}
+.color-4 {
+  color: #ff5c5c;
+}
+.color-5 {
+  color: #7e3d99;
+}
+
+/* CSS Variables
+:root {
+  --color-1: #ff75ff;
+  --color-2: #00bfff;
+  --color-3: #ffb300;
+  --color-4: #ff5c5c;
+  --color-5: #7e3d99;
 }
 
 /* Glowing buttons 
