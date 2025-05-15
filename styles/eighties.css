@@ -2,12 +2,12 @@
 
 /* Core theme variables */
 :root[data-theme="eighties"] {
-  --pico-primary: #ff4ec3;
+  --pico-primary: #170110;
   --pico-primary-focus: #e600a4;
   --pico-primary-inverse: #0pico-00;
   --pico-primary-hover: #ff84d6;
 
-  --pico-background-color: #0d022pico-1;
+  --pico-background-color: #ffe3f9;
   --pico-muted-color: #a7a1ae;
   --pico-muted-border-color: #5c5a61;
   --pico-card-background-color: #1a103d;
@@ -41,17 +41,7 @@
   transition: all 0.3s ease-in-out;
 }
 
-@keyframes gridFade {
-  0% {
-    background-position: 0 0, 0 0, 0 0;
-  }
-
-  100% {
-    background-position: 100px 100px, 100px 100px, 0 0;
-  }
-}
-
-/* Glowing buttons */
+/* Glowing buttons 
 [data-theme="eighties"] button,
 [data-theme="eighties"] .contrast,
 [data-theme="eighties"] .primary {
@@ -68,13 +58,13 @@
   box-shadow: 0 0 16px #ff84d6, 0 0 32px #ffe600;
 }
 
-/* Glowing headers */
+/* Glowing headers 
 [data-theme="eighties"] h1,
 [data-theme="eighties"] h2 {
   text-shadow: 0 0 2px #ffe600, 0 0 8px #ff4ec3;
 }
 
-/* Cards and sections */
+/* Cards and sections 
 [data-theme="eighties"] section,
 [data-theme="eighties"] article,
 [data-theme="eighties"] .card {
@@ -85,7 +75,7 @@
   /*padding: 1.5rem;*/
 }
 
-/* Form fields */
+/* Form fields 
 [data-theme="eighties"] input,
 [data-theme="eighties"] select,
 [data-theme="eighties"] textarea {
@@ -102,12 +92,12 @@
   box-shadow: 0 0 8px var(--focus-ring-color);
 }
 
-/* Neon link hover */
+/* Neon link hover 
 [data-theme="eighties"] a:hover {
   text-shadow: 0 0 6px var(--link-hover-color);
 }
 
-/* Code styling */
+/* Code styling
 [data-theme="eighties"] code {
   background-color: var(--code-background-color);
   color: var(--code-color);
@@ -115,13 +105,13 @@
   border-radius: 4px;
 }
 
-/* Optional: 80s synth-style animated underline for links */
+/* Optional: 80s synth-style animated underline for links
 [data-theme="eighties"] a {
   position: relative;
   text-decoration: none;
   color: var(--link-color);
 }
-
+*/
 [data-theme="eighties"] a::after {
   content: '';
   position: absolute;
@@ -149,16 +139,3 @@
 [data-theme="eighties"] #theme-switcher svg {
   width: 1.3rem;
 }
-
-/* 80s 
-:root[data-theme="eighties"] {
-  section.grid {
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
-    background-color: rgba(15, 255, 255, 0.5);
-    border-radius: 16px;
-  }
-  section.grid {
-    border-bottom: none;
-  }
-}*/
