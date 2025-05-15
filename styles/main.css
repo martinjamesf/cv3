@@ -51,7 +51,7 @@ section.content {
 figure.theme-image {
     align-content: end;
     background-image: url(https://storage.googleapis.com/headshotpro-public-content/headshotpro/images/backgrounds/43.jpeg);
-    background-size: auto;
+    background-size: cover;
     border-radius: 4px;
 }
 
