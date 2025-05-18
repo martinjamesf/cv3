@@ -2541,7 +2541,7 @@ nav[aria-label=breadcrumb] ul li a {
 }
 nav[aria-label=breadcrumb] ul li:not(:last-child)::after {
   display: inline-block;
-  position: absolute;
+  position: relative;
   width: calc(var(--pico-nav-link-spacing-horizontal) * 4);
   margin: 0 calc(var(--pico-nav-link-spacing-horizontal) * -1);
   content: var(--pico-nav-breadcrumb-divider);
