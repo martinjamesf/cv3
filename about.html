@@ -45,6 +45,246 @@
       opacity: 1;
       height: auto;
     }
+
+    /* Enhanced responsive styles for readability */
+    .content {
+      max-width: 65ch; /* Optimal line length for reading */
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* Mobile-first responsive adjustments */
+    @media (max-width: 576px) {
+      .content {
+        max-width: 100%;
+        padding: 0 0.75rem;
+      }
+      
+      .content h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      .content p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1.25rem;
+      }
+      
+      .content ul {
+        padding-left: 1.25rem;
+        margin-bottom: 1.25rem;
+      }
+      
+      .content li {
+        margin-bottom: 0.5rem;
+        line-height: 1.5;
+      }
+      
+      .img-fluid {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        margin: 1rem 0;
+      }
+      
+      form {
+        padding: 0;
+      }
+      
+      form label {
+        display: block;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+      }
+      
+      form input,
+      form textarea {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+        border-radius: 4px;
+      }
+      
+      form textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+      
+      form button {
+        width: 100%;
+        padding: 0.875rem;
+        font-size: 1rem;
+        margin-top: 0.5rem;
+      }
+    }
+
+    /* Tablet adjustments */
+    @media (min-width: 577px) and (max-width: 768px) {
+      .content {
+        max-width: 60ch;
+        padding: 0 1.5rem;
+      }
+      
+      .content h2 {
+        font-size: 1.75rem;
+      }
+      
+      .content p {
+        font-size: 1.1rem;
+        line-height: 1.65;
+      }
+      
+      .img-fluid {
+        max-width: 80%;
+        margin: 1.5rem auto;
+        display: block;
+      }
+      
+      form {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+
+    /* Desktop and larger screens */
+    @media (min-width: 769px) {
+      .content {
+        max-width: 65ch;
+        padding: 0 2rem;
+      }
+      
+      .content h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .content p {
+        font-size: 1.125rem;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+      }
+      
+      .content ul {
+        margin-bottom: 1.5rem;
+      }
+      
+      .content li {
+        margin-bottom: 0.75rem;
+        line-height: 1.6;
+      }
+      
+      .img-fluid {
+        max-width: 70%;
+        margin: 2rem auto;
+        display: block;
+      }
+      
+      form {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      
+      form label {
+        margin-bottom: 1.25rem;
+      }
+      
+      form input,
+      form textarea {
+        padding: 1rem;
+        font-size: 1.1rem;
+      }
+      
+      form textarea {
+        min-height: 150px;
+      }
+      
+      form button {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        width: auto;
+        margin-top: 1rem;
+      }
+    }
+
+    /* Large screens - prevent content from becoming too wide */
+    @media (min-width: 1200px) {
+      .content {
+        max-width: 70ch;
+      }
+    }
+
+    /* Navigation responsive improvements */
+    @media (max-width: 768px) {
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      
+      nav ul li {
+        margin: 0.25rem;
+      }
+      
+      nav ul li a {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Improve touch targets on mobile */
+    @media (max-width: 576px) {
+      nav ul li a,
+      nav ul li button {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    /* Footer responsive adjustments */
+    footer {
+      padding: 2rem 1rem 1rem;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 576px) {
+      footer p {
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Improve image accessibility and responsiveness */
+    .img-fluid.round {
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .img-fluid.round:hover {
+      transform: scale(1.02);
+    }
+
+    /* Ensure proper spacing between sections */
+    section.content {
+      margin-bottom: 3rem;
+    }
+
+    section.content:last-of-type {
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 576px) {
+      section.content {
+        margin-bottom: 2rem;
+      }
+    }
   </style>
 </head>
 
@@ -81,10 +321,10 @@
 
   <main class="container">
     <section class="content">
-      <h2 style="font-size: larger;">Approach</h2>
-      <p>My work lives at the intersection of service design, strategy, and systems thinking. Whether I’m guiding a
+      <h2>Approach</h2>
+      <p>My work lives at the intersection of service design, strategy, and systems thinking. Whether I'm guiding a
         discovery sprint or scaling a service, I focus on creating the right conditions for good decisions — and
-        great outcomes.
+        great outcomes.</p>
       <p>I help organizations:</p>
       <ul>
         <li>Understand users and systems through research and mapping</li>
@@ -93,9 +333,8 @@
         <li>Launch with purpose, then learn and adapt</li>
       </ul>
       <p>I help teams move beyond delivery to real transformation — creating lasting impact, not just outputs. Whether
-        I’m stepping into a project midstream or leading from day one, I adapt to what the moment needs, always with a
+        I'm stepping into a project midstream or leading from day one, I adapt to what the moment needs, always with a
         focus on outcomes.</p>
-      <br>
       <p>Principles that guide my work:</p>
       <ul>
         <li>Start with people, then zoom out. I design with empathy — and think in ecosystems.</li>
@@ -106,49 +345,50 @@
         that align user needs, technical feasibility, and business goals. I'm based in Madison, Wisconsin, and
         collaborate seamlessly with teams on-site or remotely across regions.</p>
     </section>
+    
     <section class="content">
-      <h2 style="font-size: larger;">Fun Facts</h2>
+      <h2>Fun Facts</h2>
       <p>Apart from work, I love the outdoors. You can often find me:</p>
       <ul>
-        <li>Snowboardeding in the mountains out west (Vail and Big Ski are my top two)</li>
+        <li>Snowboarding in the mountains out west (Vail and Big Sky are my top two)</li>
         <li>Kayaking the Wisconsin River (gotta love the sandbars)</li>
         <li>Car-camping across the great United States (way too many places to count)</li>
         <li>Thru-hiking loads of miles on our National Trails (I will conquer the Ice Age Trail)</li>
         <li>Training or racing long-distance triathlons (Ironman WI is my favorite)</li>
       </ul>
-      <p>I'm an avid reader. I love to learn more about my profession, design, human behavior, tin-hat theoreis, and
-        history. One of my favorite books is Orbiting the Gaint Hairball by Gordon MacKenzie.</p>
+      <p>I'm an avid reader. I love to learn more about my profession, design, human behavior, tin-hat theories, and
+        history. One of my favorite books is Orbiting the Giant Hairball by Gordon MacKenzie.</p>
       <img class="img-fluid round pb-5" src="images/books.jpg" alt="Profile image of James Martin">
-      <!--Army-->
+      
       <p>Another fun fact about me; I enlisted at the age of 17 into the United States Army and served one tour of
         duty (OIF) in 2003. While in a war zone, my contributions and performance earned me a retroactive promotion
-        (battlefield promotions weren’t reinstated until 2009) to a non-commissioned officer (Sergeant). And yes,I
+        (battlefield promotions weren't reinstated until 2009) to a non-commissioned officer (Sergeant). And yes, I
         used camo paint to draw flames on my truck in the middle of Iraq.</p>
       <img class="img-fluid round" src="images/about_truck.jpg" alt="Image of a truck with camo flames">
     </section>
-    <!-- Connect Form -->
+    
     <section class="content">
-      <h2 style="font-size: larger;">Get in Touch</h2>
-      <p>I’m always open to conversations, collaborations, and new challenges. Reach out via email or happy to connect
+      <h2>Get in Touch</h2>
+      <p>I'm always open to conversations, collaborations, and new challenges. Reach out via email or happy to connect
         on <a href="https://www.linkedin.com/in/martinjamesf" target="_blank">LinkedIn.</a></p>
       <p>Email me at martin.jamesfrancis(@)gmail.com or fill out the form below.</p>
       <form action="https://formspree.io/f/xeoaknbd" method="POST">
         <label>
           Your email:
-          <input type="email" name="email">
+          <input type="email" name="email" required>
         </label>
         <label>
           Your message:
-          <textarea name="message"></textarea>
+          <textarea name="message" required></textarea>
         </label>
-        <!-- your other form fields go here -->
         <button type="submit">Send</button>
       </form>
     </section>
   </main>
-  <footer class="container-fluid" style="text-align: center; margin-top: 2rem;">
+  
+  <footer class="container-fluid">
     <p>Hand-coded by me |
-      <a href="http://www.github.com/martinjamesf" target="_blank">
+      <a href="http://www.github.com/martinjamesf" target="_blank" aria-label="Visit James Martin's GitHub Profile">
         <svg width="1rem" height="1rem" viewBox="0 -0.5 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
           <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -163,6 +403,7 @@
       </a>
     </p>
   </footer>
+  
   <script src="js/scripts.js"></script>
 </body>
 
