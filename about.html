@@ -48,7 +48,7 @@
 
     /* Enhanced responsive styles for readability */
     .content {
-      max-width: 65ch; /* Optimal line length for reading */
+      max-width: 75ch; /* Increased from 65ch for better use of space */
       margin: 0 auto;
       padding: 0 1rem;
     }
@@ -57,7 +57,7 @@
     @media (max-width: 576px) {
       .content {
         max-width: 100%;
-        padding: 0 0.75rem;
+        padding: 0 1rem; /* Reduced from 0.75rem for more content space */
       }
       
       .content h2 {
@@ -122,8 +122,8 @@
     /* Tablet adjustments */
     @media (min-width: 577px) and (max-width: 768px) {
       .content {
-        max-width: 60ch;
-        padding: 0 1.5rem;
+        max-width: 70ch; /* Increased from 60ch */
+        padding: 0 1.25rem; /* Reduced padding */
       }
       
       .content h2 {
@@ -150,8 +150,8 @@
     /* Desktop and larger screens */
     @media (min-width: 769px) {
       .content {
-        max-width: 65ch;
-        padding: 0 2rem;
+        max-width: 75ch; /* Increased from 65ch */
+        padding: 0 1.5rem; /* Reduced from 2rem */
       }
       
       .content h2 {
@@ -210,36 +210,103 @@
     /* Large screens - prevent content from becoming too wide */
     @media (min-width: 1200px) {
       .content {
-        max-width: 70ch;
+        max-width: 80ch; /* Increased from 70ch */
       }
     }
 
-    /* Navigation responsive improvements */
+    /* Mobile Navigation - Pico CSS compliant */
+    .mobile-nav {
+      display: none;
+    }
+
     @media (max-width: 768px) {
-      nav ul {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.5rem;
+      /* Hide desktop nav on mobile */
+      nav {
+        position: relative;
       }
       
-      nav ul li {
-        margin: 0.25rem;
+      nav > ul {
+        display: none;
       }
       
-      nav ul li a {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.9rem;
+      nav > ul.show {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--pico-background-color);
+        border: var(--pico-border-width) solid var(--pico-border-color);
+        border-radius: var(--pico-border-radius);
+        box-shadow: var(--pico-box-shadow);
+        z-index: 1000;
+        padding: 1rem;
+        margin-top: 0.5rem;
+      }
+      
+      nav > ul.show li {
+        margin: 0.25rem 0;
+        width: 100%;
+      }
+      
+      nav > ul.show li a,
+      nav > ul.show li button {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 0.75rem 1rem;
+        min-height: 44px;
+        border-radius: var(--pico-border-radius);
+      }
+      
+      nav > ul.show li a:hover,
+      nav > ul.show li button:hover {
+        background: var(--pico-secondary-background);
+      }
+      
+      /* Mobile menu toggle */
+      .mobile-nav {
+        display: block;
+        background: none;
+        border: none;
+        color: var(--pico-color);
+        font-size: 1.5rem;
+        padding: 0.5rem;
+        cursor: pointer;
+        margin-left: auto;
+      }
+      
+      .mobile-nav:hover {
+        background: var(--pico-secondary-background);
+        border-radius: var(--pico-border-radius);
+      }
+      
+      /* Show brand name on mobile */
+      .mobile-brand {
+        display: block;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+      
+      /* Mobile header layout */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
       }
     }
 
-    /* Improve touch targets on mobile */
-    @media (max-width: 576px) {
-      nav ul li a,
-      nav ul li button {
-        min-height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    /* Desktop navigation - keep original Pico styles */
+    @media (min-width: 769px) {
+      .mobile-nav,
+      .mobile-brand {
+        display: none;
+      }
+      
+      nav > ul {
+        display: flex !important;
       }
     }
 
@@ -291,10 +358,16 @@
 <body>
   <header class="container">
     <nav>
+      <div class="mobile-brand">
+        <a href="index.html">James Martin</a>
+      </div>
+      <button class="mobile-nav" aria-label="Toggle navigation menu" onclick="toggleMobileNav()">
+        ☰
+      </button>
       <ul class="smHide">
         <li><strong><a href="index.html">James Martin</a></strong></li>
       </ul>
-      <ul class="secondary">
+      <ul class="secondary" id="nav-menu">
         <li class="lgHide"><a href="index.html">Home</a></li>
         <li><a href="work/index.html">Work</a></li>
         <li><a href="resume.html">Resume</a></li>
@@ -405,6 +478,31 @@
   </footer>
   
   <script src="js/scripts.js"></script>
+  <script>
+    function toggleMobileNav() {
+      const navMenu = document.getElementById('nav-menu');
+      navMenu.classList.toggle('show');
+    }
+
+    // Close mobile nav when clicking outside
+    document.addEventListener('click', function(event) {
+      const nav = document.querySelector('nav');
+      const navMenu = document.getElementById('nav-menu');
+      const mobileNavButton = document.querySelector('.mobile-nav');
+      
+      if (!nav.contains(event.target) && navMenu.classList.contains('show')) {
+        navMenu.classList.remove('show');
+      }
+    });
+
+    // Close mobile nav when window is resized to desktop
+    window.addEventListener('resize', function() {
+      const navMenu = document.getElementById('nav-menu');
+      if (window.innerWidth > 768 && navMenu.classList.contains('show')) {
+        navMenu.classList.remove('show');
+      }
+    });
+  </script>
 </body>
 
 </html>
